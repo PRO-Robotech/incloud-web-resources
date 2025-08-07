@@ -28,6 +28,5 @@ items:
       id: "stock-namespace-/argoproj.io/v1alpha1/applications"
       pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/argocd-application-details/~recordValue~"
 
-
 kind: List
 metadata:

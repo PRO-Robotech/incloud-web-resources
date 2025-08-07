@@ -1,0 +1,120 @@
+{{- define "incloud-web-resources.sidebar.menu.items.cluster" -}}
+{{- if .Values.gitops.argocd.enable -}}
+- children:
+    - key: argocd-application
+      label: Applications
+      link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/applications
+    - key: argocd-applicationset
+      label: ApplicationSets
+      link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/applicationsets
+    - key: argocd-projects
+      label: Projects
+      link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/appprojects
+  key: argocd
+  label: Argocd
+{{- end }}
+
+- children:
+    - key: pods
+      label: Pods
+      link: /openapi-ui/{clusterName}/builtin-table/pods
+    - key: deployments
+      label: Deployments
+      link: /openapi-ui/{clusterName}/api-table/apps/v1/deployments
+    - key: statefulsets
+      label: Statefulsets
+      link: /openapi-ui/{clusterName}/api-table/apps/v1/statefulsets
+    - key: secrets
+      label: Secrets
+      link: /openapi-ui/{clusterName}/builtin-table/secrets
+    - key: configmaps
+      label: ConfigMaps
+      link: /openapi-ui/{clusterName}/builtin-table/configmaps
+    - key: cronjobs
+      label: CronJobs
+      link: /openapi-ui/{clusterName}/api-table/batch/v1/cronjobs
+    - key: jobs
+      label: Jobs
+      link: /openapi-ui/{clusterName}/api-table/batch/v1/jobs
+    - key: daemonsets
+      label: Daemonsets
+      link: /openapi-ui/{clusterName}/api-table/apps/v1/daemonsets
+    - key: replicasets
+      label: ReplicaSets
+      link: /openapi-ui/{clusterName}/api-table/apps/v1/replicasets
+    - key: replicationcontrollers
+      label: ReplicationControllers
+      link: /openapi-ui/{clusterName}/builtin-table/replicationcontrollers
+    - key: horizontalpodautoscalers
+      label: HorizontalPodAutoscalers
+      link: /openapi-ui/{clusterName}/api-table/autoscaling/v2/horizontalpodautoscalers
+    - key: poddisruptionbudgets
+      label: PodDisruptionBudgets
+      link: /openapi-ui/{clusterName}/api-table/policy/v1/poddisruptionbudgets
+  key: workloads
+  label: Workloads
+- children:
+    - key: services
+      label: Services
+      link: /openapi-ui/{clusterName}/builtin-table/services
+    - key: networkpolicies
+      label: NetworkPolicies
+      link: /openapi-ui/{clusterName}/api-table/networking.k8s.io/v1/networkpolicies
+    - key: ingresses
+      label: Ingresses
+      link: /openapi-ui/{clusterName}/api-table/networking.k8s.io/v1/ingresses
+  key: networking
+  label: Networking
+- children:
+    - key: persistentvolumes
+      label: PersistentVolumes
+      link: /openapi-ui/{clusterName}/builtin-table/persistentvolumes
+    - key: persistentvolumeclaims
+      label: PersistentVolumeClaims
+      link: /openapi-ui/{clusterName}/builtin-table/persistentvolumeclaims
+    - key: storageclasses
+      label: StorageClasses
+      link: /openapi-ui/{clusterName}/api-table/storage.k8s.io/v1/storageclasses
+  key: storage
+  label: Storage
+- children:
+    - key: nodes
+      label: Nodes
+      link: /openapi-ui/{clusterName}/builtin-table/nodes
+  key: compute
+  label: Compute
+- children:
+    - key: groups
+      label: ServiceAccounts
+      link: /openapi-ui/{clusterName}/builtin-table/serviceaccounts
+    - key: roles
+      label: Roles
+      link: /openapi-ui/{clusterName}/api-table/rbac.authorization.k8s.io/v1/roles
+    - key: rolebindings
+      label: RoleBindings
+      link: /openapi-ui/{clusterName}/api-table/rbac.authorization.k8s.io/v1/rolebindings
+    - key: clusterroles
+      label: ClusterRoles
+      link: /openapi-ui/{clusterName}/api-table/rbac.authorization.k8s.io/v1/clusterroles
+    - key: clusterrolebindings
+      label: ClusterRoleBindings
+      link: /openapi-ui/{clusterName}/api-table/rbac.authorization.k8s.io/v1/clusterrolebindings
+  key: usermanagement
+  label: User Management
+- children:
+    - key: namespaces
+      label: Namespaces
+      link: /openapi-ui/{clusterName}/builtin-table/namespaces
+    - key: limitranges
+      label: LimitRanges
+      link: /openapi-ui/{clusterName}/builtin-table/limitranges
+    - key: resourcequotas
+      label: ResourceQuotas
+      link: /openapi-ui/{clusterName}/builtin-table/resourcequotas
+    - key: customresourcedefinitions
+      label: CustomResourceDefinitions
+      link: /openapi-ui/{clusterName}/api-table/apiextensions.k8s.io/v1/customresourcedefinitions
+  key: administration
+  label: Administration
+
+{{- end }}

@@ -35,11 +35,15 @@ items:
         - key: Pod Selector
           value: 1
       additionalPrinterColumnsUndefinedValues:
-        - key: Labels
+        - key: Name
           value: "-"
-        - key: Pod Selector
+        - key: Sync Status
           value: "-"
-        - key: Namespace
+        - key: Health Status
+          value: "-"
+        - key: Revision
+          value: "-"
+        - key: Project
           value: "-"
 
       id: "stock-cluster-/argoproj.io/v1alpha1/applications"
@@ -76,11 +80,15 @@ items:
         - key: Pod Selector
           value: 1
       additionalPrinterColumnsUndefinedValues:
-        - key: Labels
+        - key: Name
           value: "-"
-        - key: Pod Selector
+        - key: Sync Status
           value: "-"
-        - key: Namespace
+        - key: Health Status
+          value: "-"
+        - key: Revision
+          value: "-"
+        - key: Project
           value: "-"
 
       id: "stock-namespace-/argoproj.io/v1alpha1/applications"
@@ -180,7 +188,8 @@ items:
       additionalPrinterColumnsUndefinedValues:
         - key: Namespace
           value: "-"
-
+        - key: Revision
+          value: "-"
       id: "factory-argocd-application-status-history"
 
 kind: List

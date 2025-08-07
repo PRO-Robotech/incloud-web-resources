@@ -7,7 +7,7 @@ items:
     spec:
       key: argocd-application-details
       sidebarTags:
-        - argocd-application-sidebar
+        - argocd-applications-sidebar
       withScrollableMainContentCard: true
       urlsToFetch:
         - "/api/clusters/{2}/k8s/apis/argoproj.io/v1alpha1/namespaces/{3}/applications/{6}"
@@ -455,6 +455,7 @@ items:
                                         data:
                                           id: 21012
                                           text: "{reqs[0]['status', 'operationState', 'startedAt']}"
+                                          formatter: timestamp
 
                                   - type: antdFlex
                                     data:
@@ -471,6 +472,7 @@ items:
                                         data:
                                           id: 21012
                                           text: "{reqs[0]['status', 'operationState', 'finishedAt']}"
+                                          formatter: timestamp
 
                       - type: antdCol
                         data:
