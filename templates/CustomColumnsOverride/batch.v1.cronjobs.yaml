@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "default-batch.v1.cronjobs"
+      name: "stock-cluster-batch.v1.cronjobs"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -35,7 +35,41 @@ items:
           value: "-"
         - key: Starting deadline seconds
           value: "-"
-      id: "default-/batch/v1/cronjobs"
+      id: "stock-cluster-/batch/v1/cronjobs"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "stock-namespace-batch.v1.cronjobs"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .spec.schedule
+          name: Schedule
+          type: string
+        - jsonPath: .spec.suspend
+          name: Suspend
+          type: string
+        - jsonPath: .spec.concurrencyPolicy
+          name: Concurrency policy
+          type: string
+        - jsonPath: .spec.startingDeadlineSeconds
+          name: Starting deadline seconds
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Namespace
+          value: "-"
+        - key: Starting deadline seconds
+          value: "-"
+      id: "stock-namespace-/batch/v1/cronjobs"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride

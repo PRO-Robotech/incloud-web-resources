@@ -218,6 +218,7 @@ items:
                                             data:
                                               id: 36022
                                               text: "{reqs[0]['metadata', 'creationTimestamp']}"
+                                              formatter: timestamp
                                   - type: antdFlex
                                     data:
                                       id: 3600

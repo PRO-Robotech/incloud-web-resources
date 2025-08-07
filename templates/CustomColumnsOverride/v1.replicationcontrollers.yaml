@@ -1,9 +1,11 @@
 apiVersion: v1
+kind: List
+metadata:
 items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "stock-cluster-apps.v1.replicasets"
+      name: "stock-cluster-apps.v1.replicationcontroller"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -26,12 +28,12 @@ items:
           value: 64
         - key: Labels
           value: 1
-      id: "stock-cluster-/apps/v1/replicasets"
+      id: "stock-cluster-/v1/replicationcontrollers"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "stock-namespace-apps.v1.replicasets"
+      name: "stock-namespace-apps.v1.replicationcontroller"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -51,52 +53,23 @@ items:
           value: 64
         - key: Labels
           value: 1
-      id: "stock-namespace-/apps/v1/replicasets"
+      id: "stock-namespace-/v1/replicationcontrollers"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "factory-apps.v1.replicasets"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .metadata.ownerReferences[*].name
-          name: Owner
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-      additionalPrinterColumnsUndefinedValues:
-        - key: Labels
-          value: "-"
-
-      id: "factory-/apps/v1/replicasets"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "factory-replicaset-details-volume-list"
+      name: "factory-replicationcontroller-details-volume-list"
     spec:
       additionalPrinterColumns:
         - jsonPath: .name
           name: Name
           type: string
-      id: "factory-replicaset-details-volume-list"
+      id: "factory-replicationcontroller-details-volume-list"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: factory-replicaset-details-init-containers-list
+      name: factory-replicationcontroller-details-init-containers-list
     spec:
       additionalPrinterColumns:
         - jsonPath: .name
@@ -105,18 +78,30 @@ items:
         - jsonPath: .image
           name: Image
           type: string
-        - jsonPath: .resources
-          name: Resources
+        - jsonPath: .resources.requests
+          name: Resources requests
+          type: string
+        - jsonPath: .resources.limits
+          name: Resources limits
           type: string
       additionalPrinterColumnsTrimLengths:
         - key: Image
           value: 64
-      id: factory-replicaset-details-init-containers-list
+      additionalPrinterColumnsUndefinedValues:
+        - key: Name
+          value: "-"
+        - key: Image
+          value: "-"
+        - key: Resources limits
+          value: "-"
+        - key: Resources requests
+          value: "-"
+      id: factory-replicationcontroller-details-init-containers-list
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: factory-replicaset-details-containers-list
+      name: factory-replicationcontroller-details-containers-list
     spec:
       additionalPrinterColumns:
         - jsonPath: .name
@@ -148,7 +133,4 @@ items:
           value: "-"
         - key: Ports
           value: "-"
-      id: factory-replicaset-details-containers-list
-
-kind: List
-metadata:
+      id: factory-replicationcontroller-details-containers-list

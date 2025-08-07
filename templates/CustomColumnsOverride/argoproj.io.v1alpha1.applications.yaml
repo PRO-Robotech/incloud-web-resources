@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "default-argoproj.io.v1alpha1.applications"
+      name: "stock-cluster-argoproj.io.v1alpha1.applications"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -42,7 +42,48 @@ items:
         - key: Namespace
           value: "-"
 
-      id: "default-/argoproj.io/v1alpha1/applications"
+      id: "stock-cluster-/argoproj.io/v1alpha1/applications"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "stock-namespace-argoproj.io.v1alpha1.applications"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .status.sync.status
+          name: Sync Status
+          type: string
+        - jsonPath: .status.health.status
+          name: Health Status
+          type: string
+        - jsonPath: .status.sync.revision
+          name: Revision
+          type: string
+        - jsonPath: .spec.project
+          name: Project
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Labels
+          value: 1
+        - key: Pod Selector
+          value: 1
+      additionalPrinterColumnsUndefinedValues:
+        - key: Labels
+          value: "-"
+        - key: Pod Selector
+          value: "-"
+        - key: Namespace
+          value: "-"
+
+      id: "stock-namespace-/argoproj.io/v1alpha1/applications"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride

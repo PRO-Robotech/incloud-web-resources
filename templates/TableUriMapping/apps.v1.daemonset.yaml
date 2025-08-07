@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: TableUriMapping
     metadata:
-      name: default-apps.v1.daemonsets
+      name: stock-cluster-apps.v1.daemonsets
     spec:
       keysToParse:
         - metadata
@@ -11,8 +11,23 @@ items:
       keysToParseSecond:
         - metadata
         - namespace
-      id: "default-/apps/v1/daemonsets"
+      id: "stock-cluster-/apps/v1/daemonsets"
       pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/daemonset-details/~recordValue~"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: TableUriMapping
+    metadata:
+      name: stock-namespace-apps.v1.daemonsets
+    spec:
+      keysToParse:
+        - metadata
+        - name
+      keysToParseSecond:
+        - metadata
+        - namespace
+      id: "stock-namespace-/apps/v1/daemonsets"
+      pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/daemonset-details/~recordValue~"
+
 
 kind: List
 metadata:

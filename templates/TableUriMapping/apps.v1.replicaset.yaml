@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: TableUriMapping
     metadata:
-      name: default-apps.v1.replicasets
+      name: stock-cluster-apps.v1.replicasets
     spec:
       keysToParse:
         - metadata
@@ -11,7 +11,21 @@ items:
       keysToParseSecond:
         - metadata
         - namespace
-      id: "default-/apps/v1/replicasets"
+      id: "stock-cluster-/apps/v1/replicasets"
+      pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/replicaset-details/~recordValue~"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: TableUriMapping
+    metadata:
+      name: stock-namespace-apps.v1.replicasets
+    spec:
+      keysToParse:
+        - metadata
+        - name
+      keysToParseSecond:
+        - metadata
+        - namespace
+      id: "stock-namespace-/apps/v1/replicasets"
       pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/replicaset-details/~recordValue~"
 
   - apiVersion: front.in-cloud.io/v1alpha1

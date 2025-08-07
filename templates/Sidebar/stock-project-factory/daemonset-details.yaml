@@ -3,12 +3,13 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: Sidebar
     metadata:
-      name: stock-project-factory-pod-details
+      annotations:
+      name: stock-project-factory-daemonset-details
     spec:
-      id: stock-project-factory-pod-details
+      id: stock-project-factory-daemonset-details
       keysAndTags:
-        pods:
-          - pods-sidebar
+        daemonsets:
+          - daemonset-sidebar
       menuItems:
         - children:
             - key: pods
@@ -112,5 +113,6 @@ items:
               link: /openapi-ui/{clusterName}/api-table/apiextensions.k8s.io/v1/customresourcedefinitions
           key: administration
           label: Administration
+
 kind: List
 metadata:

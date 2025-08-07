@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: TableUriMapping
     metadata:
-      name: node-details
+      name: stock-cluster-node-details
     spec:
       keysToParse:
         - metadata
@@ -11,7 +11,7 @@ items:
       keysToParseSecond:
         - metadata
         - namespace
-      id: "default-/v1/nodes"
+      id: "stock-cluster-/v1/nodes"
       pathToNavigate: "/openapi-ui/{clusterName}/factory/node-details/~recordValue~"
 
 kind: List

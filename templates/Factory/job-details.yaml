@@ -49,12 +49,18 @@ items:
                   fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
             - type: StatusText
               data:
-                id: 411
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Complete')].status']}"
-                criteria: equals
-                valueToCompare: "True"
-                successText: Complete
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+                id: 40001215555
+                value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                criteriaSuccess: equals
+                valueToCompareSuccess:
+                  - "Complete"
+                criteriaError: equals
+                valueToCompareError:
+                  - "Failed"
+                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+
 
         - type: antdTabs
           data:
@@ -240,6 +246,7 @@ items:
                                             data:
                                               id: 33
                                               text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+                                              formatter: timestamp
 
                                   - type: antdFlex
                                     data:
@@ -296,12 +303,18 @@ items:
                                           text: "Status"
                                       - type: StatusText
                                         data:
-                                          id: 411
-                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Complete')].status']}"
-                                          criteria: equals
-                                          valueToCompare: "True"
-                                          successText: Complete
-                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+                                          id: 40001215555
+                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                                          criteriaSuccess: equals
+                                          valueToCompareSuccess:
+                                            - "Complete"
+                                          criteriaError: equals
+                                          valueToCompareError:
+                                            - "Failed"
+                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+
 
                                   - type: antdFlex
                                     data:

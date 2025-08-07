@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: default-apiextensions.k8s.io.v1.customresourcedefinitions
+      name: stock-cluster-apiextensions.k8s.io.v1.customresourcedefinitions
     spec:
       additionalPrinterColumns:
         - jsonPath: .spec.names.kind
@@ -24,7 +24,7 @@ items:
       additionalPrinterColumnsTrimLengths:
         - key: Name
           value: 64
-      id: default-/apiextensions.k8s.io/v1/customresourcedefinitions
+      id: stock-cluster-/apiextensions.k8s.io/v1/customresourcedefinitions
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride

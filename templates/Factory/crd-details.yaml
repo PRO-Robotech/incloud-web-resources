@@ -169,6 +169,7 @@ items:
                                             data:
                                               id: 24
                                               text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+                                              formatter: timestamp
                                   - type: antdFlex
                                     data:
                                       id: 25

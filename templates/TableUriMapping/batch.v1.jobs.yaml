@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: TableUriMapping
     metadata:
-      name: default-batch.v1.jobs
+      name: stock-cluster-batch.v1.jobs
     spec:
       keysToParse:
         - metadata
@@ -11,7 +11,21 @@ items:
       keysToParseSecond:
         - metadata
         - namespace
-      id: "default-/batch/v1/jobs"
+      id: "stock-cluster-/batch/v1/jobs"
+      pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/job-details/~recordValue~"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: TableUriMapping
+    metadata:
+      name: stock-namespace-batch.v1.jobs
+    spec:
+      keysToParse:
+        - metadata
+        - name
+      keysToParseSecond:
+        - metadata
+        - namespace
+      id: "stock-namespace-/batch/v1/jobs"
       pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/job-details/~recordValue~"
 
 kind: List

@@ -16,8 +16,8 @@ items:
         - type: antdFlex
           data:
             id: 1
-            align: center
             gap: 6
+            align: center
             style:
               marginBottom: 24px
           children:
@@ -44,18 +44,23 @@ items:
                 id: 3
                 text: "{reqsJsonPath[0]['.metadata.name']['-']}"
                 style:
-                  fontFamily: RedHatDisplay, Overpass, helvetica, sans-serif
                   fontSize: 20px
                   lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
             - type: StatusText
               data:
-                id: 411
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Available')].status']}"
-                criteria: equals
-                valueToCompare: "True"
-                successText: Available
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Available')].reason']['-']}"
-
+                id: 40001214444
+                value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                criteriaSuccess: equals
+                valueToCompareSuccess:
+                  - "MinimumReplicasAvailable"
+                criteriaError: equals
+                valueToCompareError:
+                  - "DeploymentReplicaFailure"
+                  - "ProgressDeadlineExceeded"
+                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
         - type: antdTabs
           data:
             id: 4
@@ -77,21 +82,19 @@ items:
                           text: Deployment details
                           strong: true
                           style:
-                            fontSize: 20px
+                            fontSize: 20
                             marginBottom: 12px
 
                       - type: Spacer
                         data:
                           id: 7
-                          $space: 16
+                          "$space": 16
 
                       # Main details row
                       - type: antdRow
                         data:
                           id: 8
                           gutter: [48, 12]
-                          style:
-                            padding: 20
                         children:
                           # Left column
                           - type: antdCol
@@ -250,6 +253,7 @@ items:
                                             data:
                                               id: 36
                                               text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+                                              formatter: timestamp
                                   - type: antdFlex
                                     data:
                                       id: 37
@@ -281,6 +285,31 @@ items:
                                   vertical: true
                                   gap: 24
                                 children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 29
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 30
+                                          text: Status
+                                          strong: true
+                                      - type: StatusText
+                                        data:
+                                          id: 40001214444
+                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                                          criteriaSuccess: equals
+                                          valueToCompareSuccess:
+                                            - "MinimumReplicasAvailable"
+                                          criteriaError: equals
+                                          valueToCompareError:
+                                            - "DeploymentReplicaFailure"
+                                            - "ProgressDeadlineExceeded"
+                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
+                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
                                   - type: antdFlex
                                     data:
                                       id: 42

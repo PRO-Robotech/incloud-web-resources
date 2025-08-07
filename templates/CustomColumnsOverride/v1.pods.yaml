@@ -89,11 +89,14 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "default-v1.pods"
+      name: "stock-cluster-v1.pods"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
           name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
           type: string
         - jsonPath: .spec.nodeName
           name: Node
@@ -127,12 +130,12 @@ items:
       additionalPrinterColumnsTrimLengths:
         - key: Name
           value: 64
-      id: "default-/v1/pods"
+      id: "stock-cluster-/v1/pods"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "cluster-v1.pods"
+      name: "stock-namespace-v1.pods"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -170,6 +173,6 @@ items:
       additionalPrinterColumnsTrimLengths:
         - key: Name
           value: 64
-      id: "cluster-/v1/pods"
+      id: "stock-namespace-/v1/pods"
 kind: List
 metadata:

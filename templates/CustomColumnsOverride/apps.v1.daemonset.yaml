@@ -3,7 +3,35 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
-      name: "default-apps.v1.daemonsets"
+      name: "stock-cluster-apps.v1.daemonsets"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .metadata.labels
+          name: Labels
+          type: string
+        - jsonPath: .metadata.ownerReferences[*].name
+          name: Owner
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Labels
+          value: 1
+      id: "stock-cluster-/apps/v1/daemonsets"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "stock-namespace-apps.v1.daemonsets"
     spec:
       additionalPrinterColumns:
         - jsonPath: .metadata.name
@@ -23,7 +51,7 @@ items:
           value: 64
         - key: Labels
           value: 1
-      id: "default-/apps/v1/daemonsets"
+      id: "stock-namespace-/apps/v1/daemonsets"
 
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride

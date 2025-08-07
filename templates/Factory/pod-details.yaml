@@ -47,14 +47,29 @@ items:
                   fontSize: 20px
                   lineHeight: 24px
                   fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
             - type: StatusText
               data:
-                id: 411
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].status']}"
-                criteria: equals
-                valueToCompare: "True"
-                successText: Available
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+                id: 40001212212
+                value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
+                criteriaSuccess: equals
+                valueToCompareSuccess:
+                  - "PodReady"
+                  - "ContainersReady"
+                  - "Initialized"
+                  - "PodCompleted"
+                  - "fallback"
+                criteriaError: equals
+                valueToCompareError:
+                  - "ContainersNotReady"
+                  - "CrashLoopBackOff"
+                  - "ImagePullBackOff"
+                  - "ErrImagePull"
+                  - "CreateContainerConfigError"
+                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
+                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
+                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']}"
+
 
         - type: antdTabs
           data:
@@ -224,6 +239,7 @@ items:
                                             data:
                                               id: 33
                                               text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+                                              formatter: timestamp
                                   - type: antdFlex
                                     data:
                                       id: 34
@@ -265,14 +281,29 @@ items:
                                           id: 40
                                           strong: true
                                           text: "Status"
+
                                       - type: StatusText
                                         data:
-                                          id: 411
-                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].status']}"
-                                          criteria: equals
-                                          valueToCompare: "True"
-                                          successText: Available
-                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+                                          id: 40001212212
+                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
+                                          criteriaSuccess: equals
+                                          valueToCompareSuccess:
+                                            - "PodReady"
+                                            - "ContainersReady"
+                                            - "Initialized"
+                                            - "PodCompleted"
+                                            - "fallback"
+                                          criteriaError: equals
+                                          valueToCompareError:
+                                            - "ContainersNotReady"
+                                            - "CrashLoopBackOff"
+                                            - "ImagePullBackOff"
+                                            - "ErrImagePull"
+                                            - "CreateContainerConfigError"
+                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
+                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
+                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']}"
+
 
                                   - type: antdFlex
                                     data:

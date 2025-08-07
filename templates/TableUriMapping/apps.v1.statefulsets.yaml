@@ -3,7 +3,7 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: TableUriMapping
     metadata:
-      name: default-apps.v1.statefullsets
+      name: stock-cluster-apps.v1.statefullsets
     spec:
       keysToParse:
         - metadata
@@ -11,7 +11,21 @@ items:
       keysToParseSecond:
         - metadata
         - namespace
-      id: "default-/apps/v1/statefulsets"
+      id: "stock-cluster-/apps/v1/statefulsets"
+      pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/statefulset-details/~recordValue~"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: TableUriMapping
+    metadata:
+      name: stock-namespace-apps.v1.statefullsets
+    spec:
+      keysToParse:
+        - metadata
+        - name
+      keysToParseSecond:
+        - metadata
+        - namespace
+      id: "stock-namespace-/apps/v1/statefulsets"
       pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/statefulset-details/~recordValue~"
 
 kind: List

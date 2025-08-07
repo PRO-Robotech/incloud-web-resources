@@ -194,6 +194,7 @@ items:
                                             data:
                                               id: 36022
                                               text: "{reqs[0]['metadata', 'creationTimestamp']}"
+                                              formatter: timestamp
 
                           - type: antdCol
                             data:
