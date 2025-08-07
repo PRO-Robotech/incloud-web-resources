@@ -1,0 +1,516 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Factory
+    metadata:
+      name: node-details
+    spec:
+      key: node-details
+      withScrollableMainContentCard: true
+      sidebarTags:
+        - node-sidebar
+      urlsToFetch:
+        - "/api/clusters/{2}/k8s/api/v1/nodes/{5}"
+      data:
+        - type: antdFlex
+          data:
+            id: 3602
+            gap: 6
+            align: center
+            style:
+              marginBottom: 24px
+          children:
+            - type: antdText
+              data:
+                id: 36021
+                text: "N"
+                title: nodes
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  padding: "0 9px"
+                  borderRadius: "20px"
+                  minWidth: 24
+                  display: inline-block
+                  textAlign: center
+                  whiteSpace: nowrap
+                  color: "#fff"
+                  backgroundColor: "#8476d1"
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+                  fontWeight: 400
+
+            - type: parsedText
+              data:
+                id: 21012
+                text: "{reqs[0]['metadata', 'name']}"
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+            - type: StatusText
+              data:
+                id: 4000121221
+                requestIndex: 0
+                jsonPath: ".status.conditions[?(@.type == 'Ready')].status"
+                criteria: equals
+                valueToCompare: "True"
+                successText: Available
+                errorText: Not available
+
+        - type: antdTabs
+          data:
+            id: 20
+            defaultActiveKey: "details"
+            items:
+              - key: "details"
+                label: "Details"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 2000
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdText
+                        data:
+                          id: 1999
+                          text: "Node details"
+                          strong: true
+                          style:
+                            fontSize: 20
+                            marginBottom: 12px
+                      - type: Spacer
+                        data:
+                          id: 1999-spacer
+                          "$space": 16
+                      - type: antdRow
+                        data:
+                          id: 2001
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 2002
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2100
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Name"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['metadata', 'name']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2102
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21021
+                                          strong: true
+                                          text: "Status"
+
+                                      - type: StatusText
+                                        data:
+                                          id: 4000121221
+                                          requestIndex: 0
+                                          jsonPath: ".status.conditions[?(@.type == 'Ready')].status"
+                                          criteria: equals
+                                          valueToCompare: "True"
+                                          successText: Available
+                                          errorText: Not available
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 21021
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21021
+                                          strong: true
+                                          text: "External ID"
+                                      - type: parsedText
+                                        data:
+                                          id: 21022
+                                          text: "| требуется default | стиль цвета не работает | не понял чей"
+                                  - type: antdFlex
+                                    data:
+                                      id: 21021
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21021
+                                          strong: true
+                                          text: "Uptime"
+                                      - type: parsedText
+                                        data:
+                                          id: 21022
+                                          text: "требуется функция которая будет высчитывать время"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 21022
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21021
+                                          strong: true
+                                          text: "Node address"
+                                      - type: antdFlex
+                                        data:
+                                          id: 21026
+                                          vertical: true
+                                          gap: 2
+                                        children:
+                                          - type: ArrayOfObjectsToKeyValues
+                                            data:
+                                              id: node-address
+                                              reqIndex: 0
+                                              jsonPathToArray: ".status.addresses"
+                                              keyFieldName: type
+                                              valueFieldName: address
+                                              keyFieldStyle:
+                                                color: "#aaabac"
+                                  - type: antdFlex
+                                    data:
+                                      id: 3200
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3201
+                                          text: "Labels"
+                                          strong: true
+                                          style:
+                                            fontSize: 14
+                                      - type: antdText
+                                        data:
+                                          id: 3202
+                                          text: "No selector | требуется отображение меток с сылкой на search"
+                                          style:
+                                            color: "#FF0000"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3300
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 33000
+                                          strong: true
+                                          text: "Taints"
+                                      - type: antdText
+                                        data:
+                                          id: 3301
+                                          text: "0 Taints ✏️ | требуются ссылки и модалка на модификацию"
+                                          style:
+                                            color: "#FF0000"
+                                  - type: antdFlex
+                                    data:
+                                      id: 3400
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 34000
+                                          strong: true
+                                          text: "Annotations"
+                                      - type: antdText
+                                        data:
+                                          id: 3401
+                                          text: "3 Annotations ✏️ | требуются ссылки и модалка на модификацию"
+                                          style:
+                                            color: "#FF0000"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Provider ID"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['spec', 'providerID']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3600
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3601
+                                          strong: true
+                                          text: "Created"
+                                      - type: antdFlex
+                                        data:
+                                          id: 3602
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          - type: antdText
+                                            data:
+                                              id: 36021
+                                              text: "🌐"
+                                          - type: parsedText
+                                            data:
+                                              id: 36022
+                                              text: "{reqs[0]['metadata', 'creationTimestamp']}"
+
+                          - type: antdCol
+                            data:
+                              id: 2003
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2200
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2201
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22011
+                                          strong: true
+                                          text: "Operating system"
+                                      - type: parsedText
+                                        data:
+                                          id: 22012
+                                          text: "{reqs[0]['status', 'nodeInfo', 'operatingSystem']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2202
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22021
+                                          strong: true
+                                          text: "OS image"
+                                      - type: parsedText
+                                        data:
+                                          id: 22022
+                                          text: "{reqs[0]['status', 'nodeInfo', 'osImage']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2203
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22031
+                                          strong: true
+                                          text: "Architecture"
+                                      - type: parsedText
+                                        data:
+                                          id: 22032
+                                          text: "{reqs[0]['status', 'nodeInfo', 'architecture']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2204
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22041
+                                          strong: true
+                                          text: "Kernel versions"
+                                      - type: parsedText
+                                        data:
+                                          id: 22042
+                                          text: "{reqs[0]['status', 'nodeInfo', 'kernelVersion']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2205
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22051
+                                          strong: true
+                                          text: "Boot ID"
+                                      - type: parsedText
+                                        data:
+                                          id: 22052
+                                          text: "{reqs[0]['status', 'nodeInfo', 'bootID']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2206
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22061
+                                          strong: true
+                                          text: "Container runtime"
+                                      - type: parsedText
+                                        data:
+                                          id: 22062
+                                          text: "{reqs[0]['status', 'nodeInfo', 'containerRuntimeVersion']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2207
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22071
+                                          strong: true
+                                          text: "Kubelet version"
+                                      - type: parsedText
+                                        data:
+                                          id: 22072
+                                          text: "{reqs[0]['status', 'nodeInfo', 'kubeletVersion']}"
+
+                      - type: antdCol
+                        data:
+                          id: 99981
+                          style:
+                            marginTop: 32px
+                            padding: 16px
+                        children:
+                          - type: antdText
+                            data:
+                              id: 99992
+                              text: "Conditions"
+                              strong: true
+                              style:
+                                fontSize: 22
+                          - type: EnrichedTable
+                            data:
+                              id: 9999
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/nodes/{5}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: "factory-status-conditions"
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - conditions
+
+                      - type: antdCol
+                        data:
+                          id: 999811
+                          style:
+                            marginTop: 32px
+                            padding: 16px
+                        children:
+                          - type: antdText
+                            data:
+                              id: 999921
+                              text: "Images"
+                              strong: true
+                              style:
+                                fontSize: 22
+                          - type: EnrichedTable
+                            data:
+                              id: 99991
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/nodes/{5}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: "factory-node-images"
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - images
+
+              - key: "yaml"
+                label: "YAML"
+                children:
+                  - type: YamlEditorSingleton
+                    data:
+                      id: 999999999
+                      cluster: "{2}"
+                      isNameSpaced: false
+                      type: "builtin"
+                      typeName: nodes
+                      prefillValuesRequestIndex: 0
+                      substractHeight: 400
+
+              - key: "pods"
+                label: "Pods"
+
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: 9999
+                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/pods"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: "factory-node-details-/v1/pods"
+                      baseprefix: "/openapi-ui"
+                      withoutControls: true
+                      pathToItems:
+                        - items
+                      fieldSelector:
+                        fieldName: "spec.nodeName"
+                        parsedText: "{reqs[0]['metadata', 'name']}"
+
+              - key: "logs"
+                label: "Logs"
+                children:
+                  - type: antdText
+                    data:
+                      id: 22
+                      text: "i am from factory"
+                  - type: parsedText
+                    data:
+                      id: 19
+                      text: "used from query: {reqs[1]['metadata', 'name']} and used from url 5th part: {5}"
+
+              - key: "terminal"
+                label: "Terminal"
+                children:
+                  - type: NodeTerminal
+                    data:
+                      id: 999
+                      cluster: "{2}"
+                      nodeName: "{reqs[0]['metadata', 'name']}"
+
+kind: List
+metadata:

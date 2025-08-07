@@ -1,0 +1,18 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: TableUriMapping
+    metadata:
+      name: default-batch.v1.cronjobs
+    spec:
+      keysToParse:
+        - metadata
+        - name
+      keysToParseSecond:
+        - metadata
+        - namespace
+      id: "default-/batch/v1/cronjobs"
+      pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/cronjob-details/~recordValue~"
+
+kind: List
+metadata:

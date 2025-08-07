@@ -1,0 +1,26 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Breadcrumb
+    metadata:
+      name: stock-cluster-factory-node-details
+    spec:
+      id: "stock-cluster-factory-node-details"
+      breadcrumbItems:
+        - key: In-Cloud
+          label: In-Cloud
+          link: "/openapi-ui"
+        - key: clusterList
+          label: "Cluster List"
+          link: "/openapi-ui/clusters"
+        - key: cluster
+          label: "{clusterName}"
+          link: "/openapi-ui/clusters/{clusterName}"
+        - key: node
+          label: "nodes"
+          link: "/openapi-ui/{clusterName}/builtin-table/nodes"
+        - key: node
+          label: "{5}"
+
+kind: List
+metadata:

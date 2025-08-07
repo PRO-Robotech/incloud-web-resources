@@ -1,0 +1,41 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Breadcrumb
+    metadata:
+      name: stock-project-factory-statefulset-details
+    spec:
+      id: "stock-project-factory-statefulset-details"
+      breadcrumbItems:
+        - key: In-Cloud
+          label: In-Cloud
+          link: "/openapi-ui"
+        - key: clusterList
+          label: "Cluster List"
+          link: "/openapi-ui/clusters"
+        - key: cluster
+          label: "{clusterName}"
+          link: "/openapi-ui/clusters/{clusterName}"
+        - key: namespaces
+          label: "Namespaces"
+        - key: namespace
+          label: "{namespace}"
+        - key: statefulsets
+          label: "statefulsets"
+          link: "/openapi-ui/{clusterName}/{namespace}/api-table/apps/v1/statefulsets"
+        - key: statefulset
+          label: "{5}"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Breadcrumb
+    metadata:
+      name: stock-cluster-factory-test-factory-nodes
+    spec:
+      id: "stock-cluster-factory-node-details"
+      breadcrumbItems:
+        - key: test
+          label: "test"
+        - key: secret
+          label: "{4}"
+kind: List
+metadata:

@@ -1,0 +1,35 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-service-details-endpointslice
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .targetRef.name
+          name: Name
+          type: string
+        - jsonPath: .targetRef.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .nodeName
+          name: NodeName
+          type: string
+        - jsonPath: .conditions.ready
+          name: Ready
+          type: string
+        - jsonPath: .conditions.serving
+          name: Serving
+          type: string
+        - jsonPath: .conditions.terminating
+          name: Terminating
+          type: string
+      additionalPrinterColumnsUndefinedValues:
+        - key: Namespace
+          value: "-"
+        - key: NodeName
+          value: "-"
+      id: factory-service-details-endpointslice
+
+kind: List
+metadata:

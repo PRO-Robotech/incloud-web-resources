@@ -1,0 +1,175 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-node-details-v1.pods"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .spec.restartPolicy
+          name: Restart Policy
+          type: string
+        - jsonPath: .status.podIP
+          name: Pod IP
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+          name: Status Containers
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+          name: Status Scheduled
+          type: string
+        - jsonPath: .status.qosClass
+          name: QOS
+          type: string
+        - jsonPath: .status.phase
+          name: Phase
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsUndefinedValues:
+        - key: Node
+          value: Unschedulable
+        - key: Pod IP
+          value: NotAllocated
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      id: "factory-node-details-/v1/pods"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-v1.pods"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .spec.nodeName
+          name: Node
+          type: string
+        - jsonPath: .spec.restartPolicy
+          name: Restart Policy
+          type: string
+        - jsonPath: .status.podIP
+          name: Pod IP
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="ContainersReady" || @.type=="PodReady")].status
+          name: Status Containers
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+          name: Status Scheduled
+          type: string
+        - jsonPath: .status.qosClass
+          name: QOS
+          type: string
+        - jsonPath: .status.phase
+          name: Phase
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsUndefinedValues:
+        - key: Node
+          value: Unschedulable
+        - key: Pod IP
+          value: NotAllocated
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      id: "factory-/v1/pods"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "default-v1.pods"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .spec.nodeName
+          name: Node
+          type: string
+        - jsonPath: .spec.restartPolicy
+          name: Restart Policy
+          type: string
+        - jsonPath: .status.podIP
+          name: Pod IP
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+          name: Status Containers
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+          name: Status Scheduled
+          type: string
+        - jsonPath: .status.qosClass
+          name: QOS
+          type: string
+        - jsonPath: .status.phase
+          name: Phase
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsUndefinedValues:
+        - key: Node
+          value: Unschedulable
+        - key: Pod IP
+          value: NotAllocated
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      id: "default-/v1/pods"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "cluster-v1.pods"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .spec.nodeName
+          name: Node
+          type: string
+        - jsonPath: .spec.restartPolicy
+          name: Restart Policy
+          type: string
+        - jsonPath: .status.podIP
+          name: Pod IP
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+          name: Status Containers
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+          name: Status Scheduled
+          type: string
+        - jsonPath: .status.qosClass
+          name: QOS
+          type: string
+        - jsonPath: .status.phase
+          name: Phase
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsUndefinedValues:
+        - key: Node
+          value: Unschedulable
+        - key: Pod IP
+          value: NotAllocated
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      id: "cluster-/v1/pods"
+kind: List
+metadata:

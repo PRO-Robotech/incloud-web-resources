@@ -1,0 +1,85 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: default-v1.services
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .spec.clusterIP
+          name: ClusterIP
+          type: string
+        - jsonPath: .spec.loadBalancerIP
+          name: LoadbalancerIP
+          type: string
+        - jsonPath: .metadata.labels
+          name: Labels
+          type: string
+        - jsonPath: .spec.selector
+          name: Pod Selector
+          type: string
+      additionalPrinterColumnsUndefinedValues:
+        - key: ClusterIP
+          value: "-"
+        - key: LoadbalancerIP
+          value: "-"
+        - key: Labels
+          value: "-"
+        - key: Pod Selector
+          value: "-"
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Labels
+          value: 1
+        - key: Pod Selector
+          value: 1
+      id: default-/v1/services
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-service-details-port-mapping
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .port
+          name: Port
+          type: string
+        - jsonPath: .protocol
+          name: Protocol
+          type: string
+        - jsonPath: .targetPort
+          name: Pod port or name
+          type: string
+      id: factory-service-details-port-mapping
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-service-details-address-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: "$"
+          name: ClusterIPs
+          type: string
+
+      additionalPrinterColumnsUndefinedValues:
+        - key: ClusterIPs
+          value: "-"
+        - key: LoadbalancerIPs
+          value: "-"
+      additionalPrinterColumnsTrimLengths:
+        - key: ClusterIPs
+          value: 1
+        - key: LoadbalancerIPs
+          value: 1
+      id: factory-service-details-address-list
+
+kind: List
+metadata:

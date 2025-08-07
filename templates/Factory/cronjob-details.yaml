@@ -1,0 +1,568 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Factory
+    metadata:
+      name: cronjob-details
+    spec:
+      key: cronjob-details
+      sidebarTags:
+        - cronjobs-sidebar
+      withScrollableMainContentCard: true
+      urlsToFetch:
+        - "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+      data:
+        - type: antdFlex
+          data:
+            id: 1
+            gap: 6
+            align: center
+            style:
+              marginBottom: 24px
+          children:
+            - type: antdText
+              data:
+                id: 2
+                text: CJ
+                title: cronjobs
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  padding: "0 9px"
+                  borderRadius: "20px"
+                  minWidth: 24
+                  display: inline-block
+                  textAlign: center
+                  whiteSpace: nowrap
+                  color: "#fff"
+                  backgroundColor: "#009596"
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+                  fontWeight: 400
+            - type: parsedText
+              data:
+                id: 3
+                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+            - type: StatusText
+              data:
+                id: 411
+                value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].status']}"
+                criteria: equals
+                valueToCompare: "True"
+                successText: Available
+                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+
+        - type: antdTabs
+          data:
+            id: 4
+            defaultActiveKey: "details"
+            items:
+              - key: "details"
+                label: "Details"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 5
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdRow
+                        data:
+                          id: 8
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 9
+                              span: 12
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 6
+                                  text: "CronJob details"
+                                  strong: true
+                                  style:
+                                    fontSize: 20
+                                    marginBottom: 12px
+                              - type: Spacer
+                                data:
+                                  id: 7
+                                  "$space": 16
+                              - type: antdFlex
+                                data:
+                                  id: 10
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Name"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 14
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 15
+                                          strong: true
+                                          text: "Namespace"
+                                      - type: antdLink
+                                        data:
+                                          id: 16
+                                          text: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                                          href: "/openapi-ui/{2}/factory/namespace-details/{3}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 17
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 18
+                                          text: "Labels"
+                                          strong: true
+                                          style:
+                                            fontSize: 14
+                                      - type: antdText
+                                        data:
+                                          id: 19
+                                          text: "No selector"
+                                          style:
+                                            color: red
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Annotations"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "0 Annotations"
+                                          style:
+                                            color: red
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Schedule"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.spec.schedule']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Suspend"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.spec.suspend']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Concurrency policy"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.spec.concurrencyPolicy']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Starting deadline seconds"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.spec.startingDeadlineSeconds']['Not configured']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Last schedule time"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.status.lastScheduleTime']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 29
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 30
+                                          strong: true
+                                          text: "Created"
+                                      - type: antdFlex
+                                        data:
+                                          id: 31
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          - type: antdText
+                                            data:
+                                              id: 32
+                                              text: "🌐"
+                                          - type: parsedText
+                                            data:
+                                              id: 33
+                                              text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 34
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 35
+                                          strong: true
+                                          text: "Owner"
+                                      - type: parsedText
+                                        data:
+                                          id: 351
+                                          strong: true
+                                          text: "No owner"
+                                          style:
+                                            color: red
+
+                          - type: antdCol
+                            data:
+                              id: 37
+                              span: 12
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 6
+                                  text: "Job details"
+                                  strong: true
+                                  style:
+                                    fontSize: 20
+                                    marginBottom: 12px
+                              - type: Spacer
+                                data:
+                                  id: 7
+                                  "$space": 16
+                              - type: antdFlex
+                                data:
+                                  id: 38
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 39
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 40
+                                          strong: true
+                                          text: "Desired completions"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.completions']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 42
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 43
+                                          strong: true
+                                          text: "Parallelism"
+                                      - type: parsedText
+                                        data:
+                                          id: 44
+                                          text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.parallelism']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 45
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 46
+                                          strong: true
+                                          text: "Active deadline seconds"
+                                      - type: parsedText
+                                        data:
+                                          id: 47
+                                          text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['Not configured']}"
+
+                      # Volumes
+                      - type: antdCol
+                        data:
+                          id: 60
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 61
+                              value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 62
+                                  text: "Volumes"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 63
+                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-cronjob-details-volume-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - spec
+                                    - volumes
+                      # Init containers
+                      - type: antdCol
+                        data:
+                          id: 64
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 65
+                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.initContainers']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 66
+                                  text: "Init containers"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 67
+                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-cronjob-details-init-containers-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - spec
+                                    - jobTemplate
+                                    - spec
+                                    - template
+                                    - spec
+                                    - initContainers
+                      # Containers
+                      - type: antdCol
+                        data:
+                          id: 68
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 69
+                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.containers']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 70
+                                  text: "Containers"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 71
+                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-cronjob-details-containers-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - spec
+                                    - jobTemplate
+                                    - spec
+                                    - template
+                                    - spec
+                                    - containers
+                      # Conditions
+                      - type: antdCol
+                        data:
+                          id: 72
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 73
+                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 74
+                                  text: "Conditions"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                              - type: EnrichedTable
+                                data:
+                                  id: 75
+                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-status-conditions
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - status
+                                    - conditions
+              - key: "yaml"
+                label: "YAML"
+                children:
+                  - type: YamlEditorSingleton
+                    data:
+                      id: 76
+                      cluster: "{2}"
+                      isNameSpaced: true
+                      type: "builtin"
+                      typeName: cronjobs
+                      prefillValuesRequestIndex: 0
+                      substractHeight: 400
+
+              - key: pods
+                label: Pods
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: 62
+                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: factory-/v1/pods
+                      baseprefix: "/openapi-ui"
+                      withoutControls: true
+                      labelsSelectorFull:
+                        reqIndex: 0
+                        pathToLabels:
+                          - spec
+                          - jobTemplate
+                          - spec
+                          - template
+                          - metadata
+                          - labels
+                      pathToItems:
+                        - items
+
+              - key: jobs
+                label: Jobs
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: 62
+                      fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: factory-/batch/v1/jobs
+                      baseprefix: "/openapi-ui"
+                      withoutControls: true
+                      labelsSelectorFull:
+                        reqIndex: 0
+                        pathToLabels:
+                          - spec
+                          - jobTemplate
+                          - metadata
+                          - labels
+                      pathToItems:
+                        - items

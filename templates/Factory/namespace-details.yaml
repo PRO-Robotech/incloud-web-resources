@@ -1,0 +1,271 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Factory
+    metadata:
+      name: namespace-details
+    spec:
+      key: namespace-details
+      sidebarTags:
+        - namespace-sidebar
+      withScrollableMainContentCard: true
+      urlsToFetch:
+        - "/api/clusters/{2}/k8s/api/v1/namespaces/{5}"
+      data:
+        - type: antdFlex
+          data:
+            id: 3602
+            gap: 6
+            align: center
+            style:
+              marginBottom: 24px
+          children:
+            - type: antdText
+              data:
+                id: 36021
+                text: "NS"
+                title: Namespace
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  padding: "0 9px"
+                  borderRadius: "20px"
+                  minWidth: 24
+                  display: inline-block
+                  textAlign: center
+                  whiteSpace: nowrap
+                  color: "#fff"
+                  backgroundColor: "#1e4f18"
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+                  fontWeight: 400
+
+            - type: parsedText
+              data:
+                id: 21012
+                text: "{reqs[0]['metadata', 'name']['-']}"
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+            # - type: parsedText
+            #   data:
+            #     id: 22012
+            #     text: "{reqs[0]['status', 'phase']['-']}"
+            #     title: Pod phase
+            #     style:
+            #       fontSize: 15px
+            #       lineHeight: 24px
+            #       padding: "0 9px"
+            #       borderRadius: "20px"
+            #       minWidth: 24
+            #       display: inline-block
+            #       textAlign: center
+            #       whiteSpace: nowrap
+            #       color: "#fff"
+            #       backgroundColor: "#8a8a8a" # зелёный как для phase=Running
+            #       fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+            #       fontWeight: 400
+
+            # JSONPATH что бы отобразить статус контейнера
+            # - type: parsedText
+            #   data:
+            #     id: 21012
+            #     text: "{reqs[0]['metadata', 'name']}"
+            #     style:
+            #       fontSize: 20px
+            #       lineHeight: 24px
+            #       fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+        - type: antdTabs
+          data:
+            id: 20
+            defaultActiveKey: "details"
+            items:
+              - key: "details"
+                label: "Details"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 2000
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdText
+                        data:
+                          id: 1999
+                          text: "Pod details"
+                          strong: true
+                          style:
+                            fontSize: 20
+                            marginBottom: 12px
+                      - type: Spacer
+                        data:
+                          id: 1999-spacer
+                          "$space": 16
+                      - type: antdRow
+                        data:
+                          id: 2001
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 2002
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2100
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Name"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['metadata', 'name']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3200
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3201
+                                          text: "Labels"
+                                          strong: true
+                                          style:
+                                            fontSize: 14
+                                      - type: antdText
+                                        data:
+                                          id: 3202
+                                          text: "No selector"
+                                          # style:
+                                          #   color: "#FF0000"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3400
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 34000
+                                          strong: true
+                                          text: "Annotations"
+                                      - type: antdText
+                                        data:
+                                          id: 3401
+                                          text: "3 Annotations"
+                                          # style:
+                                          #   color: "#FF0000"
+                                  - type: antdFlex
+                                    data:
+                                      id: 3600
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3601
+                                          strong: true
+                                          text: "Created"
+                                      - type: antdFlex
+                                        data:
+                                          id: 3602
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          - type: antdText
+                                            data:
+                                              id: 36021
+                                              text: "🌐"
+                                          - type: parsedText
+                                            data:
+                                              id: 36022
+                                              text: "{reqs[0]['metadata', 'creationTimestamp']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3600
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3601
+                                          strong: true
+                                          text: "Owner"
+                                      - type: antdFlex
+                                        data:
+                                          id: 3602
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          # - type: antdText
+                                          #   data:
+                                          #     id: 36021
+                                          #     text: "RS"
+                                          - type: antdText
+                                            data:
+                                              id: 36022
+                                              text: "-"
+                                              # style:
+                                              #   color: "#FF0000"
+                          - type: antdCol
+                            data:
+                              id: 2003
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2200
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2201
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22011
+                                          strong: true
+                                          text: "Status"
+                                      - type: parsedText
+                                        data:
+                                          id: 22012
+                                          text: "{reqs[0]['status', 'phase']['-']}"
+
+              - key: "yaml"
+                label: "YAML"
+                children:
+                  - type: YamlEditorSingleton
+                    data:
+                      id: 999999999
+                      cluster: "{2}"
+                      isNameSpaced: false
+                      type: "builtin"
+                      typeName: namespaces
+                      prefillValuesRequestIndex: 0
+                      substractHeight: 400
+                      # apiGroup: string
+                      # apiVersion: string
+
+kind: List
+metadata:

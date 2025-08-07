@@ -1,0 +1,535 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Factory
+    metadata:
+      name: pod-details
+    spec:
+      key: pod-details
+      sidebarTags:
+        - pods-sidebar
+      withScrollableMainContentCard: true
+      urlsToFetch:
+        - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+      data:
+        - type: antdFlex
+          data:
+            id: 1
+            gap: 6
+            align: center
+            style:
+              marginBottom: 24px
+          children:
+            - type: antdText
+              data:
+                id: 2
+                text: P
+                title: Pods
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  padding: "0 9px"
+                  borderRadius: "20px"
+                  minWidth: 24
+                  display: inline-block
+                  textAlign: center
+                  whiteSpace: nowrap
+                  color: "#fff"
+                  backgroundColor: "#009596"
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+                  fontWeight: 400
+            - type: parsedText
+              data:
+                id: 3
+                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+            - type: StatusText
+              data:
+                id: 411
+                value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].status']}"
+                criteria: equals
+                valueToCompare: "True"
+                successText: Available
+                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+
+        - type: antdTabs
+          data:
+            id: 4
+            defaultActiveKey: "details"
+            items:
+              - key: "details"
+                label: "Details"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 5
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdText
+                        data:
+                          id: 6
+                          text: "Pod details"
+                          strong: true
+                          style:
+                            fontSize: 20
+                            marginBottom: 12px
+                      - type: Spacer
+                        data:
+                          id: 7
+                          "$space": 16
+                      - type: antdRow
+                        data:
+                          id: 8
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 9
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 10
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 11
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 12
+                                          strong: true
+                                          text: "Name"
+                                      - type: parsedText
+                                        data:
+                                          id: 13
+                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 14
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 15
+                                          strong: true
+                                          text: "Namespace"
+                                      - type: antdLink
+                                        data:
+                                          id: 16
+                                          text: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                                          href: "/openapi-ui/{2}/factory/namespace-details/{3}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 17
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 18
+                                          text: "Labels"
+                                          strong: true
+                                          style:
+                                            fontSize: 14
+                                      - type: antdText
+                                        data:
+                                          id: 19
+                                          text: "No selector"
+                                          style:
+                                            color: red
+                                  - type: antdFlex
+                                    data:
+                                      id: 20
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21
+                                          strong: true
+                                          text: "Node selector"
+                                      - type: antdText
+                                        data:
+                                          id: 22
+                                          text: "No selector"
+                                          style:
+                                            color: red
+                                  - type: antdFlex
+                                    data:
+                                      id: 23
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 24
+                                          strong: true
+                                          text: "Tolerations"
+                                      - type: antdText
+                                        data:
+                                          id: 25
+                                          text: "0 Tolerations"
+                                          style:
+                                            color: red
+                                  - type: antdFlex
+                                    data:
+                                      id: 26
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 27
+                                          strong: true
+                                          text: "Annotations"
+                                      - type: antdText
+                                        data:
+                                          id: 28
+                                          text: "0 Annotations"
+                                          style:
+                                            color: red
+                                  - type: antdFlex
+                                    data:
+                                      id: 29
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 30
+                                          strong: true
+                                          text: "Created"
+                                      - type: antdFlex
+                                        data:
+                                          id: 31
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          - type: antdText
+                                            data:
+                                              id: 32
+                                              text: "🌐"
+                                          - type: parsedText
+                                            data:
+                                              id: 33
+                                              text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 34
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 35
+                                          strong: true
+                                          text: "Owner"
+                                      - type: parsedText
+                                        data:
+                                          id: 351
+                                          strong: true
+                                          text: "No owner"
+                                          style:
+                                            color: red
+
+                          - type: antdCol
+                            data:
+                              id: 37
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 38
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 39
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 40
+                                          strong: true
+                                          text: "Status"
+                                      - type: StatusText
+                                        data:
+                                          id: 411
+                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].status']}"
+                                          criteria: equals
+                                          valueToCompare: "True"
+                                          successText: Available
+                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type == 'Ready')].reason']['-']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 42
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 43
+                                          strong: true
+                                          text: "Restart policy"
+                                      - type: parsedText
+                                        data:
+                                          id: 44
+                                          text: "{reqsJsonPath[0]['.spec.restartPolicy']['-']} restart"
+                                  - type: antdFlex
+                                    data:
+                                      id: 45
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 46
+                                          strong: true
+                                          text: "Active deadline seconds"
+                                      - type: parsedText
+                                        data:
+                                          id: 47
+                                          text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 48
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 49
+                                          strong: true
+                                          text: "Pod IP"
+                                      - type: parsedText
+                                        data:
+                                          id: 50
+                                          text: "{reqsJsonPath[0]['.status.podIP']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 51
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 52
+                                          strong: true
+                                          text: "Host IP"
+                                      - type: parsedText
+                                        data:
+                                          id: 53
+                                          text: "{reqsJsonPath[0]['.status.hostIP']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 54
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 55
+                                          strong: true
+                                          text: "Node"
+                                      - type: parsedText
+                                        data:
+                                          id: 56
+                                          text: "{reqsJsonPath[0]['.spec.nodeName']['-']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 57
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 58
+                                          strong: true
+                                          text: "QOS class"
+                                      - type: parsedText
+                                        data:
+                                          id: 59
+                                          text: "{reqsJsonPath[0]['.status.qosClass']['-']}"
+                      # Volumes
+                      - type: antdCol
+                        data:
+                          id: 60
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 61
+                              value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 62
+                                  text: "Volumes"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 63
+                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-pod-details-volume-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - spec
+                                    - volumes
+                      # Init containers
+                      - type: antdCol
+                        data:
+                          id: 64
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 65
+                              value: "{reqsJsonPath[0]['.status.initContainerStatuses']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 66
+                                  text: "Init containers"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 67
+                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-pod-details-init-containers-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - status
+                                    - initContainerStatuses
+                      # Containers
+                      - type: antdCol
+                        data:
+                          id: 68
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 69
+                              value: "{reqsJsonPath[0]['.status.containerStatuses']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 70
+                                  text: "Containers"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                                    marginBottom: 32px
+                              - type: EnrichedTable
+                                data:
+                                  id: 71
+                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-pod-details-containers-list
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - status
+                                    - containerStatuses
+                      # Conditions
+                      - type: antdCol
+                        data:
+                          id: 72
+                          style:
+                            marginTop: 10
+                            padding: 10
+                        children:
+                          - type: VisibilityContainer
+                            data:
+                              id: 73
+                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                              style:
+                                margin: 0
+                                padding: 0
+                            children:
+                              - type: antdText
+                                data:
+                                  id: 74
+                                  text: "Conditions"
+                                  strong: true
+                                  style:
+                                    fontSize: 22
+                              - type: EnrichedTable
+                                data:
+                                  id: 75
+                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                                  clusterNamePartOfUrl: "{2}"
+                                  customizationId: factory-status-conditions
+                                  baseprefix: "/openapi-ui"
+                                  withoutControls: true
+                                  pathToItems:
+                                    - status
+                                    - conditions
+              - key: "yaml"
+                label: "YAML"
+                children:
+                  - type: YamlEditorSingleton
+                    data:
+                      id: 76
+                      cluster: "{2}"
+                      isNameSpaced: true
+                      type: "builtin"
+                      typeName: pods
+                      prefillValuesRequestIndex: 0
+                      substractHeight: 400
+              - key: "logs"
+                label: "Logs"
+                children:
+                  - type: PodLogs
+                    data:
+                      id: 77
+                      cluster: "{2}"
+                      namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                      podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+              - key: "terminal"
+                label: "Terminal"
+                children:
+                  - type: PodTerminal
+                    data:
+                      id: 78
+                      cluster: "{2}"
+                      namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                      podName: "{reqsJsonPath[0]['.metadata.name']['-']}"

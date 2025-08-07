@@ -1,0 +1,99 @@
+# TODO не используется, удалить
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-pod-details-containers-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .imageID
+          name: Image
+          type: string
+        - jsonPath: .started
+          name: Started
+          type: string
+        - jsonPath: .ready
+          name: Ready
+          type: string
+        - jsonPath: .restartCount
+          name: RestartCount
+          type: string
+        - jsonPath: .lastState.waiting.reason
+          name: WaitingdReason
+          type: string
+        - jsonPath: .lastState.terminated.reason
+          name: TerminatedReason
+          type: string
+
+      additionalPrinterColumnsUndefinedValues:
+        - key: TerminatedReason
+          value: "-"
+        - key: WaitingdReason
+          value: "-"
+
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 63
+        - key: Image
+          value: 63
+      id: "factory-pod-details-containers-list"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-pod-details-init-containers-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .imageID
+          name: Image
+          type: string
+        - jsonPath: .started
+          name: Started
+          type: string
+        - jsonPath: .ready
+          name: Ready
+          type: string
+        - jsonPath: .restartCount
+          name: RestartCount
+          type: string
+        - jsonPath: .lastState.waiting.reason
+          name: WaitingdReason
+          type: string
+        - jsonPath: .lastState.terminated.reason
+          name: TerminatedReason
+          type: string
+
+      additionalPrinterColumnsUndefinedValues:
+        - key: TerminatedReason
+          value: "-"
+        - key: WaitingdReason
+          value: "-"
+
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 63
+        - key: Image
+          value: 63
+      id: "factory-pod-details-init-containers-list"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-pod-details-volume-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+
+      id: "factory-pod-details-volume-list"
+
+kind: List
+metadata:

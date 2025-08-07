@@ -1,0 +1,519 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: Factory
+    metadata:
+      name: argocd-application-details
+    spec:
+      key: argocd-application-details
+      sidebarTags:
+        - argocd-application-sidebar
+      withScrollableMainContentCard: true
+      urlsToFetch:
+        - "/api/clusters/{2}/k8s/apis/argoproj.io/v1alpha1/namespaces/{3}/applications/{6}"
+      data:
+        - type: antdFlex
+          data:
+            id: 3602
+            gap: 6
+            align: center
+            style:
+              marginBottom: 24px
+          children:
+            - type: antdText
+              data:
+                id: 36021
+                text: A
+                title: argocd
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  padding: "0 9px"
+                  borderRadius: "20px"
+                  minWidth: 24
+                  display: inline-block
+                  textAlign: center
+                  whiteSpace: nowrap
+                  color: "#fff"
+                  backgroundColor: "#009596"
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+                  fontWeight: 400
+
+            - type: parsedText
+              data:
+                id: 21012
+                text: "{reqs[0]['metadata', 'name']}"
+                style:
+                  fontSize: 20px
+                  lineHeight: 24px
+                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+            # JSONPATH что бы отобразить статус контейнера
+            # - type: parsedText
+            #   data:
+            #     id: 21012
+            #     text: "{reqs[0]['metadata', 'name']}"
+            #     style:
+            #       fontSize: 20px
+            #       lineHeight: 24px
+            #       fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+        - type: antdTabs
+          data:
+            id: 20
+            defaultActiveKey: "details"
+            items:
+              - key: "details"
+                label: "Details"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 2000
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdText
+                        data:
+                          id: 1999
+                          text: "Application details"
+                          strong: true
+                          style:
+                            fontSize: 20
+                            marginBottom: 12px
+                      - type: Spacer
+                        data:
+                          id: 1999-spacer
+                          "$space": 16
+                      - type: antdRow
+                        data:
+                          id: 2001
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 2002
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2100
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Name"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['metadata', 'name']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2102
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21021
+                                          strong: true
+                                          text: "Namespace"
+                                      - type: parsedText
+                                        data:
+                                          id: 21022
+                                          text: "{reqs[0]['metadata', 'namespace']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3200
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3201
+                                          text: "Labels"
+                                          strong: true
+                                          style:
+                                            fontSize: 14
+                                      - type: antdText
+                                        data:
+                                          id: 3202
+                                          text: "No selector"
+                                          # style:
+                                          #   color: "#FF0000"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3400
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 34000
+                                          strong: true
+                                          text: "Annotations"
+                                      - type: antdText
+                                        data:
+                                          id: 3401
+                                          text: "3 Annotations"
+                                          # style:
+                                          #   color: "#FF0000"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3600
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 3601
+                                          strong: true
+                                          text: "Created"
+                                      - type: antdFlex
+                                        data:
+                                          id: 3602
+                                          gap: 6
+                                          align: center
+                                        children:
+                                          - type: antdText
+                                            data:
+                                              id: 36021
+                                              text: "🌐"
+                                          - type: parsedText
+                                            data:
+                                              id: 36022
+                                              text: "{reqs[0]['metadata', 'creationTimestamp']}"
+
+                          - type: antdCol
+                            data:
+                              id: 2003
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2200
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2201
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22011
+                                          strong: true
+                                          text: "Health Status"
+                                      - type: parsedText
+                                        data:
+                                          id: 22012
+                                          text: "{reqs[0]['status', 'health', 'status']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2202
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22021
+                                          strong: true
+                                          text: "Current Sync Status"
+
+                                      - type: antdFlex
+                                        data:
+                                          id: 3602
+                                          gap: 6
+                                          align: center
+                                          style:
+                                            marginBottom: 24px
+                                        children:
+                                          - type: parsedText
+                                            data:
+                                              id: 22022
+                                              text: "{reqs[0]['status','sync','status']}"
+
+                                          - type: parsedText
+                                            data:
+                                              id: 220221
+                                              text: "{reqs[0]['status','sync','revision']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2203
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22031
+                                          strong: true
+                                          text: "Target Revision"
+                                      - type: parsedText
+                                        data:
+                                          id: 22032
+                                          text: "{reqs[0]['spec', 'source','targetRevision']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2204
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22041
+                                          strong: true
+                                          text: "Project"
+                                      - type: parsedText
+                                        data:
+                                          id: 22042
+                                          text: "{reqs[0]['spec', 'project']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2205
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22051
+                                          strong: true
+                                          text: "Destination"
+                                      - type: parsedText
+                                        data:
+                                          id: 22052
+                                          text: "{reqs[0]['spec', 'destination', 'server']}"
+                                  - type: antdFlex
+                                    data:
+                                      id: 2206
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 22061
+                                          strong: true
+                                          text: "Sync Policy"
+                                      - type: parsedText
+                                        data:
+                                          id: 22062
+                                          text: "{reqs[0]['spec', 'syncPolicy']}"
+
+              - key: "yaml"
+                label: "YAML"
+                children:
+                  - type: YamlEditorSingleton
+                    data:
+                      id: 999999999
+                      cluster: "{2}"
+                      isNameSpaced: true
+                      type: "apis"
+                      typeName: applications
+                      apiGroup: argoproj.io
+                      apiVersion: v1alpha1
+                      prefillValuesRequestIndex: 0
+                      substractHeight: 400
+
+              - key: "resources"
+                label: "Resources"
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: 99991
+                      fetchUrl: "/api/clusters/{2}/k8s/apis/argoproj.io/v1alpha1/namespaces/{3}/applications/{6}"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: "factory-argocd-application-status-resources"
+                      baseprefix: "/openapi-ui"
+                      withoutControls: true
+                      pathToItems:
+                        - status
+                        - resources
+
+              - key: "sync-resources"
+                label: "Sync Resources"
+                children:
+                  - type: ContentCard
+                    data:
+                      id: 2000
+                      style:
+                        marginBottom: 24px
+                    children:
+                      - type: antdText
+                        data:
+                          id: 1999
+                          text: "Sync Status details"
+                          strong: true
+                          style:
+                            fontSize: 20
+                            marginBottom: 12px
+                      - type: Spacer
+                        data:
+                          id: 1999-spacer
+                          "$space": 16
+                      - type: antdRow
+                        data:
+                          id: 2001
+                          gutter: [48, 12]
+                        children:
+                          - type: antdCol
+                            data:
+                              id: 2002
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2100
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Phase"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['status','operationState', 'phase']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Message"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['status','operationState', 'message']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Initiated By"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['status','operationState','operation' ,'initiatedBy', 'username']}"
+                          - type: antdCol
+                            data:
+                              id: 2002
+                              span: 12
+                            children:
+                              - type: antdFlex
+                                data:
+                                  id: 2100
+                                  vertical: true
+                                  gap: 24
+                                children:
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Started At"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['status', 'operationState', 'startedAt']}"
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 2101
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: 21011
+                                          strong: true
+                                          text: "Finished At"
+                                      - type: parsedText
+                                        data:
+                                          id: 21012
+                                          text: "{reqs[0]['status', 'operationState', 'finishedAt']}"
+
+                      - type: antdCol
+                        data:
+                          id: 9998011
+                          style:
+                            marginTop: 32px
+                            padding: 16px
+                        children:
+                          - type: antdText
+                            data:
+                              id: 999901
+                              text: "Resources Last Synced"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: 99991
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/argoproj.io/v1alpha1/namespaces/{3}/applications/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: "factory-argocd-application-resources"
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - operationState
+                                - syncResult
+                                - resources
+
+              - key: "hustory"
+                label: "Hystory"
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: 99991
+                      fetchUrl: "/api/clusters/{2}/k8s/apis/argoproj.io/v1alpha1/namespaces/{3}/applications/{6}"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: "factory-argocd-application-status-history"
+                      baseprefix: "/openapi-ui"
+                      withoutControls: true
+                      pathToItems:
+                        - status
+                        - history
+
+kind: List
+metadata:

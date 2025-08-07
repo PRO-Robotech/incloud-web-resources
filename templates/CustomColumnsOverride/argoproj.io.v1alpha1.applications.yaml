@@ -1,0 +1,146 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "default-argoproj.io.v1alpha1.applications"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .status.sync.status
+          name: Sync Status
+          type: string
+        - jsonPath: .status.health.status
+          name: Health Status
+          type: string
+        - jsonPath: .status.sync.revision
+          name: Revision
+          type: string
+        - jsonPath: .spec.project
+          name: Project
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Labels
+          value: 1
+        - key: Pod Selector
+          value: 1
+      additionalPrinterColumnsUndefinedValues:
+        - key: Labels
+          value: "-"
+        - key: Pod Selector
+          value: "-"
+        - key: Namespace
+          value: "-"
+
+      id: "default-/argoproj.io/v1alpha1/applications"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-argocd-application-resources
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .kind
+          name: Kind
+          type: string
+        - jsonPath: .version
+          name: Version
+          type: string
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .namespace
+          name: Namespace
+          type: string
+        - jsonPath: .status
+          name: Status
+          type: string
+        - jsonPath: .message
+          name: Message
+          type: string
+
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Message
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Message
+          value: "-"
+        - key: Namespace
+          value: "-"
+
+      id: "factory-argocd-application-resources"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-argocd-application-status-resources"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .kind
+          name: Kind
+          type: string
+        - jsonPath: .version
+          name: Version
+          type: string
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .namespace
+          name: Namespace
+          type: string
+        - jsonPath: .status
+          name: Status
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Namespace
+          value: "-"
+
+      id: "factory-argocd-application-status-resources"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-argocd-application-status-history"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .id
+          name: ID
+          type: string
+        - jsonPath: .initiatedBy.username
+          name: InitiatedBy
+          type: string
+        - jsonPath: .deployStartedAt
+          name: Deploy Started At
+          type: string
+        - jsonPath: .deployedAt
+          name: Deployed At
+          type: string
+        - jsonPath: .revision
+          name: Revision
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Namespace
+          value: "-"
+
+      id: "factory-argocd-application-status-history"
+
+kind: List
+metadata:

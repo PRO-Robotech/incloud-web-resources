@@ -1,0 +1,110 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "default-batch.v1.cronjobs"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .spec.schedule
+          name: Schedule
+          type: string
+        - jsonPath: .spec.suspend
+          name: Suspend
+          type: string
+        - jsonPath: .spec.concurrencyPolicy
+          name: Concurrency policy
+          type: string
+        - jsonPath: .spec.startingDeadlineSeconds
+          name: Starting deadline seconds
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Namespace
+          value: "-"
+        - key: Starting deadline seconds
+          value: "-"
+      id: "default-/batch/v1/cronjobs"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-cronjob-details-init-containers-list"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .image
+          name: Image
+          type: string
+        - jsonPath: .resources.requests
+          name: Resources requests
+          type: string
+        - jsonPath: .resources.limits
+          name: Resources limits
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Image
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Name
+          value: "-"
+        - key: Image
+          value: "-"
+        - key: Resources limits
+          value: "-"
+        - key: Resources requests
+          value: "-"
+      id: "factory-cronjob-details-init-containers-list"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-cronjob-details-containers-list"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .image
+          name: Image
+          type: string
+        - jsonPath: .resources.requests
+          name: Resources requests
+          type: string
+        - jsonPath: .resources.limits
+          name: Resources limits
+          type: string
+        - jsonPath: .ports[*].containerPort
+          name: Ports
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Image
+          value: 64
+      additionalPrinterColumnsUndefinedValues:
+        - key: Name
+          value: "-"
+        - key: Image
+          value: "-"
+        - key: Resources limits
+          value: "-"
+        - key: Resources requests
+          value: "-"
+        - key: Ports
+          value: "-"
+      id: "factory-cronjob-details-containers-list"
+
+kind: List
+metadata:

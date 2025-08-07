@@ -1,0 +1,90 @@
+apiVersion: v1
+items:
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "factory-statefulset-details-volume-list"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+      id: "factory-statefulset-details-volume-list"
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-statefulset-details-init-containers-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .image
+          name: Image
+          type: string
+        - jsonPath: .resources
+          name: Resources
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Image
+          value: 64
+      id: factory-statefulset-details-init-containers-list
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: factory-statefulset-details-containers-list
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .name
+          name: Name
+          type: string
+        - jsonPath: .image
+          name: Image
+          type: string
+        - jsonPath: .resources
+          name: Resources
+          type: string
+        - jsonPath: .ports[*].containerPort
+          name: Ports
+          type: string
+      additionalPrinterColumnsTrimLengths:
+        - key: Image
+          value: 64
+      id: factory-statefulset-details-containers-list
+
+  - apiVersion: front.in-cloud.io/v1alpha1
+    kind: CustomColumnsOverride
+    metadata:
+      name: "default-apps.v1.statefulsets"
+    spec:
+      additionalPrinterColumns:
+        - jsonPath: .metadata.name
+          name: Name
+          type: string
+        - jsonPath: .metadata.namespace
+          name: Namespace
+          type: string
+        - jsonPath: .metadata.labels
+          name: Labels
+          type: string
+        - jsonPath: .spec.template.metadata.labels
+          name: Pod Selector
+          type: string
+        - jsonPath: .status.conditions[?(@.type=="Available")].status
+          name: Status
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Created
+          type: date
+      additionalPrinterColumnsTrimLengths:
+        - key: Name
+          value: 64
+        - key: Labels
+          value: 1
+        - key: Pod Selector
+          value: 1
+      id: "default-/apps/v1/statefulsets"
+kind: List
+metadata:
