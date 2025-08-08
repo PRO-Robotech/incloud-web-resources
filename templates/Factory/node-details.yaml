@@ -212,7 +212,7 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
 
                               # Taints counter block
                               - type: antdFlex
@@ -221,7 +221,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.taints" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.counters.fields" (dict
+                                      "jsonPath" ".spec.taints"
+                                      "type" "taints"
+                                      "title" "Taints"
+                                    ) | nindent 34
+                                  }}
 
                               # Annotations counter block
                               - type: antdFlex
@@ -230,7 +235,7 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 34}}
 
                               # Provider ID block
                               - type: antdFlex

@@ -150,7 +150,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 30}}
+                                  {{ include "incloud-web-resources.factory.labels.base.selector" (dict
+                                      "type" "node"
+                                      "title" "Node selector"
+                                      "jsonPath" ".spec.template.spec.nodeSelector"
+                                    ) | nindent 34
+                                  }}
 
                               # Pod selector block
                               - type: antdFlex
@@ -159,8 +164,13 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 30}}
-
+                                  {{ include "incloud-web-resources.factory.labels.base.selector" (dict
+                                      "type" "pod"
+                                      "title" "Pod selector"
+                                      "jsonPath" ".spec.template.metadata.labels"
+                                    ) | nindent 34
+                                  }}
+  
                               # Tolerations counter block
                               - type: antdFlex
                                 data:
@@ -168,7 +178,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 30}}
+                                  {{ include "incloud-web-resources.factory.counters.fields" (dict
+                                      "jsonPath" ".spec.template.spec.tolerations"
+                                      "type" "tolerations"
+                                      "title" "Tolerations"
+                                    ) | nindent 34
+                                  }}
 
                               # Annotations counter block
                               - type: antdFlex

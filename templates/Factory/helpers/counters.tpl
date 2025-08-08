@@ -1,45 +1,19 @@
-{{- define "incloud-web-resources.factory.counters.taints" -}}
+{{- define "incloud-web-resources.factory.counters.fields" -}}
+{{- $i := (default 0 .reqIndex) -}}
+{{- $type := (default "counter" .type) -}}
+{{- $title := (default "" .title) -}}
 - type: antdText
   data:
-    id: 3601
+    id: {{ printf "%s-label" $type }}
     strong: true
-    text: "Taints"
+    text: "{{ $title }}"
 - type: ItemCounter
   data:
-    id: taints-counter
-    text: "~counter~ Taints"
-    reqIndex: 0
-    jsonPathToArray: '.spec.taints'
+    id: {{ printf "%s-counter" $type }}
+    text: "~counter~ {{ $type }}"
+    reqIndex: {{$i}}
+    jsonPathToArray: "{{ .jsonPath | default "" }}"
 {{- end -}}
-
-{{- define "incloud-web-resources.factory.counters.template.tolerations" -}}
-- type: antdText
-  data:
-    id: 3601
-    strong: true
-    text: "tolerations"
-- type: ItemCounter
-  data:
-    id: taints-counter
-    text: "~counter~ tolerations"
-    reqIndex: 0
-    jsonPathToArray: '.spec.template.spec.tolerations'
-{{- end -}}
-
-{{- define "incloud-web-resources.factory.counters.pod.tolerations" -}}
-- type: antdText
-  data:
-    id: 3601
-    strong: true
-    text: "tolerations"
-- type: ItemCounter
-  data:
-    id: taints-counter
-    text: "~counter~ tolerations"
-    reqIndex: 0
-    jsonPathToArray: '.spec.tolerations'
-{{- end -}}
-
 
 {{- define "incloud-web-resources.factory.counters.annotations" -}}
 - type: antdText

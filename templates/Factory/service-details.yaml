@@ -118,7 +118,7 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34}}
 
                               # Labels
                               - type: antdFlex
@@ -127,7 +127,7 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
 
                               # Pod selector
                               - type: antdFlex
@@ -136,7 +136,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.labels.base.selector" (dict
+                                      "type" "pod"
+                                      "title" "Pod selector"
+                                      "jsonPath" ".spec.template.metadata.labels"
+                                    ) | nindent 34
+                                  }}
 
                               # Annotations
                               - type: antdFlex
@@ -145,7 +150,7 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 34}}
 
                               # Session affinity
                               - type: antdFlex
@@ -174,7 +179,7 @@ spec:
                                   {{ include "incloud-web-resources.factory.time.create" (dict
                                     "req" ".metadata.creationTimestamp"
                                     "text" "Created"
-                                    ) | nindent 38
+                                    ) | nindent 34
                                   }}
 
                               # Owner

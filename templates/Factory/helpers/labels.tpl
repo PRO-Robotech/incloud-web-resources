@@ -15,83 +15,22 @@
       maxTagTextLength: 35
 {{- end -}}
 
-{{- define "incloud-web-resources.factory.labels.base.pod.selector" -}}
+{{- define "incloud-web-resources.factory.labels.base.selector" -}}
+{{- $i := (default 0 .reqIndex) -}}
+{{- $type := (default "pod-selector" .type) -}}
+{{- $title := (default "Pod selector" .title) -}}
+{{- $jsonPath := (default ".spec.template.metadata.labels" .jsonPath) -}}
 - type: antdText
   data:
-    id: 18
-    text: "Pod selector"
+    id: {{ printf "%s-selector" $type }}
+    text: "{{ $title }}"
     strong: true
     style:
       fontSize: 14
 - type: LabelsToSearchParams
   data:
-    id: labels-to-search-params
-    reqIndex: 0
-    jsonPathToLabels: ".spec.template.metadata.labels"
-    linkPrefix: "/openapi-ui/incloud-k8s-local-dev-local-1/search"
-{{- end -}}
-
-{{- define "incloud-web-resources.factory.labels.cronjob.pod.selector" -}}
-- type: antdText
-  data:
-    id: 18
-    text: "Pod selector"
-    strong: true
-    style:
-      fontSize: 14
-- type: LabelsToSearchParams
-  data:
-    id: labels-to-search-params
-    reqIndex: 0
-    jsonPathToLabels: ".spec.jobTemplate.spec.template.metadata.labels"
-    linkPrefix: "/openapi-ui/{2}/search"
-{{- end -}}
-
-
-{{- define "incloud-web-resources.factory.labels.base.node.selector" -}}
-- type: antdText
-  data:
-    id: 18
-    text: "Node selector"
-    strong: true
-    style:
-      fontSize: 14
-- type: LabelsToSearchParams
-  data:
-    id: labels-to-search-params
-    reqIndex: 0
-    jsonPathToLabels: ".spec.template.spec.nodeSelector"
-    linkPrefix: "/openapi-ui/{2}/search"
-{{- end -}}
-
-{{- define "incloud-web-resources.factory.labels.base-pod.node.selector" -}}
-- type: antdText
-  data:
-    id: 18
-    text: "Node selector"
-    strong: true
-    style:
-      fontSize: 14
-- type: LabelsToSearchParams
-  data:
-    id: labels-to-search-params
-    reqIndex: 0
-    jsonPathToLabels: ".spec.nodeSelector"
-    linkPrefix: "/openapi-ui/{2}/search"
-{{- end -}}
-
-{{- define "incloud-web-resources.factory.labels.cronjob.node.selector" -}}
-- type: antdText
-  data:
-    id: 18
-    text: "Node selector"
-    strong: true
-    style:
-      fontSize: 14
-- type: LabelsToSearchParams
-  data:
-    id: labels-to-search-params
-    reqIndex: 0
-    jsonPathToLabels: ".spec.jobTemplate.spec.template.metadata.labels"
-    linkPrefix: "/openapi-ui/{2}/search"
+    id: {{ printf "%s-to-search-params" $type }}
+    reqIndex: {{$i}}
+    jsonPathToLabels: "{{ $jsonPath }}"
+    linkPrefix: "{{ .linkPrefix | default "/openapi-ui/incloud-k8s-local-dev-local-1/search" }}"
 {{- end -}}

@@ -161,7 +161,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels.base-pod.node.selector" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.labels.base.selector" (dict
+                                      "type" "node"
+                                      "title" "Node selector"
+                                      "jsonPath" ".spec.nodeSelector"
+                                    ) | nindent 34
+                                  }}
 
                               # Tolerations counter (kept as include)
                               - type: antdFlex
@@ -170,7 +175,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.pod.tolerations" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.counters.fields" (dict
+                                      "jsonPath" ".spec.tolerations"
+                                      "type" "tolerations"
+                                      "title" "Tolerations"
+                                    ) | nindent 34
+                                  }}
 
                               # Annotations counter (kept as include)
                               - type: antdFlex
