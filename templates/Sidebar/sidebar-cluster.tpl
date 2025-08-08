@@ -1,5 +1,5 @@
 {{- define "incloud-web-resources.sidebar.menu.items.cluster" -}}
-{{- if .Values.gitops.argocd.enable -}}
+{{- if .Values.addons.argocd.enabled -}}
 - children:
     - key: argocd-application
       label: Applications
@@ -13,7 +13,6 @@
   key: argocd
   label: Argocd
 {{- end }}
-
 - children:
     - key: pods
       label: Pods

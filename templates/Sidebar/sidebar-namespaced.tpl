@@ -1,5 +1,5 @@
 {{- define "incloud-web-resources.sidebar.menu.items.namespaced" -}}
-{{- if .Values.gitops.argocd.enable -}}
+{{- if .Values.addons.argocd.enabled -}}
 - children:
     - key: argocd-application
       label: Applications

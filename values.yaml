@@ -1,3 +1,5 @@
-gitops:
+addons:
   argocd:
-    enable: true
+    enabled: true
+  hbf:
+    enabled: true

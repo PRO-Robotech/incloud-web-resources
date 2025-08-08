@@ -1,4 +1,4 @@
-{{- if .Values.gitops.argocd.enable  }}
+{{- if .Values.addons.argocd.enabled  }}
 ---
 apiVersion: front.in-cloud.io/v1alpha1
 kind: Sidebar
