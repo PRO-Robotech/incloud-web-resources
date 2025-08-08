@@ -1,316 +1,337 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: crd-details
-    spec:
-      key: crd-details
-      sidebarTags:
-        - customresourcedefinitions-sidebar
-      urlsToFetch:
-        - /api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}
-      withScrollableMainContentCard: true
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: crd-details
+spec:
+  # Unique key for this factory
+  key: crd-details
+
+  # Sidebar tag for grouping in UI
+  sidebarTags:
+    - customresourcedefinitions-sidebar
+
+  # URL for fetching CRD details
+  urlsToFetch:
+    - /api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}
+
+  # Enable scrollable main content
+  withScrollableMainContentCard: true
+
+  data:
+    # === HEADER SECTION ===
+    - type: antdFlex
       data:
-        # Header
-        - type: antdFlex
+        id: header-row
+        align: center
+        gap: 6
+        style:
+          marginBottom: 24px
+      children:
+        # CRD badge
+        - type: antdText
           data:
-            id: 1
-            align: center
-            gap: 6
+            id: header-badge
+            text: CRD
+            title: CRD
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: CRD
-                title: CRD
-                style:
-                  backgroundColor: "#2b9af3"
-                  borderRadius: 20px
-                  color: "#fff"
-                  display: inline-block
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontSize: 20px
-                  fontWeight: 400
-                  lineHeight: 24px
-                  minWidth: 24
-                  padding: 0 9px
-                  textAlign: center
-                  whiteSpace: nowrap
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontSize: 20px
-                  lineHeight: 24px
-
-        # Tabs
-        - type: antdTabs
+              backgroundColor: "#2b9af3"
+              borderRadius: 20px
+              color: "#fff"
+              display: inline-block
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontSize: 20px
+              fontWeight: 400
+              lineHeight: 24px
+              minWidth: 24
+              padding: 0 9px
+              textAlign: center
+              whiteSpace: nowrap
+        # CRD name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: details
-            items:
-              # Details tab
-              - key: details
-                label: Details
+            id: header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontSize: 20px
+              lineHeight: 24px
+
+    # === TABS SECTION ===
+    - type: antdTabs
+      data:
+        id: tabs-root
+        defaultActiveKey: details
+        items:
+
+          # --- DETAILS TAB ---
+          - key: details
+            label: Details
+            children:
+              # Main details card
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  # Main content card
-                  - type: ContentCard
+                  # Title
+                  - type: antdText
                     data:
-                      id: 5
+                      id: details-title
+                      text: CustomResourceDefinition details
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20px
+                        marginBottom: 12px
+
+                  # Spacer for separation
+                  - type: Spacer
+                    data:
+                      id: details-spacer
+                      $space: 16
+
+                  # Grid layout (left & right columns)
+                  - type: antdRow
+                    data:
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdText
-                        data:
-                          id: 6
-                          text: CustomResourceDefinition details
-                          strong: true
-                          style:
-                            fontSize: 20px
-                            marginBottom: 12px
 
-                      - type: Spacer
-                        data:
-                          id: 7
-                          $space: 16
-
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
-                        children:
-                          # Left column
-                          - type: antdCol
-                            data:
-                              id: 9
-                              span: 12
-                            children:
-                              - type: antdFlex
-                                data:
-                                  id: 10
-                                  vertical: true
-                                  gap: 24
-                                children:
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          text: Name
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 25
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 26
-                                          text: Owner
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 27
-                                          text: "No owner"
-
-                          # Right column
-                          - type: antdCol
-                            data:
-                              id: 28
-                              span: 12
-                            children:
-                              - type: antdFlex
-                                data:
-                                  id: 29
-                                  vertical: true
-                                  gap: 24
-                                children:
-                                  - type: antdFlex
-                                    data:
-                                      id: 30
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 31
-                                          text: Group
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 32
-                                          text: "{reqsJsonPath[0]['.spec.group']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 33
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 34
-                                          text: Scope
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 35
-                                          text: "{reqsJsonPath[0]['.spec.scope']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 36
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 37
-                                          text: Latest version
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 38
-                                          text: "{reqsJsonPath[0]['.status.storedVersions[0]']['-']}"
-
-                      # Conditions table
+                      # LEFT COLUMN — metadata and creation info
                       - type: antdCol
                         data:
-                          id: 39
-                          style:
-                            marginTop: 32px
-                            padding: 16px
+                          id: details-col-left
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 40
-                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: left-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Name field
+                              - type: antdFlex
                                 data:
-                                  id: 41
-                                  text: Conditions
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
+                                  id: field-name-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: field-name-label
+                                      text: Name
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: field-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                              # Labels block
+                              - type: antdFlex
                                 data:
-                                  id: 42
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-status-conditions
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - conditions
+                                  id: labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
+                              # Annotations counter
+                              - type: antdFlex
+                                data:
+                                  id: annotations-counter-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30 }}
+                              # Creation time
+                              - type: antdFlex
+                                data:
+                                  id: created-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                    ) | nindent 30
+                                  }}
+                              # Owner info
+                              - type: antdFlex
+                                data:
+                                  id: owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: owner-label
+                                      text: Owner
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: owner-value
+                                      text: "No owner"
+                                      style:
+                                        color: red
 
-                      # Versions table
+                      # RIGHT COLUMN — CRD spec info
                       - type: antdCol
                         data:
-                          id: 43
-                          style:
-                            marginTop: 32px
-                            padding: 16px
+                          id: details-col-right
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 44
-                              value: "{reqsJsonPath[0]['.spec.versions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: right-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Group field
+                              - type: antdFlex
                                 data:
-                                  id: 45
-                                  text: Versions
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
+                                  id: group-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: group-label
+                                      text: Group
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: group-value
+                                      text: "{reqsJsonPath[0]['.spec.group']['-']}"
+                              # Scope field
+                              - type: antdFlex
                                 data:
-                                  id: 46
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: versions-apiextensions.k8s.io.v1.customresourcedefinitions
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - versions
+                                  id: scope-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: scope-label
+                                      text: Scope
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: scope-value
+                                      text: "{reqsJsonPath[0]['.spec.scope']['-']}"
+                              # Latest stored version
+                              - type: antdFlex
+                                data:
+                                  id: latest-version-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: latest-version-label
+                                      text: Latest version
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: latest-version-value
+                                      text: "{reqsJsonPath[0]['.status.storedVersions[0]']['-']}"
 
-              # YAML tab
-              - key: yaml
-                label: YAML
-                children:
-                  - type: YamlEditorSingleton
+                  # Conditions section
+                  - type: antdCol
                     data:
-                      id: 47
-                      apiGroup: apiextensions.k8s.io
-                      apiVersion: v1
-                      cluster: "{2}"
-                      isNameSpaced: false
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
-                      type: apis
-                      typeName: customresourcedefinitions
+                      id: conditions-section
+                      style:
+                        marginTop: 32px
+                        padding: 16px
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: conditions-container
+                          value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: conditions-title
+                              text: Conditions
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: conditions-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-status-conditions
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - conditions
 
-              # Instances tab
-              - key: instance
-                label: Instances
-                children:
-                  - type: EnrichedTable
+                  # Versions section
+                  - type: antdCol
                     data:
-                      id: 49
-                      fetchUrl: "/api/clusters/{2}/k8s/apis/{reqsJsonPath[0]['.spec.group']}/{reqsJsonPath[0]['.status.storedVersions[0]']}/{reqsJsonPath[0]['.spec.names.plural']}"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: instances-crd
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      pathToItems:
-                        - items
-      type: antdTabs
+                      id: versions-section
+                      style:
+                        marginTop: 32px
+                        padding: 16px
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: versions-container
+                          value: "{reqsJsonPath[0]['.spec.versions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: versions-title
+                              text: Versions
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: versions-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: versions-apiextensions.k8s.io.v1.customresourcedefinitions
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - versions
+
+          # --- YAML TAB ---
+          - key: yaml
+            label: YAML
+            children:
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  apiGroup: apiextensions.k8s.io
+                  apiVersion: v1
+                  cluster: "{2}"
+                  isNameSpaced: false
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+                  type: apis
+                  typeName: customresourcedefinitions
+
+          # --- INSTANCES TAB ---
+          - key: instance
+            label: Instances
+            children:
+              - type: EnrichedTable
+                data:
+                  id: instances-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/{reqsJsonPath[0]['.spec.group']['-']}/{reqsJsonPath[0]['.status.storedVersions[0]']['-']}/{reqsJsonPath[0]['.spec.names.plural']['-']}"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: instances-crd
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  pathToItems:
+                    - items

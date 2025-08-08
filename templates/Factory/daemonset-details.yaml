@@ -1,385 +1,421 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: daemonset-details
-    spec:
-      key: daemonset-details
-      sidebarTags:
-        - daemonset-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: daemonset-details
+spec:
+  # Unique key for this factory configuration
+  key: daemonset-details
+
+  # Sidebar category tags
+  sidebarTags:
+    - daemonset-sidebar
+
+  # Enable scrollable content card for main section
+  withScrollableMainContentCard: true
+
+  # API endpoint for fetching DaemonSet details
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
+
+  data:
+    # === HEADER ROW ===
+    - type: antdFlex
       data:
-        # Заголовок
-        - type: antdFlex
+        id: ds-header
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Badge with resource short name
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: ds-header-badge
+            text: DS
+            title: daemonset
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: DS
-                title: daemonset
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#004080"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#004080"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
 
-        # Вкладки
-        - type: antdTabs
+        # DaemonSet name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: details
-            items:
-              # Details
-              - key: details
-                label: Details
+            id: ds-header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+    # === MAIN TABS ===
+    - type: antdTabs
+      data:
+        id: ds-tabs
+        defaultActiveKey: details
+        items:
+          # ------ DETAILS TAB ------
+          - key: details
+            label: Details
+            children:
+              # Main card container for details section
+              - type: ContentCard
+                data:
+                  id: ds-details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  # Карточка с основной информацией
-                  - type: ContentCard
+                  # Section title
+                  - type: antdText
                     data:
-                      id: 5
+                      id: ds-details-title
+                      text: DaemonSet details
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20px
+                        marginBottom: 12px
+
+                  # Spacer for visual separation
+                  - type: Spacer
+                    data:
+                      id: ds-spacer
+                      $space: 16
+
+                  # Grid layout: left and right columns
+                  - type: antdRow
+                    data:
+                      id: ds-main-row
+                      gutter: [48, 12]
                     children:
-                      - type: antdText
+                      # LEFT COLUMN: Metadata and selectors
+                      - type: antdCol
                         data:
-                          id: 6
-                          text: DaemonSet details
-                          strong: true
-                          style:
-                            fontSize: 20px
-                            marginBottom: 12px
-
-                      - type: Spacer
-                        data:
-                          id: 7
-                          $space: 16
-
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: ds-left-col
+                          span: 12
                         children:
-                          # Левая колонка
-                          - type: antdCol
+                          - type: antdFlex
                             data:
-                              id: 9
-                              span: 12
+                              id: ds-left-stack
+                              vertical: true
+                              gap: 24
                             children:
+                              # Resource name block
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: ds-name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          text: Name
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: ds-name-label
+                                      text: Name
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: ds-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 37
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 38
-                                          text: Owner
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 381
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          # Правая колонка
-                          - type: antdCol
-                            data:
-                              id: 40
-                              span: 12
-                            children:
+                              # Namespace link block
                               - type: antdFlex
                                 data:
-                                  id: 41
+                                  id: ds-namespace-links
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34}}
+
+                              # Labels display block
+                              - type: antdFlex
+                                data:
+                                  id: ds-labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
+
+                              # Node selector block
+                              - type: antdFlex
+                                data:
+                                  id: ds-node-selector
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 30}}
+
+                              # Pod selector block
+                              - type: antdFlex
+                                data:
+                                  id: ds-pod-selector
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 30}}
+
+                              # Tolerations counter block
+                              - type: antdFlex
+                                data:
+                                  id: ds-tolerations
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 30}}
+
+                              # Annotations counter block
+                              - type: antdFlex
+                                data:
+                                  id: ds-annotations
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30}}
+
+                              # Creation time block
+                              - type: antdFlex
+                                data:
+                                  id: ds-created-time
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                    ) | nindent 30
+                                  }}
+
+                              # Owner information block
+                              - type: antdFlex
+                                data:
+                                  id: ds-owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          text: Current count
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.currentNumberScheduled']['0']}"
-                                  - type: antdFlex
+                                      id: ds-owner-label
+                                      text: Owner
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          text: Desired count
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 47
-                                          text: "{reqsJsonPath[0]['.status.desiredNumberScheduled']['0']}"
+                                      id: ds-owner-value
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
 
-                      # Таблицы внизу
+                      # RIGHT COLUMN: Status counts
                       - type: antdCol
                         data:
-                          id: 48
-                          style:
-                            marginTop: 10
-                            padding: 10
+                          id: ds-right-col
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 49
-                              value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: ds-right-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Current pods count
+                              - type: antdFlex
                                 data:
-                                  id: 50
-                                  text: Volumes
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 51
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-daemonset-details-volume-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - volumes
+                                  id: ds-current-count
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: ds-current-count-label
+                                      text: Current count
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: ds-current-count-value
+                                      text: "{reqsJsonPath[0]['.status.currentNumberScheduled']['-']}"
 
-                      - type: antdCol
-                        data:
-                          id: 52
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 53
-                              value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # Desired pods count
+                              - type: antdFlex
                                 data:
-                                  id: 54
-                                  text: Init containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 55
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-daemonset-details-init-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - initContainers
+                                  id: ds-desired-count
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: ds-desired-count-label
+                                      text: Desired count
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: ds-desired-count-value
+                                      text: "{reqsJsonPath[0]['.status.desiredNumberScheduled']['-']}"
 
-                      - type: antdCol
-                        data:
-                          id: 56
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 57
-                              value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 58
-                                  text: Containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 59
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-daemonset-details-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - containers
-
-              # Конец Details
-
-              - key: yaml
-                label: YAML
-                children:
-                  - type: YamlEditorSingleton
+                  # ---- VOLUMES SECTION ----
+                  - type: antdCol
                     data:
-                      id: 60
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: apis
-                      apiGroup: apps
-                      apiVersion: v1
-                      typeName: daemonsets
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+                      id: ds-volumes-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: ds-volumes-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: ds-volumes-label
+                              text: Volumes
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Table rendering volumes
+                          - type: EnrichedTable
+                            data:
+                              id: ds-volumes-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-daemonset-details-volume-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - volumes
 
-              - key: pods
-                label: Pods
-                children:
-                  - type: EnrichedTable
+                  # ---- INIT CONTAINERS SECTION ----
+                  - type: antdCol
                     data:
-                      id: 62
-                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/v1/pods
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
+                      id: ds-init-containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: ds-init-containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: ds-init-containers-label
+                              text: Init containers
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Table rendering init containers
+                          - type: EnrichedTable
+                            data:
+                              id: ds-init-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-daemonset-details-init-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - initContainers
 
-      type: antdTabs
+                  # ---- CONTAINERS SECTION ----
+                  - type: antdCol
+                    data:
+                      id: ds-containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: ds-containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: ds-containers-label
+                              text: Containers
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Table rendering containers
+                          - type: EnrichedTable
+                            data:
+                              id: ds-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-daemonset-details-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - containers
+
+          # ------ YAML TAB ------
+          - key: yaml
+            label: YAML
+            children:
+              # YAML editor for DaemonSet manifest
+              - type: YamlEditorSingleton
+                data:
+                  id: ds-yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: apis
+                  apiGroup: apps
+                  apiVersion: v1
+                  typeName: daemonsets
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+
+          # ------ PODS TAB ------
+          - key: pods
+            label: Pods
+            children:
+              # Table of Pods controlled by the DaemonSet
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/v1/pods
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  # Items path for Pods list
+                  pathToItems:
+                    - items

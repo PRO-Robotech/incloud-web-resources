@@ -1,356 +1,371 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: service-details
-    spec:
-      key: service-details
-      withScrollableMainContentCard: true
-      sidebarTags:
-        - service-sidebar
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/services/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: service-details
+spec:
+  key: service-details
+  withScrollableMainContentCard: true
+  sidebarTags:
+    - service-sidebar
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/services/{6}"
+
+  # Header row with badge and Service name
+  data:
+    - type: antdFlex
       data:
-        - type: antdFlex
+        id: header-row
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Service badge
+        - type: antdText
           data:
-            id: 3602
-            gap: 6
-            align: center
+            id: badge-service
+            text: S
+            title: services
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 36021
-                text: S
-                title: services
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#6ca100"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-
-            - type: parsedText
-              data:
-                id: 21012
-                text: "{reqs[0]['metadata', 'name']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-
-        - type: antdTabs
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#6ca100"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
+        # Service name
+        - type: parsedText
           data:
-            id: 20
-            defaultActiveKey: "details"
-            items:
-              - key: "details"
-                label: "Details"
+            id: service-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+    # Tabs with Details, YAML, and Pods
+    - type: antdTabs
+      data:
+        id: service-tabs
+        defaultActiveKey: "details"
+        items:
+          # Details tab
+          - key: "details"
+            label: "Details"
+            children:
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  - type: ContentCard
+                  - type: antdRow
                     data:
-                      id: 2000
-                      style:
-                        marginBottom: 24px
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdRow
+                      # Left column: metadata and config
+                      - type: antdCol
                         data:
-                          id: 2001
-                          gutter: [48, 12]
+                          id: col-left
+                          span: 12
                         children:
-                          - type: antdCol
+                          - type: antdText
                             data:
-                              id: 2002
-                              span: 12
+                              id: details-title
+                              text: "Service details"
+                              strong: true
+                              style:
+                                fontSize: 20
+                                marginBottom: 12px
+                          - type: Spacer
+                            data:
+                              id: details-spacer
+                              "$space": 16
+                          - type: antdFlex
+                            data:
+                              id: col-left-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
-                                data:
-                                  id: 1999
-                                  text: "Service details"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 1999-spacer
-                                  "$space": 16
+                              # Name block
                               - type: antdFlex
                                 data:
-                                  id: 2100
+                                  id: meta-name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
+                                  - type: antdText
+                                    data:
+                                      id: meta-name-label
+                                      strong: true
+                                      text: "Name"
+                                  - type: parsedText
+                                    data:
+                                      id: meta-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+
+                              # Namespace link
+                              - type: antdFlex
+                                data:
+                                  id: meta-namespace-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+
+                              # Labels
+                              - type: antdFlex
+                                data:
+                                  id: meta-labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+
+                              # Pod selector
+                              - type: antdFlex
+                                data:
+                                  id: meta-pod-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
+
+                              # Annotations
+                              - type: antdFlex
+                                data:
+                                  id: meta-annotations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
+                              # Session affinity
+                              - type: antdFlex
+                                data:
+                                  id: meta-session-affinity-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: meta-session-affinity-label
+                                      strong: true
+                                      text: "Session affinity"
+                                  - type: parsedText
+                                    data:
+                                      id: meta-session-affinity-value
+                                      text: "{reqsJsonPath[0]['.spec.sessionAffinity']['Not configured']}"
+
+                              # Created timestamp
+                              - type: antdFlex
+                                data:
+                                  id: meta-created-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                    ) | nindent 38
+                                  }}
+
+                              # Owner
+                              - type: antdFlex
+                                data:
+                                  id: meta-owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: meta-owner-label
+                                      strong: true
+                                      text: "Owner"
                                   - type: antdFlex
                                     data:
-                                      id: 2101
-                                      vertical: true
-                                      gap: 4
+                                      id: meta-owner-flex
+                                      gap: 6
+                                      align: center
                                     children:
                                       - type: antdText
                                         data:
-                                          id: 21011
-                                          strong: true
-                                          text: "Name"
-                                      - type: parsedText
-                                        data:
-                                          id: 21012
-                                          text: "{reqs[0]['metadata', 'name']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3300
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 33000
-                                          strong: true
-                                          text: "Session affinity"
-                                      - type: parsedText
-                                        data:
-                                          id: 3301
-                                          text: "{reqs[0]['spec', 'sessionAffinity']}"
+                                          id: meta-owner-fallback
+                                          text: "No owner"
                                           style:
                                             color: "#FF0000"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 3601
-                                          strong: true
-                                          text: "Owner"
-                                      - type: antdFlex
-                                        data:
-                                          id: 3602
-                                          gap: 6
-                                          align: center
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 36021
-                                              text: "No owner"
-                                          - type: parsedText
-                                            data:
-                                              id: 3301
-                                              text: "{reqs[0]['metadata', 'ownerReferences', 0, 'name']}"
-                                              style:
-                                                color: "#FF0000"
-                          - type: antdCol
+                      # Right column: routing and ports
+                      - type: antdCol
+                        data:
+                          id: col-right
+                          span: 12
+                        children:
+                          - type: antdText
                             data:
-                              id: 2003
-                              span: 12
+                              id: routing-title
+                              text: "Service routing"
+                              strong: true
+                              style:
+                                fontSize: 20
+                                marginBottom: 12px
+                          - type: Spacer
+                            data:
+                              id: routing-spacer
+                              "$space": 16
+                          - type: antdFlex
+                            data:
+                              id: col-right-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
-                                data:
-                                  id: 1999
-                                  text: "Service routing"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 1999-spacer
-                                  "$space": 16
+                              # Hostname
                               - type: antdFlex
                                 data:
-                                  id: 2200
+                                  id: service-hostname-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  # Hostname блок
+                                  - type: antdText
+                                    data:
+                                      id: service-hostname-label
+                                      strong: true
+                                      text: "Hostname"
+                                  - type: parsedText
+                                    data:
+                                      id: service-hostname-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}.{reqsJsonPath[0]['.metadata.namespace']['-']}.svc.cluster.local"
+
+                              # IP addresses block
+                              - type: antdFlex
+                                data:
+                                  id: service-ip-block
+                                  vertical: true
+                                  gap: 12
+                                children:
+                                  # ClusterIP
                                   - type: antdFlex
                                     data:
-                                      id: 2201
+                                      id: clusterip-block
                                       vertical: true
                                       gap: 4
                                     children:
                                       - type: antdText
                                         data:
-                                          id: 22011
+                                          id: clusterip-label
                                           strong: true
-                                          text: "Hostname"
+                                          text: "ClusterIP address"
                                       - type: parsedText
                                         data:
-                                          id: 22012
-                                          text: "{reqs[0]['metadata', 'name']}.{reqs[0]['metadata', 'namespace']}.svc.cluster.local"
-
-                                  # Блок IP-адресов (ClusterIP и LoadBalancerIP)
+                                          id: clusterip-value
+                                          text: "{reqsJsonPath[0]['.spec.clusterIP']['-']}"
+                                  # LoadBalancerIP
                                   - type: antdFlex
                                     data:
-                                      id: 2210
-                                      vertical: true
-                                      gap: 12
-                                    children:
-                                      # ClusterIP
-                                      - type: antdFlex
-                                        data:
-                                          id: 2211
-                                          vertical: true
-                                          gap: 4
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 22111
-                                              strong: true
-                                              text: "ClusterIP address"
-                                          - type: parsedText
-                                            data:
-                                              id: 22112
-                                              text: "{reqs[0]['spec', 'clusterIP']}"
-
-                                      # LoadBalancerIP
-                                      - type: antdFlex
-                                        data:
-                                          id: 2212
-                                          vertical: true
-                                          gap: 4
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 22121
-                                              strong: true
-                                              text: "LoadBalancerIP address"
-                                          - type: parsedText
-                                            data:
-                                              id: 22122
-                                              text: "{reqs[0]['status', 'loadBalancer', 'ingress', 0, 'ip']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 2203
+                                      id: loadbalancerip-block
                                       vertical: true
                                       gap: 4
                                     children:
                                       - type: antdText
                                         data:
-                                          id: 22031
+                                          id: loadbalancerip-label
                                           strong: true
-                                          text: "Service port mapping"
-                                      - type: EnrichedTable
+                                          text: "LoadBalancerIP address"
+                                      - type: parsedText
                                         data:
-                                          id: 99991
-                                          fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/services/{6}"
-                                          clusterNamePartOfUrl: "{2}"
-                                          customizationId: "factory-service-details-port-mapping"
-                                          baseprefix: "/openapi-ui"
-                                          withoutControls: true
-                                          pathToItems:
-                                            - spec
-                                            - ports
+                                          id: loadbalancerip-value
+                                          text: "{reqsJsonPath[0]['.status.loadBalancer.ingress[0].ip']['Not Configured']}"
+                                          style:
+                                            color: red
 
-                                  - type: antdFlex
+                              # Service port mapping
+                              - type: antdFlex
+                                data:
+                                  id: service-port-mapping-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 2203
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 22031
-                                          strong: true
-                                          text: "Pod serving"
-                                      - type: EnrichedTable
-                                        data:
-                                          id: 99991
-                                          fetchUrl: "/api/clusters/{2}/k8s/apis/discovery.k8s.io/v1/namespaces/{3}/endpointslices"
-                                          clusterNamePartOfUrl: "{2}"
-                                          customizationId: "factory-service-details-endpointslice"
-                                          baseprefix: "/openapi-ui"
-                                          withoutControls: true
-                                          labelsSelector:
-                                            kubernetes.io/service-name: "{reqs[0]['metadata', 'name']}"
-                                          pathToItems:
-                                            - items
-                                            - [0]
-                                            - endpoints
+                                      id: service-port-mapping-label
+                                      strong: true
+                                      text: "Service port mapping"
+                                  - type: EnrichedTable
+                                    data:
+                                      id: service-port-mapping-table
+                                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/services/{6}"
+                                      clusterNamePartOfUrl: "{2}"
+                                      customizationId: "factory-service-details-port-mapping"
+                                      baseprefix: "/openapi-ui"
+                                      withoutControls: true
+                                      pathToItems:
+                                        - spec
+                                        - ports
 
-              - key: "yaml"
-                label: "YAML"
-                children:
-                  - type: YamlEditorSingleton
-                    data:
-                      id: 999999999
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: "builtin"
-                      typeName: services
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+                              # Pod serving
+                              - type: antdFlex
+                                data:
+                                  id: service-pod-serving-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: service-pod-serving-label
+                                      strong: true
+                                      text: "Pod serving"
+                                  - type: EnrichedTable
+                                    data:
+                                      id: service-pod-serving-table
+                                      fetchUrl: "/api/clusters/{2}/k8s/apis/discovery.k8s.io/v1/namespaces/{3}/endpointslices"
+                                      clusterNamePartOfUrl: "{2}"
+                                      customizationId: "factory-service-details-endpointslice"
+                                      baseprefix: "/openapi-ui"
+                                      withoutControls: true
+                                      labelsSelector:
+                                        kubernetes.io/service-name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                                      pathToItems:
+                                        - items
+                                        - [0]
+                                        - endpoints
 
-              - key: "pods"
-                label: "Pods"
-                children:
-                  - type: EnrichedTable
-                    data:
-                      id: 99991
-                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: "factory-node-details-/v1/pods"
-                      baseprefix: "/openapi-ui"
-                      withoutControls: false
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels: ["spec", "selector"]
-                      pathToItems:
-                        - items
+          # YAML tab
+          - key: "yaml"
+            label: "YAML"
+            children:
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: "builtin"
+                  typeName: services
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
 
-kind: List
-metadata:
+          # Pods tab
+          - key: "pods"
+            label: "Pods"
+            children:
+              - type: EnrichedTable
+                data:
+                  id: pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: "factory-node-details-/v1/pods"
+                  baseprefix: "/openapi-ui"
+                  withoutControls: false
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - selector
+                  pathToItems:
+                    - items

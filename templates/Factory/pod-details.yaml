@@ -1,497 +1,542 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: pod-details
-    spec:
-      key: pod-details
-      sidebarTags:
-        - pods-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: pod-details
+spec:
+  key: pod-details
+  sidebarTags:
+    - pods-sidebar
+  withScrollableMainContentCard: true
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+
+  # Header row with badge, pod name, and status
+  data:
+    - type: antdFlex
       data:
-        - type: antdFlex
+        id: header-row
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Pod badge
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: header-badge
+            text: P
+            title: Pods
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: P
-                title: Pods
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#009596"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-
-            - type: StatusText
-              data:
-                id: 40001212212
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
-                criteriaSuccess: equals
-                valueToCompareSuccess:
-                  - "PodReady"
-                  - "ContainersReady"
-                  - "Initialized"
-                  - "PodCompleted"
-                  - "fallback"
-                criteriaError: equals
-                valueToCompareError:
-                  - "ContainersNotReady"
-                  - "CrashLoopBackOff"
-                  - "ImagePullBackOff"
-                  - "ErrImagePull"
-                  - "CreateContainerConfigError"
-                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
-                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']}"
-
-
-        - type: antdTabs
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#009596"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
+        # Pod name next to badge
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: "details"
-            items:
-              - key: "details"
-                label: "Details"
+            id: header-pod-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+        # Pod readiness/status indicator
+        - type: StatusText
+          data:
+            id: header-pod-status
+            value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
+            criteriaSuccess: equals
+            valueToCompareSuccess:
+              - "PodReady"
+              - "ContainersReady"
+              - "Initialized"
+              - "PodCompleted"
+              - "fallback"
+            criteriaError: equals
+            valueToCompareError:
+              - "ContainersNotReady"
+              - "CrashLoopBackOff"
+              - "ImagePullBackOff"
+              - "ErrImagePull"
+              - "CreateContainerConfigError"
+            successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
+            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
+            fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['-']}"
+
+    # Tabs with Details, YAML, Logs, and Terminal views
+    - type: antdTabs
+      data:
+        id: pod-tabs
+        defaultActiveKey: "details"
+        items:
+          # Details tab with metadata and spec
+          - key: "details"
+            label: "Details"
+            children:
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  - type: ContentCard
+                  # Title of the details section
+                  - type: antdText
                     data:
-                      id: 5
+                      id: details-title
+                      text: "Pod details"
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20
+                        marginBottom: 12px
+                  # Spacer before grid
+                  - type: Spacer
+                    data:
+                      id: details-spacer
+                      "$space": 16
+                  # Two-column layout for metadata (left) and status/spec (right)
+                  - type: antdRow
+                    data:
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdText
+                      # Left column: metadata, links, labels
+                      - type: antdCol
                         data:
-                          id: 6
-                          text: "Pod details"
-                          strong: true
-                          style:
-                            fontSize: 20
-                            marginBottom: 12px
-                      - type: Spacer
-                        data:
-                          id: 7
-                          "$space": 16
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: col-left
+                          span: 12
                         children:
-                          - type: antdCol
+                          - type: antdFlex
                             data:
-                              id: 9
-                              span: 12
+                              id: col-left-stack
+                              vertical: true
+                              gap: 24
                             children:
+                              # Display name label/value
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: meta-name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Name"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: meta-name-label
+                                      strong: true
+                                      text: "Name"
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: meta-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base-pod.node.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.pod.tolerations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 34
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 35
-                                          strong: true
-                                          text: "Owner"
-                                      - type: parsedText
-                                        data:
-                                          id: 351
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          - type: antdCol
-                            data:
-                              id: 37
-                              span: 12
-                            children:
+                              # Namespace link (kept as include)
                               - type: antdFlex
                                 data:
-                                  id: 38
+                                  id: meta-namespace-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
-                                    data:
-                                      id: 39
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 40
-                                          strong: true
-                                          text: "Status"
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
 
-                                      - type: StatusText
-                                        data:
-                                          id: 40001212212
-                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
-                                          criteriaSuccess: equals
-                                          valueToCompareSuccess:
-                                            - "PodReady"
-                                            - "ContainersReady"
-                                            - "Initialized"
-                                            - "PodCompleted"
-                                            - "fallback"
-                                          criteriaError: equals
-                                          valueToCompareError:
-                                            - "ContainersNotReady"
-                                            - "CrashLoopBackOff"
-                                            - "ImagePullBackOff"
-                                            - "ErrImagePull"
-                                            - "CreateContainerConfigError"
-                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
-                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
-                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']}"
+                              # Labels list (kept as include)
+                              - type: antdFlex
+                                data:
+                                  id: meta-labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 38}}
 
+                              # Node selector chips (kept as include)
+                              - type: antdFlex
+                                data:
+                                  id: meta-node-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base-pod.node.selector" . | nindent 38}}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          strong: true
-                                          text: "Restart policy"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.spec.restartPolicy']['-']} restart"
-                                  - type: antdFlex
-                                    data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Active deadline seconds"
-                                      - type: parsedText
-                                        data:
-                                          id: 47
-                                          text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 48
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 49
-                                          strong: true
-                                          text: "Pod IP"
-                                      - type: parsedText
-                                        data:
-                                          id: 50
-                                          text: "{reqsJsonPath[0]['.status.podIP']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 51
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 52
-                                          strong: true
-                                          text: "Host IP"
-                                      - type: parsedText
-                                        data:
-                                          id: 53
-                                          text: "{reqsJsonPath[0]['.status.hostIP']['-']}"
+                              # Tolerations counter (kept as include)
+                              - type: antdFlex
+                                data:
+                                  id: meta-tolerations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.pod.tolerations" . | nindent 38}}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.node-details" . | nindent 42}}
+                              # Annotations counter (kept as include)
+                              - type: antdFlex
+                                data:
+                                  id: meta-annotations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
 
-                                  - type: antdFlex
+                              # Created timestamp (kept as include)
+                              - type: antdFlex
+                                data:
+                                  id: meta-created-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                  ) | nindent 38
+                                  }}
+
+                              # Owner information (fallback when absent)
+                              - type: antdFlex
+                                data:
+                                  id: meta-owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 57
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 58
-                                          strong: true
-                                          text: "QOS class"
-                                      - type: parsedText
-                                        data:
-                                          id: 59
-                                          text: "{reqsJsonPath[0]['.status.qosClass']['-']}"
-                      # Volumes
+                                      id: meta-owner-label
+                                      strong: true
+                                      text: "Owner"
+                                  - type: parsedText
+                                    data:
+                                      id: meta-owner-fallback
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
+
+                      # Right column: status and runtime info
                       - type: antdCol
                         data:
-                          id: 60
-                          style:
-                            marginTop: 10
-                            padding: 10
+                          id: col-right
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 61
-                              value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: col-right-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Status block with readiness reason mapping
+                              - type: antdFlex
                                 data:
-                                  id: 62
-                                  text: "Volumes"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
+                                  id: status-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: status-label
+                                      strong: true
+                                      text: "Status"
+                                  - type: StatusText
+                                    data:
+                                      id: status-value
+                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
+                                      criteriaSuccess: equals
+                                      valueToCompareSuccess:
+                                        - "PodReady"
+                                        - "ContainersReady"
+                                        - "Initialized"
+                                        - "PodCompleted"
+                                        - "fallback"
+                                      criteriaError: equals
+                                      valueToCompareError:
+                                        - "ContainersNotReady"
+                                        - "CrashLoopBackOff"
+                                        - "ImagePullBackOff"
+                                        - "ErrImagePull"
+                                        - "CreateContainerConfigError"
+                                      successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
+                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
+                                      fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['-']}"
+
+                              # Restart policy
+                              - type: antdFlex
                                 data:
-                                  id: 63
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-pod-details-volume-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - volumes
-                      # Init containers
-                      - type: antdCol
-                        data:
-                          id: 64
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 65
-                              value: "{reqsJsonPath[0]['.status.initContainerStatuses']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                                  id: restart-policy-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: restart-policy-label
+                                      strong: true
+                                      text: "Restart policy"
+                                  - type: parsedText
+                                    data:
+                                      id: restart-policy-value
+                                      text: "{reqsJsonPath[0]['.spec.restartPolicy']['-']} restart"
+
+                              # Active deadline seconds
+                              - type: antdFlex
                                 data:
-                                  id: 66
-                                  text: "Init containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
+                                  id: active-deadline-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: active-deadline-label
+                                      strong: true
+                                      text: "Active deadline seconds"
+                                  - type: parsedText
+                                    data:
+                                      id: active-deadline-value
+                                      text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['-']}"
+
+                              # Pod IP
+                              - type: antdFlex
                                 data:
-                                  id: 67
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-pod-details-init-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - initContainerStatuses
-                      # Containers
-                      - type: antdCol
-                        data:
-                          id: 68
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 69
-                              value: "{reqsJsonPath[0]['.status.containerStatuses']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                                  id: pod-ip-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: pod-ip-label
+                                      strong: true
+                                      text: "Pod IP"
+                                  - type: parsedText
+                                    data:
+                                      id: pod-ip-value
+                                      text: "{reqsJsonPath[0]['.status.podIP']['-']}"
+
+                              # Host IP
+                              - type: antdFlex
                                 data:
-                                  id: 70
-                                  text: "Containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
+                                  id: host-ip-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: host-ip-label
+                                      strong: true
+                                      text: "Host IP"
+                                  - type: parsedText
+                                    data:
+                                      id: host-ip-value
+                                      text: "{reqsJsonPath[0]['.status.hostIP']['-']}"
+
+                              # Node details link (kept as include)
+                              - type: antdFlex
                                 data:
-                                  id: 71
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-pod-details-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - containerStatuses
-                      # Conditions
-                      - type: antdCol
-                        data:
-                          id: 72
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 73
-                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                                  id: node-link-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.links.node-details" . | nindent 42}}
+
+                              # QoS class
+                              - type: antdFlex
                                 data:
-                                  id: 74
-                                  text: "Conditions"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                              - type: EnrichedTable
-                                data:
-                                  id: 75
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-status-conditions
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - conditions
-              - key: "yaml"
-                label: "YAML"
-                children:
-                  - type: YamlEditorSingleton
+                                  id: qos-class-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: qos-class-label
+                                      strong: true
+                                      text: "QOS class"
+                                  - type: parsedText
+                                    data:
+                                      id: qos-class-value
+                                      text: "{reqsJsonPath[0]['.status.qosClass']['-']}"
+
+                  # Volumes section (table is hidden if no volumes)
+                  - type: antdCol
                     data:
-                      id: 76
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: "builtin"
-                      typeName: pods
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
-              - key: "logs"
-                label: "Logs"
-                children:
-                  - type: PodLogs
+                      id: volumes-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: volumes-visibility
+                          value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Volumes title
+                          - type: antdText
+                            data:
+                              id: volumes-title
+                              text: "Volumes"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Volumes table
+                          - type: EnrichedTable
+                            data:
+                              id: volumes-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-pod-details-volume-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - volumes
+
+                  # Init containers section (hidden if none)
+                  - type: antdCol
                     data:
-                      id: 77
-                      cluster: "{2}"
-                      namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-                      podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
-              - key: "terminal"
-                label: "Terminal"
-                children:
-                  - type: PodTerminal
+                      id: init-containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: init-containers-visibility
+                          value: "{reqsJsonPath[0]['.status.initContainerStatuses']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Init containers title
+                          - type: antdText
+                            data:
+                              id: init-containers-title
+                              text: "Init containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Init containers table
+                          - type: EnrichedTable
+                            data:
+                              id: init-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-pod-details-init-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - initContainerStatuses
+
+                  # Containers section (hidden if none)
+                  - type: antdCol
                     data:
-                      id: 78
-                      cluster: "{2}"
-                      namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-                      podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                      id: containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: containers-visibility
+                          value: "{reqsJsonPath[0]['.status.containerStatuses']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Containers title
+                          - type: antdText
+                            data:
+                              id: containers-title
+                              text: "Containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Containers table
+                          - type: EnrichedTable
+                            data:
+                              id: containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-pod-details-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - containerStatuses
+
+                  # Conditions section (hidden if none)
+                  - type: antdCol
+                    data:
+                      id: conditions-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: conditions-visibility
+                          value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Conditions title
+                          - type: antdText
+                            data:
+                              id: conditions-title
+                              text: "Conditions"
+                              strong: true
+                              style:
+                                fontSize: 22
+                          # Conditions table
+                          - type: EnrichedTable
+                            data:
+                              id: conditions-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-status-conditions
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - conditions
+
+          # YAML tab with inline editor
+          - key: "yaml"
+            label: "YAML"
+            children:
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: "builtin"
+                  typeName: pods
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+
+          # Logs tab with live pod logs
+          - key: "logs"
+            label: "Logs"
+            children:
+              - type: PodLogs
+                data:
+                  id: pod-logs
+                  cluster: "{2}"
+                  namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                  podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+
+          # Terminal tab with exec into pod
+          - key: "terminal"
+            label: "Terminal"
+            children:
+              - type: PodTerminal
+                data:
+                  id: pod-terminal
+                  cluster: "{2}"
+                  namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+                  podName: "{reqsJsonPath[0]['.metadata.name']['-']}"

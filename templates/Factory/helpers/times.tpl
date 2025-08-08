@@ -1,22 +1,23 @@
 {{- define "incloud-web-resources.factory.time.create" -}}
+{{- $i := (default 0 .reqIndex) -}}
 - type: antdText
   data:
-    id: 3601
+    id: {{ .labelId | default "time-label" }}
     strong: true
-    text: "Created"
+    text: "{{ .text | default "Created" }}"
 - type: antdFlex
   data:
-    id: 3602
-    gap: 6
+    id: {{ .id | default "time-block" }}
     align: center
+    gap: 6
   children:
     - type: antdText
       data:
-        id: 36021
+        id: {{ .iconId | default "time-icon" }}
         text: "🌐"
     - type: parsedText
       data:
-        id: 36022
-        text: "{reqs[0]['metadata', 'creationTimestamp']}"
+        id: {{ .valueId | default "time-value" }}
+        text: "{reqsJsonPath[{{$i}}]['{{ .req }}']['-']}"
         formatter: timestamp
 {{- end -}}

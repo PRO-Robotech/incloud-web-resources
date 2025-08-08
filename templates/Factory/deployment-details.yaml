@@ -1,526 +1,574 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: deployment-details
-    spec:
-      key: deployment-details
-      sidebarTags:
-        - deployment-sidebar
-      urlsToFetch:
-        - /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-      withScrollableMainContentCard: true
+# Factory definition for Deployment details page
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: deployment-details
+spec:
+  # Stable key used by the UI router/registry
+  key: deployment-details
+
+  # Sidebar categorization
+  sidebarTags:
+    - deployment-sidebar
+
+  # API request used to fetch the target Deployment
+  urlsToFetch:
+    - /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+
+  # Enables scrollable main content area
+  withScrollableMainContentCard: true
+
+  # Root component tree
+  data:
+    # === Header with icon, name and high-level status ===
+    - type: antdFlex
       data:
-        - type: antdFlex
+        id: header-flex
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Left: static "D" label for Deployment
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: header-icon
+            text: D
+            title: Deployment
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: D
-                title: Deployment
-                style:
-                  backgroundColor: "#004080"
-                  borderRadius: 20px
-                  color: "#fff"
-                  display: inline-block
-                  fontFamily: RedHatDisplay, Overpass, helvetica, sans-serif
-                  fontSize: 20px
-                  fontWeight: 400
-                  lineHeight: 24px
-                  minWidth: 24
-                  padding: 0 9px
-                  textAlign: center
-                  whiteSpace: nowrap
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-            - type: StatusText
-              data:
-                id: 40001214444
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                criteriaSuccess: equals
-                valueToCompareSuccess:
-                  - "MinimumReplicasAvailable"
-                criteriaError: equals
-                valueToCompareError:
-                  - "DeploymentReplicaFailure"
-                  - "ProgressDeadlineExceeded"
-                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-        - type: antdTabs
+              backgroundColor: "#004080"
+              borderRadius: 20px
+              color: "#fff"
+              display: inline-block
+              fontFamily: RedHatDisplay, Overpass, helvetica, sans-serif
+              fontSize: 20px
+              fontWeight: 400
+              lineHeight: 24px
+              minWidth: 24
+              padding: 0 9px
+              textAlign: center
+              whiteSpace: nowrap
+
+        # Center: deployment name from the fetched object
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: details
-            items:
-              - key: details
-                label: Details
+            id: header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+        # Right: status (Available or error) based on condition reason
+        - type: StatusText
+          data:
+            id: header-status
+            value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+            criteriaSuccess: equals
+            valueToCompareSuccess:
+              - "MinimumReplicasAvailable"
+            criteriaError: equals
+            valueToCompareError:
+              - "DeploymentReplicaFailure"
+              - "ProgressDeadlineExceeded"
+            successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+            fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+
+    # === Main content organized by tabs ===
+    - type: antdTabs
+      data:
+        id: deployment-tabs
+        defaultActiveKey: details
+        items:
+          # ------ DETAILS TAB ------
+          - key: details
+            label: Details
+            children:
+              # Card wrapper for details content
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  - type: ContentCard
+                  # Section title
+                  - type: antdText
                     data:
-                      id: 5
+                      id: details-title
+                      text: Deployment details
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20
+                        marginBottom: 12px
+
+                  # Spacer for breathing room
+                  - type: Spacer
+                    data:
+                      id: details-spacer
+                      "$space": 16
+
+                  # Two-column layout for metadata and rollout settings
+                  - type: antdRow
+                    data:
+                      id: main-details-row
+                      gutter: [48, 12]
                     children:
-                      # Header
-                      - type: antdText
+                      # === LEFT COLUMN: Metadata & links ===
+                      - type: antdCol
                         data:
-                          id: 6
-                          text: Deployment details
-                          strong: true
-                          style:
-                            fontSize: 20
-                            marginBottom: 12px
-
-                      - type: Spacer
-                        data:
-                          id: 7
-                          "$space": 16
-
-                      # Main details row
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: left-column
+                          span: 12
                         children:
-                          # Left column
-                          - type: antdCol
+                          - type: antdFlex
                             data:
-                              id: 9
-                              span: 12
+                              id: left-column-flex
+                              vertical: true
+                              gap: 24
                             children:
+                              # Name block
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          text: Name
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-
-                                  - type: antdFlex
+                                      id: name-label
+                                      text: Name
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
-                                          
-                                  - type: antdFlex
-                                    data:
-                                      id: 37
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 38
-                                          text: Owner
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 381
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          # Right column
-                          - type: antdCol
-                            data:
-                              id: 40
-                              span: 12
-                            children:
+                              # Namespace link block (rendered by include)
                               - type: antdFlex
                                 data:
-                                  id: 41
+                                  id: namespace-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
-                                    data:
-                                      id: 29
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 30
-                                          text: Status
-                                          strong: true
-                                      - type: StatusText
-                                        data:
-                                          id: 40001214444
-                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                                          criteriaSuccess: equals
-                                          valueToCompareSuccess:
-                                            - "MinimumReplicasAvailable"
-                                          criteriaError: equals
-                                          valueToCompareError:
-                                            - "DeploymentReplicaFailure"
-                                            - "ProgressDeadlineExceeded"
-                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Available\')].reason']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          text: Update strategy
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.spec.strategy.type']['-']}"
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34 }}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          text: Max unavailable
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 47
-                                          text: "{reqsJsonPath[0]['.spec.strategy.rollingUpdate.maxUnavailable']['-']}"
+                              # Labels list (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 48
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 49
-                                          text: Max surge
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 50
-                                          text: "{reqsJsonPath[0]['.spec.strategy.rollingUpdate.maxSurge']['-']}"
+                              # Node selector key-value list (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: node-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 34 }}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 51
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 52
-                                          text: Progress deadline seconds
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 53
-                                          text: "{reqsJsonPath[0]['.spec.progressDeadlineSeconds']['-']}"
+                              # Pod selector key-value list (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: pod-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 34 }}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 54
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 55
-                                          text: Min ready seconds
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 56
-                                          text: "{reqsJsonPath[0]['.spec.minReadySeconds']['-']}"
+                              # Tolerations counter (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: tolerations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 34 }}
 
-                      # Volumes table
+                              # Annotations counter (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: annotations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 34 }}
+
+                              # Created timestamp (rendered by include)
+                              - type: antdFlex
+                                data:
+                                  id: created-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                  ) | nindent 38 
+                                  }}
+
+                              # Owner reference (fallback text if no owner)
+                              - type: antdFlex
+                                data:
+                                  id: owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: owner-label
+                                      text: Owner
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: owner-value
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
+
+                      # === RIGHT COLUMN: Rollout and timing settings ===
                       - type: antdCol
                         data:
-                          id: 57
-                          style:
-                            marginTop: 16
-                            padding: 10
+                          id: right-column
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 58
-                              value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: right-column-flex
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Status block (mirrors header status)
+                              - type: antdFlex
                                 data:
-                                  id: 59
-                                  text: Volumes
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
-                                data:
-                                  id: 60
-                                  fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-deployment-details-volume-list
-                                  baseprefix: /openapi-ui
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - volumes
+                                  id: status-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: status-label
+                                      text: Status
+                                      strong: true
+                                  - type: StatusText
+                                    data:
+                                      id: status-value
+                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+                                      criteriaSuccess: equals
+                                      valueToCompareSuccess:
+                                        - "MinimumReplicasAvailable"
+                                      criteriaError: equals
+                                      valueToCompareError:
+                                        - "DeploymentReplicaFailure"
+                                        - "ProgressDeadlineExceeded"
+                                      successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
+                                      fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Available')].reason']['-']}"
 
-                      # Init containers table
-                      - type: antdCol
-                        data:
-                          id: 61
-                          style:
-                            marginTop: 16
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 62
-                              value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # Rolling update strategy type
+                              - type: antdFlex
                                 data:
-                                  id: 63
-                                  text: Init containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
-                                data:
-                                  id: 64
-                                  fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-deployment-details-init-containers-list
-                                  baseprefix: /openapi-ui
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - initContainers
+                                  id: update-strategy-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: update-strategy-label
+                                      text: Update strategy
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: update-strategy-value
+                                      text: "{reqsJsonPath[0]['.spec.strategy.type']['-']}"
 
-                      # Containers table
-                      - type: antdCol
-                        data:
-                          id: 65
-                          style:
-                            marginTop: 16
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 66
-                              value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # MaxUnavailable value
+                              - type: antdFlex
                                 data:
-                                  id: 67
-                                  text: Containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
-                                data:
-                                  id: 68
-                                  fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-deployment-details-containers-list
-                                  baseprefix: /openapi-ui
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - containers
+                                  id: max-unavailable-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: max-unavailable-label
+                                      text: Max unavailable
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: max-unavailable-value
+                                      text: "{reqsJsonPath[0]['.spec.strategy.rollingUpdate.maxUnavailable']['-']}"
 
-                      # Conditions table
-                      - type: antdCol
-                        data:
-                          id: 69
-                          style:
-                            marginTop: 16
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 70
-                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # MaxSurge value
+                              - type: antdFlex
                                 data:
-                                  id: 71
-                                  text: Conditions
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 16px
-                              - type: EnrichedTable
-                                data:
-                                  id: 72
-                                  fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-status-conditions
-                                  baseprefix: /openapi-ui
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - conditions
+                                  id: max-surge-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: max-surge-label
+                                      text: Max surge
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: max-surge-value
+                                      text: "{reqsJsonPath[0]['.spec.strategy.rollingUpdate.maxSurge']['-']}"
 
-              - key: yaml
-                label: YAML
-                children:
-                  - type: YamlEditorSingleton
+                              # ProgressDeadlineSeconds
+                              - type: antdFlex
+                                data:
+                                  id: progress-deadline-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: progress-deadline-label
+                                      text: Progress deadline seconds
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: progress-deadline-value
+                                      text: "{reqsJsonPath[0]['.spec.progressDeadlineSeconds']['-']}"
+
+                              # MinReadySeconds
+                              - type: antdFlex
+                                data:
+                                  id: min-ready-seconds-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: min-ready-seconds-label
+                                      text: Min ready seconds
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: min-ready-seconds-value
+                                      text: "{reqsJsonPath[0]['.spec.minReadySeconds']['-']}"
+
+                  # === Volumes table (visible only if volumes exist) ===
+                  - type: antdCol
                     data:
-                      id: 73
-                      apiGroup: apps
-                      apiVersion: v1
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
-                      type: apis
-                      typeName: deployments
+                      id: volumes-column
+                      style:
+                        marginTop: 16
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: volumes-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: volumes-title
+                              text: Volumes
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: volumes-table
+                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-deployment-details-volume-list
+                              baseprefix: /openapi-ui
+                              withoutControls: true
+                              # Path in the fetched object to the volumes array
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - volumes
 
-              - key: replicasets
-                label: ReplicaSets
-                children:
-                  - type: EnrichedTable
+                  # === Init containers table (visible only if initContainers exist) ===
+                  - type: antdCol
                     data:
-                      id: 75
-                      fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/replicasets
-                      baseprefix: /openapi-ui
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/apps/v1/replicasets
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
-                      withoutControls: true
+                      id: init-containers-column
+                      style:
+                        marginTop: 16
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: init-containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: init-containers-title
+                              text: Init containers
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: init-containers-table
+                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-deployment-details-init-containers-list
+                              baseprefix: /openapi-ui
+                              withoutControls: true
+                              # Path in the fetched object to the initContainers array
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - initContainers
 
-              - key: pods
-                label: Pods
-                children:
-                  - type: EnrichedTable
+                  # === Containers table (visible only if containers exist) ===
+                  - type: antdCol
                     data:
-                      id: 77
-                      fetchUrl: /api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods
-                      baseprefix: /openapi-ui
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/v1/pods
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
-                      withoutControls: true
-      type: antdTabs
+                      id: containers-column
+                      style:
+                        marginTop: 16
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: containers-title
+                              text: Containers
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: containers-table
+                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-deployment-details-containers-list
+                              baseprefix: /openapi-ui
+                              withoutControls: true
+                              # Path in the fetched object to the containers array
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - containers
+
+                  # === Conditions table (visible only if status.conditions exist) ===
+                  - type: antdCol
+                    data:
+                      id: conditions-column
+                      style:
+                        marginTop: 16
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: conditions-container
+                          value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: conditions-title
+                              text: Conditions
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 16px
+                          - type: EnrichedTable
+                            data:
+                              id: conditions-table
+                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-status-conditions
+                              baseprefix: /openapi-ui
+                              withoutControls: true
+                              # Path in the fetched object to the conditions array
+                              pathToItems:
+                                - status
+                                - conditions
+
+          # ------ YAML TAB ------
+          - key: yaml
+            label: YAML
+            children:
+              # In-place editor bound to the same Deployment
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  apiGroup: apps
+                  apiVersion: v1
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+                  type: apis
+                  typeName: deployments
+
+          # ------ REPLICASETS TAB ------
+          - key: replicasets
+            label: ReplicaSets
+            children:
+              # Table filtered by Deployment's Pod template labels
+              - type: EnrichedTable
+                data:
+                  id: replicasets-table
+                  fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/replicasets
+                  baseprefix: /openapi-ui
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/apps/v1/replicasets
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  # Path to items list in the response
+                  pathToItems:
+                    - items
+                  withoutControls: true
+
+          # ------ PODS TAB ------
+          - key: pods
+            label: Pods
+            children:
+              # Table filtered by Deployment's Pod template labels
+              - type: EnrichedTable
+                data:
+                  id: pods-table
+                  fetchUrl: /api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods
+                  baseprefix: /openapi-ui
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/v1/pods
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  # Path to items list in the response
+                  pathToItems:
+                    - items
+                  withoutControls: true

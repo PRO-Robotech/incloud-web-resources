@@ -3,9 +3,9 @@ items:
   - apiVersion: front.in-cloud.io/v1alpha1
     kind: Breadcrumb
     metadata:
-      name: stock-cluster-factory-namespace-details
+      name: stock-project-factory-job-details
     spec:
-      id: "stock-cluster-factory-namespace-details"
+      id: "stock-project-factory-job-details"
       breadcrumbItems:
         - key: In-Cloud
           label: In-Cloud
@@ -18,9 +18,13 @@ items:
           link: "/openapi-ui/clusters/{clusterName}"
         - key: namespaces
           label: "Namespaces"
-          link: "/openapi-ui/{clusterName}/builtin-table/namespaces"
         - key: namespace
-          label: "{5}"
+          label: "{namespace}"
+        - key: jobs
+          label: "jobs"
+          link: "/openapi-ui/{clusterName}/{namespace}/api-table/batch/v1/jobs"
+        - key: job
+          label: "{6}"
 
 kind: List
 metadata:

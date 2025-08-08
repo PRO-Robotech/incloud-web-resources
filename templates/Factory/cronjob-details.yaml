@@ -1,514 +1,582 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: cronjob-details
-    spec:
-      key: cronjob-details
-      sidebarTags:
-        - cronjobs-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: cronjob-details
+spec:
+  # Unique key for this factory configuration
+  key: cronjob-details
+
+  # Sidebar category tags
+  sidebarTags:
+    - cronjobs-sidebar
+
+  # Enable scrollable content card for main section
+  withScrollableMainContentCard: true
+
+  # API endpoint for fetching CronJob details
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+
+  data:
+    # === HEADER ROW ===
+    - type: antdFlex
       data:
-        - type: antdFlex
+        id: header-row
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Badge with resource short name
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: header-badge
+            text: CJ
+            title: cronjobs
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: CJ
-                title: cronjobs
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#009596"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#009596"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
 
-        - type: antdTabs
+        # CronJob name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: "details"
-            items:
-              - key: "details"
-                label: "Details"
+            id: header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+    # === MAIN TABS ===
+    - type: antdTabs
+      data:
+        id: tabs-root
+        defaultActiveKey: "details"
+        items:
+          # ------ DETAILS TAB ------
+          - key: "details"
+            label: "Details"
+            children:
+              # Main card container for details section
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  - type: ContentCard
+                  # Grid layout: left and right columns
+                  - type: antdRow
                     data:
-                      id: 5
-                      style:
-                        marginBottom: 24px
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdRow
+                      # LEFT COLUMN: Metadata, schedule, labels, etc.
+                      - type: antdCol
                         data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: col-left
+                          span: 12
                         children:
-                          - type: antdCol
+                          # Section title
+                          - type: antdText
                             data:
-                              id: 9
-                              span: 12
+                              id: cronjob-title
+                              text: "CronJob details"
+                              strong: true
+                              style:
+                                fontSize: 20
+                                marginBottom: 12px
+
+                          # Spacer for visual separation
+                          - type: Spacer
+                            data:
+                              id: spacer-main
+                              "$space": 16
+
+                          # Vertical stack of fields
+                          - type: antdFlex
+                            data:
+                              id: left-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
-                                data:
-                                  id: 6
-                                  text: "CronJob details"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 7
-                                  "$space": 16
+                              # Resource name block
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Name"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: meta-name-label
+                                      strong: true
+                                      text: "Name"
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: meta-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Schedule"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.schedule']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Suspend"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.suspend']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Concurrency policy"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.concurrencyPolicy']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Starting deadline seconds"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.startingDeadlineSeconds']['Not configured']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Last schedule time"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.status.lastScheduleTime']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 34
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 35
-                                          strong: true
-                                          text: "Owner"
-                                      - type: parsedText
-                                        data:
-                                          id: 351
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          - type: antdCol
-                            data:
-                              id: 37
-                              span: 12
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 6
-                                  text: "Job details"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 7
-                                  "$space": 16
+                              # Namespace link
                               - type: antdFlex
                                 data:
-                                  id: 38
+                                  id: meta-namespace-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 38}}
+
+                              # Labels display block
+                              - type: antdFlex
+                                data:
+                                  id: labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
+
+                              # Annotations counter block
+                              - type: antdFlex
+                                data:
+                                  id: annotations-counter-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30}}
+
+                              # Cron schedule string (crontab)
+                              - type: antdFlex
+                                data:
+                                  id: schedule-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 39
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 40
-                                          strong: true
-                                          text: "Desired completions"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.completions']['-']}"
-
-                                  - type: antdFlex
+                                      id: schedule-label
+                                      strong: true
+                                      text: "Schedule"
+                                  - type: parsedText
                                     data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          strong: true
-                                          text: "Parallelism"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.parallelism']['-']}"
+                                      id: schedule-value
+                                      text: "{reqsJsonPath[0]['.spec.schedule']['-']}"
 
-                                  - type: antdFlex
+                              # Suspend flag
+                              - type: antdFlex
+                                data:
+                                  id: suspend-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Active deadline seconds"
-                                      - type: parsedText
-                                        data:
-                                          id: 47
-                                          text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['Not configured']}"
+                                      id: suspend-label
+                                      strong: true
+                                      text: "Suspend"
+                                  - type: parsedText
+                                    data:
+                                      id: suspend-value
+                                      text: "{reqsJsonPath[0]['.spec.suspend']['-']}"
 
-                      # Volumes
-                      - type: antdCol
-                        data:
-                          id: 60
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 61
-                              value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # Concurrency policy
+                              - type: antdFlex
                                 data:
-                                  id: 62
-                                  text: "Volumes"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 63
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-cronjob-details-volume-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - volumes
-                      # Init containers
-                      - type: antdCol
-                        data:
-                          id: 64
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 65
-                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.initContainers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 66
-                                  text: "Init containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 67
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-cronjob-details-init-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - jobTemplate
-                                    - spec
-                                    - template
-                                    - spec
-                                    - initContainers
-                      # Containers
-                      - type: antdCol
-                        data:
-                          id: 68
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 69
-                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.containers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 70
-                                  text: "Containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 71
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-cronjob-details-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - jobTemplate
-                                    - spec
-                                    - template
-                                    - spec
-                                    - containers
-                      # Conditions
-                      - type: antdCol
-                        data:
-                          id: 72
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 73
-                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 74
-                                  text: "Conditions"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                              - type: EnrichedTable
-                                data:
-                                  id: 75
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-status-conditions
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - conditions
-              - key: "yaml"
-                label: "YAML"
-                children:
-                  - type: YamlEditorSingleton
-                    data:
-                      id: 76
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: "builtin"
-                      typeName: cronjobs
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+                                  id: concurrency-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: concurrency-label
+                                      strong: true
+                                      text: "Concurrency policy"
+                                  - type: parsedText
+                                    data:
+                                      id: concurrency-value
+                                      text: "{reqsJsonPath[0]['.spec.concurrencyPolicy']['-']}"
 
-              - key: pods
-                label: Pods
-                children:
-                  - type: EnrichedTable
-                    data:
-                      id: 62
-                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/v1/pods
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - jobTemplate
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
+                              # StartingDeadlineSeconds
+                              - type: antdFlex
+                                data:
+                                  id: starting-deadline-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: starting-deadline-label
+                                      strong: true
+                                      text: "Starting deadline seconds"
+                                  - type: parsedText
+                                    data:
+                                      id: starting-deadline-value
+                                      text: "{reqsJsonPath[0]['.spec.startingDeadlineSeconds']['Not configured']}"
 
-              - key: jobs
-                label: Jobs
-                children:
-                  - type: EnrichedTable
+                              # Last schedule time (from status)
+                              - type: antdFlex
+                                data:
+                                  id: last-schedule-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".status.lastScheduleTime"
+                                    "text" "Last schedule time"
+                                    ) | nindent 34
+                                  }}
+
+                              # Creation timestamp
+                              - type: antdFlex
+                                data:
+                                  id: created-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                    ) | nindent 34
+                                  }}
+
+                              # Owner information block
+                              - type: antdFlex
+                                data:
+                                  id: owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: owner-label
+                                      strong: true
+                                      text: "Owner"
+                                  - type: parsedText
+                                    data:
+                                      id: owner-value
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
+
+                      # RIGHT COLUMN: Job template fields (completions, parallelism, deadlines)
+                      - type: antdCol
+                        data:
+                          id: col-right
+                          span: 12
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: job-title
+                              text: "Job details"
+                              strong: true
+                              style:
+                                fontSize: 20
+                                marginBottom: 12px
+
+                          # Spacer for visual separation
+                          - type: Spacer
+                            data:
+                              id: spacer-job
+                              "$space": 16
+
+                          # Vertical stack of job fields
+                          - type: antdFlex
+                            data:
+                              id: right-stack
+                              vertical: true
+                              gap: 24
+                            children:
+                              # Desired completions
+                              - type: antdFlex
+                                data:
+                                  id: desired-completions-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: desired-completions-label
+                                      strong: true
+                                      text: "Desired completions"
+                                  - type: parsedText
+                                    data:
+                                      id: desired-completions-value
+                                      text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.completions']['-']}"
+
+                              # Parallelism
+                              - type: antdFlex
+                                data:
+                                  id: parallelism-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: parallelism-label
+                                      strong: true
+                                      text: "Parallelism"
+                                  - type: parsedText
+                                    data:
+                                      id: parallelism-value
+                                      text: "{reqsJsonPath[0]['.spec.jobTemplate.spec.parallelism']['-']}"
+
+                              # ActiveDeadlineSeconds
+                              - type: antdFlex
+                                data:
+                                  id: active-deadline-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: active-deadline-label
+                                      strong: true
+                                      text: "Active deadline seconds"
+                                  - type: parsedText
+                                    data:
+                                      id: active-deadline-value
+                                      text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['Not configured']}"
+
+                  # ---- VOLUMES SECTION ----
+                  - type: antdCol
                     data:
-                      id: 62
-                      fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/batch/v1/jobs
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - jobTemplate
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
+                      id: volumes-section
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      # Hide block if no volumes
+                      - type: VisibilityContainer
+                        data:
+                          id: volumes-container
+                          value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: volumes-title
+                              text: "Volumes"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Generic table rendering volumes list
+                          - type: EnrichedTable
+                            data:
+                              id: volumes-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-cronjob-details-volume-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              # Path inside CronJob manifest where volumes are located
+                              pathToItems:
+                                - spec
+                                - volumes
+
+                  # ---- INIT CONTAINERS SECTION ----
+                  - type: antdCol
+                    data:
+                      id: init-containers-section
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      # Hide block if no init containers
+                      - type: VisibilityContainer
+                        data:
+                          id: init-containers-container
+                          value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.initContainers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: init-containers-title
+                              text: "Init containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Table rendering initContainers from jobTemplate
+                          - type: EnrichedTable
+                            data:
+                              id: init-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-cronjob-details-init-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              # Path to initContainers within jobTemplate
+                              pathToItems:
+                                - spec
+                                - jobTemplate
+                                - spec
+                                - template
+                                - spec
+                                - initContainers
+
+                  # ---- CONTAINERS SECTION ----
+                  - type: antdCol
+                    data:
+                      id: containers-section
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      # Hide block if no containers
+                      - type: VisibilityContainer
+                        data:
+                          id: containers-container
+                          value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.containers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: containers-title
+                              text: "Containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          # Table rendering containers from jobTemplate
+                          - type: EnrichedTable
+                            data:
+                              id: containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-cronjob-details-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              # Path to containers within jobTemplate
+                              pathToItems:
+                                - spec
+                                - jobTemplate
+                                - spec
+                                - template
+                                - spec
+                                - containers
+
+                  # ---- CONDITIONS SECTION ----
+                  - type: antdCol
+                    data:
+                      id: conditions-section
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      # Hide block if no status.conditions
+                      - type: VisibilityContainer
+                        data:
+                          id: conditions-container
+                          value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          # Section title
+                          - type: antdText
+                            data:
+                              id: conditions-title
+                              text: "Conditions"
+                              strong: true
+                              style:
+                                fontSize: 22
+                          # Table rendering .status.conditions
+                          - type: EnrichedTable
+                            data:
+                              id: conditions-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-status-conditions
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              # Path to conditions array
+                              pathToItems:
+                                - status
+                                - conditions
+
+          # ------ YAML TAB ------
+          - key: "yaml"
+            label: "YAML"
+            children:
+              # YAML editor for resource manifest
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: "builtin"
+                  typeName: cronjobs
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+
+          # ------ PODS TAB ------
+          - key: pods
+            label: Pods
+            children:
+              # Table of Pods that match CronJob's job template labels
+              - type: EnrichedTable
+                data:
+                  id: pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/v1/pods
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from job template's pod labels
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - jobTemplate
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  # Items path for Pods list
+                  pathToItems:
+                    - items
+
+          # ------ JOBS TAB ------
+          - key: jobs
+            label: Jobs
+            children:
+              # Table of Jobs in the same namespace; filtered by CronJob's jobTemplate labels
+              - type: EnrichedTable
+                data:
+                  id: jobs-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/batch/v1/jobs
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from CronJob's job template metadata.labels
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - jobTemplate
+                      - metadata
+                      - labels
+                  # Items path for Jobs list
+                  pathToItems:
+                    - items

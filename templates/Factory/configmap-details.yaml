@@ -1,179 +1,201 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: configmap-details
-    spec:
-      key: configmap-details
-      sidebarTags:
-        - configmap-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/configmaps/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: configmap-details
+spec:
+  # Unique key for this factory configuration
+  key: configmap-details
+
+  # Sidebar category tags
+  sidebarTags:
+    - configmap-sidebar
+
+  # Enable scrollable content card for main section
+  withScrollableMainContentCard: true
+
+  # API endpoint for fetching ConfigMap details
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/configmaps/{6}"
+
+  data:
+    # === HEADER ROW ===
+    - type: antdFlex
       data:
-        # Заголовок
-        - type: antdFlex
+        id: header-row
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Badge with resource short name
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: header-badge
+            text: CM
+            title: ConfigMap
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: CM
-                title: ConfigMap
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#40199a"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#40199a"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
 
-        # Вкладки
-        - type: antdTabs
+        # ConfigMap name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: details
-            items:
-              # Details
-              - key: details
-                label: Details
+            id: header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+    # === MAIN TABS ===
+    - type: antdTabs
+      data:
+        id: tabs-root
+        defaultActiveKey: details
+        items:
+          # ------ DETAILS TAB ------
+          - key: details
+            label: Details
+            children:
+              # Main card container for details section
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  # Основная карточка
-                  - type: ContentCard
+                  # Section title
+                  - type: antdText
                     data:
-                      id: 5
+                      id: details-title
+                      text: ConfigMap details
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20px
+                        marginBottom: 12px
+
+                  # Spacer for visual separation
+                  - type: Spacer
+                    data:
+                      id: details-spacer
+                      $space: 16
+
+                  # Grid layout: left and right columns
+                  - type: antdRow
+                    data:
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdText
+                      # LEFT COLUMN: Metadata and links
+                      - type: antdCol
                         data:
-                          id: 6
-                          text: ConfigMap details
-                          strong: true
-                          style:
-                            fontSize: 20px
-                            marginBottom: 12px
-
-                      - type: Spacer
-                        data:
-                          id: 7
-                          $space: 16
-
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: details-col-left
+                          span: 12
                         children:
-                          # Левая колонка
-                          - type: antdCol
+                          - type: antdFlex
                             data:
-                              id: 9
-                              span: 12
+                              id: left-stack
+                              vertical: true
+                              gap: 24
                             children:
+                              # Resource name block
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: field-name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          text: Name
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: field-name-label
+                                      text: Name
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: field-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
+                              # Namespace link block
+                              - type: antdFlex
+                                data:
+                                  id: namespace-links-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34}}
+
+                              # Labels display block
+                              - type: antdFlex
+                                data:
+                                  id: labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
+
+                              # Annotations counter block
+                              - type: antdFlex
+                                data:
+                                  id: annotations-counter-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30}}
+
+                              # Creation time block
+                              - type: antdFlex
+                                data:
+                                  id: created-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                    ) | nindent 30
+                                  }}
+
+                              # Owner information block
+                              - type: antdFlex
+                                data:
+                                  id: owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
+                                      id: owner-label
+                                      text: Owner
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+                                      id: owner-value
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
 
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 28
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 29
-                                          text: Owner
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 351
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-              # YAML
-              - key: yaml
-                label: YAML
-                children:
-                  - type: YamlEditorSingleton
-                    data:
-                      id: 31
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: builtin
-                      typeName: configmaps
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+          # ------ YAML TAB ------
+          - key: yaml
+            label: YAML
+            children:
+              # YAML editor for resource manifest
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: builtin
+                  typeName: configmaps
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400

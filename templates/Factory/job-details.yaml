@@ -1,531 +1,564 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: job-details
-    spec:
-      key: job-details
-      sidebarTags:
-        - jobs-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+# Factory definition for Job details page
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: job-details
+spec:
+  # Unique key for this view
+  key: job-details
+
+  # Tags for sidebar navigation
+  sidebarTags:
+    - jobs-sidebar
+
+  # Enables scrolling in the main content area
+  withScrollableMainContentCard: true
+
+  # API endpoint to fetch Job resource
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+
+  data:
+    # === Header with icon, name, and job status ===
+    - type: antdFlex
       data:
-        - type: antdFlex
+        id: header-flex
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # Job icon
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: header-icon
+            text: J
+            title: jobs
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: J
-                title: jobs
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#009596"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-            - type: StatusText
-              data:
-                id: 40001215555
-                value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                criteriaSuccess: equals
-                valueToCompareSuccess:
-                  - "Complete"
-                criteriaError: equals
-                valueToCompareError:
-                  - "Failed"
-                successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#009596"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
 
-
-        - type: antdTabs
+        # Job name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: "details"
-            items:
-              - key: "details"
-                label: "Details"
+            id: header-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+        # Job completion/failed status
+        - type: StatusText
+          data:
+            id: header-status
+            value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+            criteriaSuccess: equals
+            valueToCompareSuccess:
+              - "Complete"
+            criteriaError: equals
+            valueToCompareError:
+              - "Failed"
+            successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+            fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+
+    # === Main content tabs ===
+    - type: antdTabs
+      data:
+        id: job-tabs
+        defaultActiveKey: "details"
+        items:
+          # ------ DETAILS TAB ------
+          - key: "details"
+            label: "Details"
+            children:
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  - type: ContentCard
+                  - type: antdRow
                     data:
-                      id: 5
-                      style:
-                        marginBottom: 24px
+                      id: details-row
+                      gutter: [48, 12]
                     children:
-                      - type: antdRow
+                      # === LEFT COLUMN: Job metadata ===
+                      - type: antdCol
                         data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: left-column
+                          span: 12
                         children:
-                          - type: antdCol
+                          - type: antdText
                             data:
-                              id: 9
-                              span: 12
+                              id: job-details-title
+                              text: "Job details"
+                              strong: true
+                              style:
+                                fontSize: 20
+                                marginBottom: 12px
+
+                          - type: Spacer
+                            data:
+                              id: details-spacer
+                              "$space": 16
+
+                          - type: antdFlex
+                            data:
+                              id: left-column-flex
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
-                                data:
-                                  id: 6
-                                  text: "Job details"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 7
-                                  "$space": 16
+                              # Job name
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Name"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: name-label
+                                      strong: true
+                                      text: "Name"
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Desired completions"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.completions']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Parallelism"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.parallelism']['-']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          strong: true
-                                          text: "Active deadline seconds"
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['Not configured']}"
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 34
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 35
-                                          strong: true
-                                          text: "Owner"
-                                      - type: parsedText
-                                        data:
-                                          id: 351
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          - type: antdCol
-                            data:
-                              id: 37
-                              span: 12
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 6
-                                  text: "Job status"
-                                  strong: true
-                                  style:
-                                    fontSize: 20
-                                    marginBottom: 12px
-                              - type: Spacer
-                                data:
-                                  id: 7
-                                  "$space": 16
+                              # Namespace link
                               - type: antdFlex
                                 data:
-                                  id: 38
+                                  id: namespace-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
-                                    data:
-                                      id: 39
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 40
-                                          strong: true
-                                          text: "Status"
-                                      - type: StatusText
-                                        data:
-                                          id: 40001215555
-                                          value: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                                          criteriaSuccess: equals
-                                          valueToCompareSuccess:
-                                            - "Complete"
-                                          criteriaError: equals
-                                          valueToCompareError:
-                                            - "Failed"
-                                          successText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                                          errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
-                                          fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type==\'Complete\' || @.type==\'Failed\')].type']['-']}"
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34 }}
 
+                              # Labels
+                              - type: antdFlex
+                                data:
+                                  id: labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          strong: true
-                                          text: "Start time"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.startTime']['-']}"
+                              # Annotations
+                              - type: antdFlex
+                                data:
+                                  id: annotations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 34 }}
 
-                                  - type: antdFlex
+                              # Desired completions
+                              - type: antdFlex
+                                data:
+                                  id: completions-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Completion time"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.completionTime']['-']}"
+                                      id: completions-label
+                                      strong: true
+                                      text: "Desired completions"
+                                  - type: parsedText
+                                    data:
+                                      id: completions-value
+                                      text: "{reqsJsonPath[0]['.spec.completions']['-']}"
 
-                                  - type: antdFlex
+                              # Parallelism
+                              - type: antdFlex
+                                data:
+                                  id: parallelism-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Succeeded pods"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.succeeded']['0']}"
+                                      id: parallelism-label
+                                      strong: true
+                                      text: "Parallelism"
+                                  - type: parsedText
+                                    data:
+                                      id: parallelism-value
+                                      text: "{reqsJsonPath[0]['.spec.parallelism']['-']}"
 
-                                  - type: antdFlex
+                              # Active deadline seconds
+                              - type: antdFlex
+                                data:
+                                  id: active-deadline-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Active pods"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.active']['0']}"
+                                      id: active-deadline-label
+                                      strong: true
+                                      text: "Active deadline seconds"
+                                  - type: parsedText
+                                    data:
+                                      id: active-deadline-value
+                                      text: "{reqsJsonPath[0]['.spec.activeDeadlineSeconds']['-']}"
 
-                                  - type: antdFlex
+                              # Created timestamp
+                              - type: antdFlex
+                                data:
+                                  id: created-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                  ) | nindent 34 
+                                  }}
+
+                              # Owner reference
+                              - type: antdFlex
+                                data:
+                                  id: owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          strong: true
-                                          text: "Failed pods"
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.failed']['0']}"
-                      # Volumes
+                                      id: owner-label
+                                      strong: true
+                                      text: "Owner"
+                                  - type: parsedText
+                                    data:
+                                      id: owner-value
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
+
+                      # === RIGHT COLUMN: Job status ===
                       - type: antdCol
                         data:
-                          id: 60
-                          style:
-                            marginTop: 10
-                            padding: 10
+                          id: right-column
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdText
                             data:
-                              id: 61
-                              value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                              id: job-status-title
+                              text: "Job status"
+                              strong: true
                               style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 62
-                                  text: "Volumes"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 63
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-job-details-volume-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - volumes
-                      # Init containers
-                      - type: antdCol
-                        data:
-                          id: 64
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
+                                fontSize: 20
+                                marginBottom: 12px
+
+                          - type: Spacer
                             data:
-                              id: 65
-                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.initContainers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 66
-                                  text: "Init containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 67
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-job-details-init-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - jobTemplate
-                                    - spec
-                                    - template
-                                    - spec
-                                    - initContainers
-                      # Containers
-                      - type: antdCol
-                        data:
-                          id: 68
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
+                              id: status-spacer
+                              "$space": 16
+
+                          - type: antdFlex
                             data:
-                              id: 69
-                              value: "{reqsJsonPath[0]['.spec.jobTemplate.spec.template.spec.containers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: right-column-flex
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Status (Complete/Failed)
+                              - type: antdFlex
                                 data:
-                                  id: 70
-                                  text: "Containers"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                                    marginBottom: 32px
-                              - type: EnrichedTable
+                                  id: status-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: status-label
+                                      strong: true
+                                      text: "Status"
+                                  - type: StatusText
+                                    data:
+                                      id: status-value
+                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+                                      criteriaSuccess: equals
+                                      valueToCompareSuccess:
+                                        - "Complete"
+                                      criteriaError: equals
+                                      valueToCompareError:
+                                        - "Failed"
+                                      successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+                                      fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+
+                              # Start time
+                              - type: antdFlex
                                 data:
-                                  id: 71
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-job-details-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - jobTemplate
-                                    - spec
-                                    - template
-                                    - spec
-                                    - containers
-                      # Conditions
-                      - type: antdCol
-                        data:
-                          id: 72
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 73
-                              value: "{reqsJsonPath[0]['.status.conditions']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                                  id: start-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".status.startTime"
+                                    "text" "Start time"
+                                    ) | nindent 34 
+                                  }}
+
+                              # Completion time
+                              - type: antdFlex
                                 data:
-                                  id: 74
-                                  text: "Conditions"
-                                  strong: true
-                                  style:
-                                    fontSize: 22
-                              - type: EnrichedTable
+                                  id: completion-time-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".status.completionTime"
+                                    "text" "Completion time"
+                                    ) | nindent 34 
+                                  }}
+
+                              # Succeeded pods count
+                              - type: antdFlex
                                 data:
-                                  id: 75
-                                  fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-status-conditions
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - status
-                                    - conditions
-              - key: "yaml"
-                label: "YAML"
-                children:
-                  - type: YamlEditorSingleton
+                                  id: succeeded-pods-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: succeeded-pods-label
+                                      strong: true
+                                      text: "Succeeded pods"
+                                  - type: parsedText
+                                    data:
+                                      id: succeeded-pods-value
+                                      text: "{reqsJsonPath[0]['.status.succeeded']['-']}"
+
+                              # Active pods count
+                              - type: antdFlex
+                                data:
+                                  id: active-pods-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: active-pods-label
+                                      strong: true
+                                      text: "Active pods"
+                                  - type: parsedText
+                                    data:
+                                      id: active-pods-value
+                                      text: "{reqsJsonPath[0]['.status.active']['-']}"
+
+                              # Failed pods count
+                              - type: antdFlex
+                                data:
+                                  id: failed-pods-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: failed-pods-label
+                                      strong: true
+                                      text: "Failed pods"
+                                  - type: parsedText
+                                    data:
+                                      id: failed-pods-value
+                                      text: "{reqsJsonPath[0]['.status.failed']['-']}"
+
+                  # === Volumes table ===
+                  - type: antdCol
                     data:
-                      id: 76
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: "builtin"
-                      typeName: jobs
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+                      id: volumes-column
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: volumes-container
+                          value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: volumes-title
+                              text: "Volumes"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: volumes-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-job-details-volume-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - volumes
 
-              - key: pods
-                label: Pods
-                children:
-                  - type: EnrichedTable
+                  # === Init containers table ===
+                  - type: antdCol
                     data:
-                      id: 62
-                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/v1/pods
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
+                      id: init-containers-column
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: init-containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: init-containers-title
+                              text: "Init containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: init-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-job-details-init-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - initContainers
+
+                  # === Containers table ===
+                  - type: antdCol
+                    data:
+                      id: containers-column
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: containers-container
+                          value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: containers-title
+                              text: "Containers"
+                              strong: true
+                              style:
+                                fontSize: 22
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-job-details-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - containers
+
+                  # === Conditions table ===
+                  - type: antdCol
+                    data:
+                      id: conditions-column
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: conditions-container
+                          value: "{reqsJsonPath[0]['.status.conditions']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: conditions-title
+                              text: "Conditions"
+                              strong: true
+                              style:
+                                fontSize: 22
+                          - type: EnrichedTable
+                            data:
+                              id: conditions-table
+                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-status-conditions
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - status
+                                - conditions
+
+          # ------ YAML TAB ------
+          - key: "yaml"
+            label: "YAML"
+            children:
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: "builtin"
+                  typeName: jobs
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+
+          # ------ PODS TAB ------
+          - key: pods
+            label: Pods
+            children:
+              - type: EnrichedTable
+                data:
+                  id: pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/v1/pods
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from Job's pod template labels
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  pathToItems:
+                    - items

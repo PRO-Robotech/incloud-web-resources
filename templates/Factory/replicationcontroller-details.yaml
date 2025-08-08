@@ -1,385 +1,399 @@
-apiVersion: v1
-kind: List
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Factory
-    metadata:
-      name: replicationcontroller-details
-    spec:
-      key: replicationcontroller-details
-      sidebarTags:
-        - replicationcontroller-sidebar
-      withScrollableMainContentCard: true
-      urlsToFetch:
-        - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Factory
+metadata:
+  name: replicationcontroller-details
+spec:
+  key: replicationcontroller-details
+  sidebarTags:
+    - replicationcontroller-sidebar
+  withScrollableMainContentCard: true
+  urlsToFetch:
+    - "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
+
+  # Header row with badge and ReplicationController name
+  data:
+    - type: antdFlex
       data:
-        # Заголовок
-        - type: antdFlex
+        id: header-row
+        gap: 6
+        align: center
+        style:
+          marginBottom: 24px
+      children:
+        # ReplicationController badge
+        - type: antdText
           data:
-            id: 1
-            gap: 6
-            align: center
+            id: badge-rc
+            text: RC
+            title: replicationcontroller
             style:
-              marginBottom: 24px
-          children:
-            - type: antdText
-              data:
-                id: 2
-                text: RC
-                title: replicationcontroller
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  padding: "0 9px"
-                  borderRadius: "20px"
-                  minWidth: 24
-                  display: inline-block
-                  textAlign: center
-                  whiteSpace: nowrap
-                  color: "#fff"
-                  backgroundColor: "#004080"
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-                  fontWeight: 400
-            - type: parsedText
-              data:
-                id: 3
-                text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                style:
-                  fontSize: 20px
-                  lineHeight: 24px
-                  fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
-
-        # Вкладки
-        - type: antdTabs
+              fontSize: 20px
+              lineHeight: 24px
+              padding: "0 9px"
+              borderRadius: "20px"
+              minWidth: 24
+              display: inline-block
+              textAlign: center
+              whiteSpace: nowrap
+              color: "#fff"
+              backgroundColor: "#004080"
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+              fontWeight: 400
+        # ReplicationController name
+        - type: parsedText
           data:
-            id: 4
-            defaultActiveKey: details
-            items:
-              # Details
-              - key: details
-                label: Details
+            id: rc-name
+            text: "{reqsJsonPath[0]['.metadata.name']['-']}"
+            style:
+              fontSize: 20px
+              lineHeight: 24px
+              fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
+    # Tabs with Details, YAML, and Pods
+    - type: antdTabs
+      data:
+        id: rc-tabs
+        defaultActiveKey: details
+        items:
+          # Details tab with metadata and spec info
+          - key: details
+            label: Details
+            children:
+              - type: ContentCard
+                data:
+                  id: details-card
+                  style:
+                    marginBottom: 24px
                 children:
-                  # Карточка с основной информацией
-                  - type: ContentCard
+                  # Title
+                  - type: antdText
                     data:
-                      id: 5
+                      id: details-title
+                      text: ReplicationController details
+                      strong: true
                       style:
-                        marginBottom: 24px
+                        fontSize: 20px
+                        marginBottom: 12px
+
+                  # Spacer
+                  - type: Spacer
+                    data:
+                      id: details-spacer
+                      $space: 16
+
+                  # Two-column layout
+                  - type: antdRow
+                    data:
+                      id: details-grid
+                      gutter: [48, 12]
                     children:
-                      - type: antdText
+                      # Left column: metadata
+                      - type: antdCol
                         data:
-                          id: 6
-                          text: ReplicationController details
-                          strong: true
-                          style:
-                            fontSize: 20px
-                            marginBottom: 12px
-
-                      - type: Spacer
-                        data:
-                          id: 7
-                          $space: 16
-
-                      - type: antdRow
-                        data:
-                          id: 8
-                          gutter: [48, 12]
+                          id: col-left
+                          span: 12
                         children:
-                          # Левая колонка
-                          - type: antdCol
+                          - type: antdFlex
                             data:
-                              id: 9
-                              span: 12
+                              id: col-left-stack
+                              vertical: true
+                              gap: 24
                             children:
+                              # Name block
                               - type: antdFlex
                                 data:
-                                  id: 10
+                                  id: meta-name-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 4
                                 children:
-                                  - type: antdFlex
+                                  - type: antdText
                                     data:
-                                      id: 11
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 12
-                                          text: Name
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 13
-                                          text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-
-                                  - type: antdFlex
+                                      id: meta-name-label
+                                      text: Name
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                      id: meta-name-value
+                                      text: "{reqsJsonPath[0]['.metadata.name']['-']}"
 
-                                  - type: antdFlex
-                                    data:
-                                      id: 17
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
-
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 23
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 26
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 3600
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
-
-                                  - type: antdFlex
-                                    data:
-                                      id: 37
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 38
-                                          text: Owner
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 381
-                                          strong: true
-                                          text: "No owner"
-                                          style:
-                                            color: red
-
-                          # Правая колонка
-                          - type: antdCol
-                            data:
-                              id: 40
-                              span: 12
-                            children:
+                              # Namespace link
                               - type: antdFlex
                                 data:
-                                  id: 41
+                                  id: meta-namespace-block
                                   vertical: true
-                                  gap: 24
+                                  gap: 8
                                 children:
-                                  - type: antdFlex
+                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+
+                              # Labels
+                              - type: antdFlex
+                                data:
+                                  id: meta-labels-block
+                                  vertical: true
+                                  gap: 8
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+
+                              # Node selector
+                              - type: antdFlex
+                                data:
+                                  id: meta-node-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.node.selector" . | nindent 38}}
+
+                              # Pod selector
+                              - type: antdFlex
+                                data:
+                                  id: meta-pod-selector-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.labels.base.pod.selector" . | nindent 38}}
+
+                              # Tolerations
+                              - type: antdFlex
+                                data:
+                                  id: meta-tolerations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.template.tolerations" . | nindent 38}}
+
+                              # Annotations
+                              - type: antdFlex
+                                data:
+                                  id: meta-annotations-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
+                              # Created timestamp
+                              - type: antdFlex
+                                data:
+                                  id: meta-created-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  {{ include "incloud-web-resources.factory.time.create" (dict
+                                    "req" ".metadata.creationTimestamp"
+                                    "text" "Created"
+                                  ) | nindent 38}}
+
+                              # Owner block
+                              - type: antdFlex
+                                data:
+                                  id: meta-owner-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
                                     data:
-                                      id: 42
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 43
-                                          text: Current count
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 44
-                                          text: "{reqsJsonPath[0]['.status.replicas']['-']}"
-                                  - type: antdFlex
+                                      id: meta-owner-label
+                                      text: Owner
+                                      strong: true
+                                  - type: parsedText
                                     data:
-                                      id: 45
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 46
-                                          text: Desired count
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 47
-                                          text: "{reqsJsonPath[0]['.spec.replicas']['-']}"
+                                      id: meta-owner-fallback
+                                      strong: true
+                                      text: "No owner"
+                                      style:
+                                        color: red
 
-                      # Таблицы внизу
+                      # Right column: replica counts
                       - type: antdCol
                         data:
-                          id: 48
-                          style:
-                            marginTop: 10
-                            padding: 10
+                          id: col-right
+                          span: 12
                         children:
-                          - type: VisibilityContainer
+                          - type: antdFlex
                             data:
-                              id: 49
-                              value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
+                              id: col-right-stack
+                              vertical: true
+                              gap: 24
                             children:
-                              - type: antdText
+                              # Current replicas
+                              - type: antdFlex
                                 data:
-                                  id: 50
-                                  text: Volumes
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 51
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-replicationcontroller-details-volume-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - volumes
+                                  id: replicas-current-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: replicas-current-label
+                                      text: Current count
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: replicas-current-value
+                                      text: "{reqsJsonPath[0]['.status.replicas']['-']}"
 
-                      - type: antdCol
-                        data:
-                          id: 52
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 53
-                              value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
+                              # Desired replicas
+                              - type: antdFlex
                                 data:
-                                  id: 54
-                                  text: Init containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 55
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-replicationcontroller-details-init-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - initContainers
+                                  id: replicas-desired-block
+                                  vertical: true
+                                  gap: 4
+                                children:
+                                  - type: antdText
+                                    data:
+                                      id: replicas-desired-label
+                                      text: Desired count
+                                      strong: true
+                                  - type: parsedText
+                                    data:
+                                      id: replicas-desired-value
+                                      text: "{reqsJsonPath[0]['.spec.replicas']['-']}"
 
-                      - type: antdCol
-                        data:
-                          id: 56
-                          style:
-                            marginTop: 10
-                            padding: 10
-                        children:
-                          - type: VisibilityContainer
-                            data:
-                              id: 57
-                              value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
-                              style:
-                                margin: 0
-                                padding: 0
-                            children:
-                              - type: antdText
-                                data:
-                                  id: 58
-                                  text: Containers
-                                  strong: true
-                                  style:
-                                    fontSize: 22px
-                                    marginBottom: 32px
-                              - type: EnrichedTable
-                                data:
-                                  id: 59
-                                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
-                                  clusterNamePartOfUrl: "{2}"
-                                  customizationId: factory-replicationcontroller-details-containers-list
-                                  baseprefix: "/openapi-ui"
-                                  withoutControls: true
-                                  pathToItems:
-                                    - spec
-                                    - template
-                                    - spec
-                                    - containers
-
-              # Конец Details
-
-              - key: yaml
-                label: YAML
-                children:
-                  - type: YamlEditorSingleton
+                  # Volumes section
+                  - type: antdCol
                     data:
-                      id: 60
-                      cluster: "{2}"
-                      isNameSpaced: true
-                      type: builtin
-                      # apiGroup: apps
-                      # apiVersion: v1
-                      typeName: replicationcontrollers
-                      prefillValuesRequestIndex: 0
-                      substractHeight: 400
+                      id: volumes-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: volumes-visibility
+                          value: "{reqsJsonPath[0]['.spec.template.spec.volumes']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: volumes-title
+                              text: Volumes
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: volumes-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-replicationcontroller-details-volume-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - volumes
 
-              - key: pods
-                label: Pods
-                children:
-                  - type: EnrichedTable
+                  # Init containers section
+                  - type: antdCol
                     data:
-                      id: 62
-                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                      clusterNamePartOfUrl: "{2}"
-                      customizationId: factory-/v1/pods
-                      baseprefix: "/openapi-ui"
-                      withoutControls: true
-                      labelsSelectorFull:
-                        reqIndex: 0
-                        pathToLabels:
-                          - spec
-                          - template
-                          - metadata
-                          - labels
-                      pathToItems:
-                        - items
+                      id: init-containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: init-containers-visibility
+                          value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: init-containers-title
+                              text: Init containers
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: init-containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-replicationcontroller-details-init-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - initContainers
 
-      type: antdTabs
+                  # Containers section
+                  - type: antdCol
+                    data:
+                      id: containers-col
+                      style:
+                        marginTop: 10
+                        padding: 10
+                    children:
+                      - type: VisibilityContainer
+                        data:
+                          id: containers-visibility
+                          value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
+                          style:
+                            margin: 0
+                            padding: 0
+                        children:
+                          - type: antdText
+                            data:
+                              id: containers-title
+                              text: Containers
+                              strong: true
+                              style:
+                                fontSize: 22px
+                                marginBottom: 32px
+                          - type: EnrichedTable
+                            data:
+                              id: containers-table
+                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
+                              clusterNamePartOfUrl: "{2}"
+                              customizationId: factory-replicationcontroller-details-containers-list
+                              baseprefix: "/openapi-ui"
+                              withoutControls: true
+                              pathToItems:
+                                - spec
+                                - template
+                                - spec
+                                - containers
+
+          # YAML tab
+          - key: yaml
+            label: YAML
+            children:
+              - type: YamlEditorSingleton
+                data:
+                  id: yaml-editor
+                  cluster: "{2}"
+                  isNameSpaced: true
+                  type: builtin
+                  typeName: replicationcontrollers
+                  prefillValuesRequestIndex: 0
+                  substractHeight: 400
+
+          # Pods tab
+          - key: pods
+            label: Pods
+            children:
+              - type: EnrichedTable
+                data:
+                  id: pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-/v1/pods
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  labelsSelectorFull:
+                    reqIndex: 0
+                    pathToLabels:
+                      - spec
+                      - template
+                      - metadata
+                      - labels
+                  pathToItems:
+                    - items
