@@ -181,60 +181,31 @@ items:
                                               valueFieldName: address
                                               keyFieldStyle:
                                                 color: "#aaabac"
-                                  - type: antdFlex
-                                    data:
-                                      id: 3200
-                                      vertical: true
-                                      gap: 8
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 3201
-                                          text: "Labels"
-                                          strong: true
-                                          style:
-                                            fontSize: 14
-                                      - type: antdText
-                                        data:
-                                          id: 3202
-                                          text: "No selector | требуется отображение меток с сылкой на search"
-                                          style:
-                                            color: "#FF0000"
 
                                   - type: antdFlex
                                     data:
-                                      id: 3300
+                                      id: 17
                                       vertical: true
-                                      gap: 4
+                                      gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 33000
-                                          strong: true
-                                          text: "Taints"
-                                      - type: antdText
-                                        data:
-                                          id: 3301
-                                          text: "0 Taints ✏️ | требуются ссылки и модалка на модификацию"
-                                          style:
-                                            color: "#FF0000"
+                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
-                                      id: 3400
+                                      id: 23
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 34000
-                                          strong: true
-                                          text: "Annotations"
-                                      - type: antdText
-                                        data:
-                                          id: 3401
-                                          text: "3 Annotations ✏️ | требуются ссылки и модалка на модификацию"
-                                          style:
-                                            color: "#FF0000"
+                                      {{ include "incloud-web-resources.factory.counters.taints" . | nindent 38}}
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 26
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
                                   - type: antdFlex
                                     data:
                                       id: 2101
@@ -257,26 +228,8 @@ items:
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 3601
-                                          strong: true
-                                          text: "Created"
-                                      - type: antdFlex
-                                        data:
-                                          id: 3602
-                                          gap: 6
-                                          align: center
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 36021
-                                              text: "🌐"
-                                          - type: parsedText
-                                            data:
-                                              id: 36022
-                                              text: "{reqs[0]['metadata', 'creationTimestamp']}"
-                                              formatter: timestamp
+                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
+
 
                           - type: antdCol
                             data:

@@ -128,118 +128,55 @@ items:
                                         data:
                                           id: 13
                                           text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 14
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 15
-                                          strong: true
-                                          text: "Namespace"
-                                      - type: antdLink
-                                        data:
-                                          id: 16
-                                          text: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-                                          href: "/openapi-ui/{2}/factory/namespace-details/{3}"
+
                                   - type: antdFlex
                                     data:
                                       id: 17
                                       vertical: true
                                       gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 18
-                                          text: "Labels"
-                                          strong: true
-                                          style:
-                                            fontSize: 14
-                                      - type: antdText
-                                        data:
-                                          id: 19
-                                          text: "No selector"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
-                                      id: 20
+                                      id: 17
                                       vertical: true
-                                      gap: 4
+                                      gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 21
-                                          strong: true
-                                          text: "Node selector"
-                                      - type: antdText
-                                        data:
-                                          id: 22
-                                          text: "No selector"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.labels" . | nindent 38}}
+
                                   - type: antdFlex
                                     data:
                                       id: 23
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 24
-                                          strong: true
-                                          text: "Tolerations"
-                                      - type: antdText
-                                        data:
-                                          id: 25
-                                          text: "0 Tolerations"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.labels.base-pod.node.selector" . | nindent 38}}
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 23
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.counters.pod.tolerations" . | nindent 38}}
+
                                   - type: antdFlex
                                     data:
                                       id: 26
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 27
-                                          strong: true
-                                          text: "Annotations"
-                                      - type: antdText
-                                        data:
-                                          id: 28
-                                          text: "0 Annotations"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
                                   - type: antdFlex
                                     data:
-                                      id: 29
+                                      id: 3600
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 30
-                                          strong: true
-                                          text: "Created"
-                                      - type: antdFlex
-                                        data:
-                                          id: 31
-                                          gap: 6
-                                          align: center
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 32
-                                              text: "🌐"
-                                          - type: parsedText
-                                            data:
-                                              id: 33
-                                              text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
-                                              formatter: timestamp
+                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 38}}
+
                                   - type: antdFlex
                                     data:
                                       id: 34
@@ -365,21 +302,15 @@ items:
                                         data:
                                           id: 53
                                           text: "{reqsJsonPath[0]['.status.hostIP']['-']}"
+
                                   - type: antdFlex
                                     data:
-                                      id: 54
+                                      id: 17
                                       vertical: true
-                                      gap: 4
+                                      gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 55
-                                          strong: true
-                                          text: "Node"
-                                      - type: parsedText
-                                        data:
-                                          id: 56
-                                          text: "{reqsJsonPath[0]['.spec.nodeName']['-']}"
+                                      {{ include "incloud-web-resources.factory.links.node-details" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
                                       id: 57

@@ -112,84 +112,40 @@ items:
                                         data:
                                           id: 13
                                           text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 14
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 15
-                                          text: Namespace
-                                          strong: true
-                                      - type: antdLink
-                                        data:
-                                          id: 16
-                                          text: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-                                          href: "/openapi-ui/{2}/factory/namespace-details/{3}"
+
                                   - type: antdFlex
                                     data:
                                       id: 17
                                       vertical: true
                                       gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 18
-                                          text: Labels
-                                          strong: true
-                                          style:
-                                            fontSize: 14
-                                      - type: parsedText
-                                        data:
-                                          id: 19
-                                          text: "No selector"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
-                                      id: 20
+                                      id: 17
+                                      vertical: true
+                                      gap: 8
+                                    children:
+                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 26
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 21
-                                          text: Annotations
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 22
-                                          text: "0 Annotations"
-                                          style:
-                                            color: red
+                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
+
                                   - type: antdFlex
                                     data:
-                                      id: 23
+                                      id: 3600
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 24
-                                          text: Created
-                                          strong: true
-                                      - type: antdFlex
-                                        data:
-                                          id: 25
-                                          gap: 6
-                                          align: center
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 26
-                                              text: "🌐"
-                                          - type: parsedText
-                                            data:
-                                              id: 27
-                                              text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
-                                              formatter: timestamp
+                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
                                       id: 28

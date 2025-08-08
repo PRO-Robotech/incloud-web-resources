@@ -112,64 +112,31 @@ items:
                                         data:
                                           id: 13
                                           text: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                                  - type: antdFlex
-                                    data:
-                                      id: 14
-                                      vertical: true
-                                      gap: 4
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: 15
-                                          text: Labels
-                                          strong: true
-                                          style:
-                                            fontSize: 14
-                                      - type: parsedText
-                                        data:
-                                          id: 16
-                                          text: "No selectors"
+
                                   - type: antdFlex
                                     data:
                                       id: 17
                                       vertical: true
-                                      gap: 4
+                                      gap: 8
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 18
-                                          text: Annotations
-                                          strong: true
-                                      - type: parsedText
-                                        data:
-                                          id: 19
-                                          text: "0 Annotations"
+                                      {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
-                                      id: 20
+                                      id: 26
                                       vertical: true
                                       gap: 4
                                     children:
-                                      - type: antdText
-                                        data:
-                                          id: 21
-                                          text: Created
-                                          strong: true
-                                      - type: antdFlex
-                                        data:
-                                          id: 22
-                                          align: center
-                                          gap: 6
-                                        children:
-                                          - type: antdText
-                                            data:
-                                              id: 23
-                                              text: "🌐"
-                                          - type: parsedText
-                                            data:
-                                              id: 24
-                                              text: "{reqsJsonPath[0]['.metadata.creationTimestamp']['-']}"
-                                              formatter: timestamp
+                                      {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 38}}
+
+                                  - type: antdFlex
+                                    data:
+                                      id: 3600
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.time.create" . | nindent 42}}
+
                                   - type: antdFlex
                                     data:
                                       id: 25
