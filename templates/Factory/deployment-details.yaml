@@ -150,7 +150,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34 }}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # Labels list (rendered by include)
                               - type: antdFlex
@@ -409,83 +416,63 @@ spec:
                                 - spec
                                 - volumes
 
-                  # === Init containers table (visible only if initContainers exist) ===
+                  # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
                     data:
-                      id: init-containers-column
+                      id: ds-init-containers-col
                       style:
-                        marginTop: 16
+                        marginTop: 10
                         padding: 10
                     children:
                       - type: VisibilityContainer
                         data:
-                          id: init-containers-container
+                          id: ds-init-containers-container
                           value: "{reqsJsonPath[0]['.spec.template.spec.initContainers']['-']}"
                           style:
                             margin: 0
                             padding: 0
                         children:
-                          - type: antdText
-                            data:
-                              id: init-containers-title
-                              text: Init containers
-                              strong: true
-                              style:
-                                fontSize: 22px
-                                marginBottom: 16px
-                          - type: EnrichedTable
-                            data:
-                              id: init-containers-table
-                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-deployment-details-init-containers-list
-                              baseprefix: /openapi-ui
-                              withoutControls: true
-                              # Path in the fetched object to the initContainers array
-                              pathToItems:
-                                - spec
-                                - template
-                                - spec
-                                - initContainers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Init containers"
+                              "customizationId" "container-spec-init-containers-list"
+                              "type" "init-containers"
+                              "apiGroup" "apis/apps/v1"
+                              "kind" "deployments"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.template.spec.initContainers"
+                              "pathToItems" "['spec','template','spec','initContainers']"
+                            ) | nindent 26
+                          }}
 
-                  # === Containers table (visible only if containers exist) ===
+                  # ---- CONTAINERS SECTION ----
                   - type: antdCol
                     data:
-                      id: containers-column
+                      id: ds-containers-col
                       style:
-                        marginTop: 16
+                        marginTop: 10
                         padding: 10
                     children:
                       - type: VisibilityContainer
                         data:
-                          id: containers-container
+                          id: ds-containers-container
                           value: "{reqsJsonPath[0]['.spec.template.spec.containers']['-']}"
                           style:
                             margin: 0
                             padding: 0
                         children:
-                          - type: antdText
-                            data:
-                              id: containers-title
-                              text: Containers
-                              strong: true
-                              style:
-                                fontSize: 22px
-                                marginBottom: 16px
-                          - type: EnrichedTable
-                            data:
-                              id: containers-table
-                              fetchUrl: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-deployment-details-containers-list
-                              baseprefix: /openapi-ui
-                              withoutControls: true
-                              # Path in the fetched object to the containers array
-                              pathToItems:
-                                - spec
-                                - template
-                                - spec
-                                - containers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Containers"
+                              "customizationId" "container-spec-containers-list"
+                              "type" "containers"
+                              "apiGroup" "apis/apps/v1"
+                              "kind" "deployments"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.template.spec.containers"
+                              "pathToItems" "['spec','template','spec','containers']"
+                            ) | nindent 26
+                          }}
 
                   # === Conditions table (visible only if status.conditions exist) ===
                   - type: antdCol

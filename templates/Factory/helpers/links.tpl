@@ -1,25 +1,23 @@
-{{- define "incloud-web-resources.factory.links.namespace-details" -}}
-- type: antdText
-  data:
-    id: 21021
-    strong: true
-    text: "Namespace"
-- type: antdLink
-  data:
-    id: 16
-    text: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-    href: "/openapi-ui/{2}/factory/namespace-details/{3}"
-{{- end -}}
+{{- define "incloud-web-resources.factory.links.details" -}}
+{{- $i := (default 0 .reqIndex) -}}
+{{- $type := (default "" .type) -}}
+{{- $title := (default "" .title) -}}
+{{- $jsonPath := (default "" .jsonPath) -}}
+{{- $factory := (default "" .factory) -}}
+{{- $ns := (default "" .namespace) -}}
 
-{{- define "incloud-web-resources.factory.links.node-details" -}}
+{{- $nsPart := "" -}}
+{{- if ne $ns "" }}
+  {{- $nsPart = printf "%s/" $ns -}}
+{{- end }}
 - type: antdText
   data:
-    id: 21021
+    id: {{ printf "%s-title" $type }}
     strong: true
-    text: "Node"
+    text: "{{ $title }}"
 - type: antdLink
   data:
-    id: 16
-    text: "{reqsJsonPath[0]['.spec.nodeName']['-']}"
-    href: "/openapi-ui/{2}/factory/node-details/{reqsJsonPath[0]['.spec.nodeName']['-']}"
+    id: {{ printf "%s-link" $type }}
+    text: "{reqsJsonPath[{{$i}}]['{{ $jsonPath }}']['-']}"
+    href: "/openapi-ui/{2}/{{$nsPart}}factory/{{ $factory }}/{reqsJsonPath[{{$i}}]['{{ $jsonPath }}']['-']}"
 {{- end -}}

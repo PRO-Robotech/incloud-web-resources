@@ -118,7 +118,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # Labels
                               - type: antdFlex
@@ -271,6 +278,7 @@ spec:
                                         data:
                                           id: clusterip-value
                                           text: "{reqsJsonPath[0]['.spec.clusterIP']['-']}"
+
                                   # LoadBalancerIP
                                   - type: antdFlex
                                     data:
@@ -287,8 +295,6 @@ spec:
                                         data:
                                           id: loadbalancerip-value
                                           text: "{reqsJsonPath[0]['.status.loadBalancer.ingress[0].ip']['Not Configured']}"
-                                          style:
-                                            color: red
 
                               # Service port mapping
                               - type: antdFlex

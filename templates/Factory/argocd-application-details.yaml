@@ -1,3 +1,4 @@
+{{- if .Values.addons.argocd.enabled  }}
 ---
 # Factory definition for ArgoCD Application details page
 apiVersion: front.in-cloud.io/v1alpha1
@@ -115,7 +116,15 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
+
                               - type: antdFlex
                                 data:
                                   id: labels-block
@@ -216,15 +225,16 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  - type: antdText
-                                    data:
-                                      id: project-label
-                                      strong: true
-                                      text: "Project"
-                                  - type: parsedText
-                                    data:
-                                      id: project-value
-                                      text: "{reqsJsonPath[0]['.spec.project']['-']}"
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "project"
+                                      "title" "Project"
+                                      "jsonPath" ".spec.project"
+                                      "factory" "argocd-appproject-details"
+                                      "namespace" "{3}"
+                                    ) | nindent 34 
+                                  }}
+
                               - type: antdFlex
                                 data:
                                   id: destination-block
@@ -449,3 +459,4 @@ spec:
                   pathToItems:
                     - status
                     - history
+{{- end }}

@@ -7,7 +7,7 @@
     - key: argocd-applicationset
       label: ApplicationSets
       link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/applicationsets
-    - key: argocd-projects
+    - key: argocd-appprojects
       label: Projects
       link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/appprojects
   key: argocd

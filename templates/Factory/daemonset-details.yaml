@@ -132,7 +132,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 34}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # Labels display block
                               - type: antdFlex
@@ -329,29 +336,18 @@ spec:
                             margin: 0
                             padding: 0
                         children:
-                          # Section title
-                          - type: antdText
-                            data:
-                              id: ds-init-containers-label
-                              text: Init containers
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Table rendering init containers
-                          - type: EnrichedTable
-                            data:
-                              id: ds-init-containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-daemonset-details-init-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - spec
-                                - template
-                                - spec
-                                - initContainers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Init containers"
+                              "customizationId" "container-spec-init-containers-list"
+                              "type" "init-containers"
+                              "apiGroup" "apis/apps/v1"
+                              "kind" "daemonsets"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.template.spec.initContainers"
+                              "pathToItems" "['spec','template','spec','initContainers']"
+                            ) | nindent 26
+                          }}
 
                   # ---- CONTAINERS SECTION ----
                   - type: antdCol
@@ -369,29 +365,18 @@ spec:
                             margin: 0
                             padding: 0
                         children:
-                          # Section title
-                          - type: antdText
-                            data:
-                              id: ds-containers-label
-                              text: Containers
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Table rendering containers
-                          - type: EnrichedTable
-                            data:
-                              id: ds-containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-daemonset-details-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - spec
-                                - template
-                                - spec
-                                - containers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Containers"
+                              "customizationId" "container-spec-containers-list"
+                              "type" "containers"
+                              "apiGroup" "apis/apps/v1"
+                              "kind" "daemonsets"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.template.spec.containers"
+                              "pathToItems" "['spec','template','spec','containers']"
+                            ) | nindent 26
+                          }}
 
           # ------ YAML TAB ------
           - key: yaml

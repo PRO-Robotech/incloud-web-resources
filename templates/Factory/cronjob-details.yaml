@@ -133,7 +133,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 38}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # Labels display block
                               - type: antdFlex
@@ -404,32 +411,18 @@ spec:
                             margin: 0
                             padding: 0
                         children:
-                          # Section title
-                          - type: antdText
-                            data:
-                              id: init-containers-title
-                              text: "Init containers"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Table rendering initContainers from jobTemplate
-                          - type: EnrichedTable
-                            data:
-                              id: init-containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-cronjob-details-init-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              # Path to initContainers within jobTemplate
-                              pathToItems:
-                                - spec
-                                - jobTemplate
-                                - spec
-                                - template
-                                - spec
-                                - initContainers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Init containers"
+                              "customizationId" "container-spec-init-containers-list"
+                              "type" "init-containers"
+                              "apiGroup" "apis/batch/v1"
+                              "kind" "cronjobs"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.jobTemplate.spec.template.spec.initContainers"
+                              "pathToItems" "['spec','jobTemplate','spec','template','spec','initContainers']"
+                            ) | nindent 26
+                          }}
 
                   # ---- CONTAINERS SECTION ----
                   - type: antdCol
@@ -448,32 +441,18 @@ spec:
                             margin: 0
                             padding: 0
                         children:
-                          # Section title
-                          - type: antdText
-                            data:
-                              id: containers-title
-                              text: "Containers"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Table rendering containers from jobTemplate
-                          - type: EnrichedTable
-                            data:
-                              id: containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/cronjobs/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-cronjob-details-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              # Path to containers within jobTemplate
-                              pathToItems:
-                                - spec
-                                - jobTemplate
-                                - spec
-                                - template
-                                - spec
-                                - containers
+                          {{ include "incloud-web-resources.factory.containers.table" (dict
+                              "title" "Containers"
+                              "customizationId" "container-spec-containers-list"
+                              "type" "containers"
+                              "apiGroup" "apis/batch/v1"
+                              "kind" "cronjobs"
+                              "resourceName" "{6}"
+                              "namespace" "{3}"
+                              "jsonPath" ".spec.jobTemplate.spec.template.spec.containers"
+                              "pathToItems" "['spec','jobTemplate','spec','template','spec','containers']"
+                            ) | nindent 26
+                          }}
 
                   # ---- CONDITIONS SECTION ----
                   - type: antdCol

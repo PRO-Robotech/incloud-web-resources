@@ -48,6 +48,7 @@ spec:
               fontSize: 20px
               lineHeight: 24px
               fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
+
         # Pod readiness/status indicator
         - type: StatusText
           data:
@@ -143,7 +144,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.namespace-details" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "namespace"
+                                      "title" "Namespace"
+                                      "jsonPath" ".metadata.namespace"
+                                      "factory" "namespace-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # Labels list (kept as include)
                               - type: antdFlex
@@ -248,9 +256,10 @@ spec:
                                       id: status-label
                                       strong: true
                                       text: "Status"
+                                  # Pod readiness/status indicator
                                   - type: StatusText
                                     data:
-                                      id: status-value
+                                      id: header-pod-status
                                       value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
                                       criteriaSuccess: equals
                                       valueToCompareSuccess:
@@ -269,6 +278,7 @@ spec:
                                       successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
                                       errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
                                       fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['-']}"
+
 
                               # Restart policy
                               - type: antdFlex
@@ -345,7 +355,14 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.node-details" . | nindent 42}}
+                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                      "reqIndex" 0
+                                      "type" "node"
+                                      "title" "Node"
+                                      "jsonPath" ".spec.nodeName"
+                                      "factory" "node-details"
+                                    ) | nindent 34 
+                                  }}
 
                               # QoS class
                               - type: antdFlex
@@ -410,35 +427,18 @@ spec:
                         marginTop: 10
                         padding: 10
                     children:
-                      - type: VisibilityContainer
-                        data:
-                          id: init-containers-visibility
-                          value: "{reqsJsonPath[0]['.status.initContainerStatuses']['-']}"
-                          style:
-                            margin: 0
-                            padding: 0
-                        children:
-                          # Init containers title
-                          - type: antdText
-                            data:
-                              id: init-containers-title
-                              text: "Init containers"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Init containers table
-                          - type: EnrichedTable
-                            data:
-                              id: init-containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-pod-details-init-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - status
-                                - initContainerStatuses
+                      {{ include "incloud-web-resources.factory.containers.table" (dict
+                          "title" "Init containers"
+                          "customizationId" "container-status-init-containers-list"
+                          "type" "init-containers"
+                          "apiGroup" "api/v1"
+                          "kind" "pods"
+                          "resourceName" "{6}"
+                          "namespace" "{3}"
+                          "jsonPath" ".status.initContainerStatuses"
+                          "pathToItems" "['status','initContainerStatuses']"
+                        ) | nindent 22 
+                      }}
 
                   # Containers section (hidden if none)
                   - type: antdCol
@@ -448,35 +448,18 @@ spec:
                         marginTop: 10
                         padding: 10
                     children:
-                      - type: VisibilityContainer
-                        data:
-                          id: containers-visibility
-                          value: "{reqsJsonPath[0]['.status.containerStatuses']['-']}"
-                          style:
-                            margin: 0
-                            padding: 0
-                        children:
-                          # Containers title
-                          - type: antdText
-                            data:
-                              id: containers-title
-                              text: "Containers"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Containers table
-                          - type: EnrichedTable
-                            data:
-                              id: containers-table
-                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-pod-details-containers-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - status
-                                - containerStatuses
+                      {{ include "incloud-web-resources.factory.containers.table" (dict
+                          "title" "Containers"
+                          "customizationId" "container-status-containers-list"
+                          "type" "containers"
+                          "apiGroup" "api/v1"
+                          "kind" "pods"
+                          "resourceName" "{6}"
+                          "namespace" "{3}"
+                          "jsonPath" ".status.containerStatuses"
+                          "pathToItems" "['status','containerStatuses']"
+                        ) | nindent 22 
+                      }}
 
                   # Conditions section (hidden if none)
                   - type: antdCol
