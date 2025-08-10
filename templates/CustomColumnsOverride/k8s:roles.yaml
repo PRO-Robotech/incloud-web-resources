@@ -1,0 +1,39 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: factory-k8s-rbac-rules
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .apiGroups
+      name: Api groups
+      type: string
+    - jsonPath: .resources
+      name: Resources
+      type: date
+    - jsonPath: .resourceNames
+      name: Resource Names
+      type: date
+    - jsonPath: .nonResourceURLs
+      name: Non resource URLs
+      type: date
+    - jsonPath: .verbs
+      name: Verbs
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Resources
+      value: 10
+  additionalPrinterColumnsUndefinedValues:
+    - key: Api groups
+      value: "-"
+    - key: Resources
+      value: "-"
+    - key: Verbs
+      value: ""
+    - key: Resource Names
+      value: "-"
+    - key: Non resource URLs
+      value: "-"
+  id: factory-k8s-rbac-rules

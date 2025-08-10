@@ -1,0 +1,12 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Sidebar
+metadata:
+  name: stock-cluster-factory-clusterrole-details
+spec:
+  id: stock-cluster-factory-clusterrole-details
+  keysAndTags:
+    clusterroles:
+      - clusterrole-sidebar
+  menuItems:
+    {{ include "incloud-web-resources.sidebar.menu.items.cluster" . | nindent 4 }}

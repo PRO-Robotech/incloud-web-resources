@@ -321,31 +321,37 @@ spec:
                                         - ports
 
                               # Pod serving
-                              - type: antdFlex
+                              - type: VisibilityContainer
                                 data:
-                                  id: service-pod-serving-block
-                                  vertical: true
-                                  gap: 4
+                                  id: service-pod-serving-vis
+                                  value: "{reqsJsonPath[0]['.spec.selector']['-']}"
+                                  style: { margin: 0, padding: 0 }
                                 children:
-                                  - type: antdText
+                                  - type: antdFlex
                                     data:
-                                      id: service-pod-serving-label
-                                      strong: true
-                                      text: "Pod serving"
-                                  - type: EnrichedTable
-                                    data:
-                                      id: service-pod-serving-table
-                                      fetchUrl: "/api/clusters/{2}/k8s/apis/discovery.k8s.io/v1/namespaces/{3}/endpointslices"
-                                      clusterNamePartOfUrl: "{2}"
-                                      customizationId: "factory-service-details-endpointslice"
-                                      baseprefix: "/openapi-ui"
-                                      withoutControls: true
-                                      labelsSelector:
-                                        kubernetes.io/service-name: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                                      pathToItems:
-                                        - items
-                                        - [0]
-                                        - endpoints
+                                      id: service-pod-serving-block
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      - type: antdText
+                                        data:
+                                          id: service-pod-serving-label
+                                          strong: true
+                                          text: "Pod serving"
+                                      - type: EnrichedTable
+                                        data:
+                                          id: service-pod-serving-table
+                                          fetchUrl: "/api/clusters/{2}/k8s/apis/discovery.k8s.io/v1/namespaces/{3}/endpointslices"
+                                          clusterNamePartOfUrl: "{2}"
+                                          customizationId: "factory-service-details-endpointslice"
+                                          baseprefix: "/openapi-ui"
+                                          withoutControls: true
+                                          labelsSelector:
+                                            kubernetes.io/service-name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                                          pathToItems:
+                                            - items
+                                            - [0]
+                                            - endpoints
 
           # YAML tab
           - key: "yaml"
@@ -365,18 +371,25 @@ spec:
           - key: "pods"
             label: "Pods"
             children:
-              - type: EnrichedTable
+              - type: VisibilityContainer
                 data:
-                  id: pods-table
-                  fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
-                  clusterNamePartOfUrl: "{2}"
-                  customizationId: "factory-node-details-/v1/pods"
-                  baseprefix: "/openapi-ui"
-                  withoutControls: false
-                  labelsSelectorFull:
-                    reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - selector
-                  pathToItems:
-                    - items
+                  id: service-pod-serving-vis
+                  value: "{reqsJsonPath[0]['.spec.selector']['-']}"
+                  style: { margin: 0, padding: 0 }
+                children:
+                  - type: EnrichedTable
+                    data:
+                      id: pods-table
+                      fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods"
+                      clusterNamePartOfUrl: "{2}"
+                      customizationId: "factory-node-details-/v1/pods"
+                      baseprefix: "/openapi-ui"
+                      withoutControls: false
+                      labelsSelectorFull:
+                        reqIndex: 0
+                        # TODO требуется обработка нулевого значения
+                        pathToLabels:
+                          - spec
+                          - selector
+                      pathToItems:
+                        - items

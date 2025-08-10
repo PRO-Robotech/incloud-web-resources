@@ -1,0 +1,12 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Sidebar
+metadata:
+  name: stock-project-factory-rolebinding-details
+spec:
+  id: stock-project-factory-rolebinding-details
+  keysAndTags:
+    rolebindings:
+      - rolebinding-sidebar
+  menuItems:
+    {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}

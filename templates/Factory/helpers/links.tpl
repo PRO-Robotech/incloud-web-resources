@@ -10,11 +10,13 @@
 {{- if ne $ns "" }}
   {{- $nsPart = printf "%s/" $ns -}}
 {{- end }}
-- type: antdText
+- type: parsedText
   data:
     id: {{ printf "%s-title" $type }}
     strong: true
     text: "{{ $title }}"
+    style:
+      fontWeight: bold
 - type: antdLink
   data:
     id: {{ printf "%s-link" $type }}
