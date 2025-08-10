@@ -25,6 +25,29 @@ metadata:
   name: stock-cluster-builtin-form
 spec:
   id: stock-cluster-builtin-form
+  keysAndTags:
+    pods:
+      - pods
+    configmaps:
+      - configmaps
+    limitranges:
+      - limitranges
+    namespaces:
+      - namespaces
+    nodes:
+      - nodes
+    persistentvolumeclaims:
+      - persistentvolumeclaims
+    persistentvolumes:
+      - persistentvolumes
+    resourcequotas:
+      - resourcequotas
+    secrets:
+      - secrets
+    serviceaccounts:
+      - serviceaccounts
+    services:
+      - services
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.cluster" . | nindent 4 }}
 

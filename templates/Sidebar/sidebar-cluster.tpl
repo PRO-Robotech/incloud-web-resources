@@ -13,6 +13,40 @@
   key: argocd
   label: Argocd
 {{- end }}
+
+{{- if .Values.addons.hbf.enabled }}
+- key: hbf
+  label: HBF
+  children:
+    - key: networks
+      label: Networks
+      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networks"
+    - key: addressgroups
+      label: AddressGroups
+      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/addressgroups"
+    - key: networkbindings
+      label: NetworkBindings
+      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networkbindings"
+    - key: ieagagrules
+      label: RuleAG2AG
+      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/ieagagrules"
+    - key: services
+      label: Services
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/services"
+    - key: servicealiases
+      label: ServiceAliases
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/servicealiases"
+    - key: addressgroupbindings
+      label: AddressGroupBindings
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupbindings"
+    - key: rules2ses
+      label: RuleS2S
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/rules2ses"
+    - key: addressgroupportmappings
+      label: AddressGroupPortMappings
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupportmappings"
+{{- end }}
+
 - children:
     - key: pods
       label: Pods
