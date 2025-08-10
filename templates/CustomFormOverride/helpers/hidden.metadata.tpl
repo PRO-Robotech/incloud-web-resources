@@ -2,6 +2,31 @@
 - - metadata
   - creationTimestamp
 - - metadata
+  - deletionGracePeriodSeconds
+- - metadata
+  - deletionTimestamp
+- - metadata
+  - finalizers
+- - metadata
+  - generateName
+- - metadata
+  - generation
+- - metadata
+  - managedFields
+- - metadata
+  - ownerReferences
+- - metadata
+  - resourceVersion
+- - metadata
+  - selfLink
+- - metadata
+  - uid
+{{- end -}}
+
+{{- define "incloud-web-resources.customformoverride.hidden.metadata.system-clusterscope" -}}
+- - metadata
+  - creationTimestamp
+- - metadata
   - namespace
 - - metadata
   - deletionGracePeriodSeconds
@@ -72,6 +97,57 @@
   - selfLink
 - - spec
   - jobTemplate
+  - metadata
+  - uid
+{{- end -}}
+
+{{- define "incloud-web-resources.customformoverride.hidden.metadata.system.template" -}}
+- - spec
+  - template
+  - metadata
+  - creationTimestamp
+- - spec
+  - template
+  - metadata
+  - namespace
+- - spec
+  - template
+  - metadata
+  - deletionGracePeriodSeconds
+- - spec
+  - template
+  - metadata
+  - deletionTimestamp
+- - spec
+  - template
+  - metadata
+  - finalizers
+- - spec
+  - template
+  - metadata
+  - generateName
+- - spec
+  - template
+  - metadata
+  - generation
+- - spec
+  - template
+  - metadata
+  - managedFields
+- - spec
+  - template
+  - metadata
+  - ownerReferences
+- - spec
+  - template
+  - metadata
+  - resourceVersion
+- - spec
+  - template
+  - metadata
+  - selfLink
+- - spec
+  - template
   - metadata
   - uid
 {{- end -}}

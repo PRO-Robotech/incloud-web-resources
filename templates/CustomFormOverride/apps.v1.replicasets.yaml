@@ -2,9 +2,9 @@
 apiVersion: front.in-cloud.io/v1alpha1
 kind: CustomFormsOverride
 metadata:
-  name: default-apps.v1.deployments
+  name: default-apps.v1.replicasets
 spec:
-  customizationId: "default-/apps/v1/deployments"
+  customizationId: "default-/apps/v1/replicasets"
   hidden:
     {{ include "incloud-web-resources.customformoverride.hidden.metadata.system" . | nindent 4 }}
     {{ include "incloud-web-resources.customformoverride.hidden.metadata.api" . | nindent 4 }}
