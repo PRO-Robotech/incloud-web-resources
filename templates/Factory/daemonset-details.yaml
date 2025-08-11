@@ -199,7 +199,13 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30}}
+                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
+                                      "jsonPath" ".metadata.annotations"
+                                      "type" "annotations"
+                                      "title" "Annotations"
+                                    ) | nindent 34
+                                  }}
+
 
                               # Creation time block
                               - type: antdFlex

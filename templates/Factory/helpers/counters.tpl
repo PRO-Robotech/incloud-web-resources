@@ -15,16 +15,19 @@
     jsonPathToArray: "{{ .jsonPath | default "" }}"
 {{- end -}}
 
-{{- define "incloud-web-resources.factory.counters.annotations" -}}
+{{- define "incloud-web-resources.factory.counters.object.fields" -}}
+{{- $i := (default 0 .reqIndex) -}}
+{{- $type := (default "counter" .type) -}}
+{{- $title := (default "" .title) -}}
 - type: antdText
   data:
-    id: annotation-counter
+    id: {{ printf "%s-label" $type }}
     strong: true
-    text: "Annotations"
-- type: ItemCounter
+    text: "{{ $title }}"
+- type: KeyCounter
   data:
-    id: annotations-counter
-    text: "~counter~ Annotations"
-    reqIndex: 0
-    jsonPathToArray: '.metadata.annotations'
+    id: {{ printf "%s-counter" $type }}
+    text: "~counter~ {{ $type }}"
+    reqIndex: {{$i}}
+    jsonPathToObj: "{{ .jsonPath | default "" }}"
 {{- end -}}

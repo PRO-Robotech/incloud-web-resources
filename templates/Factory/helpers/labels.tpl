@@ -32,5 +32,5 @@
     id: {{ printf "%s-to-search-params" $type }}
     reqIndex: {{$i}}
     jsonPathToLabels: "{{ $jsonPath }}"
-    linkPrefix: "{{ .linkPrefix | default "/openapi-ui/incloud-k8s-local-dev-local-1/search" }}"
+    linkPrefix: "{{ .linkPrefix | default "/openapi-ui/{2}/search" }}"
 {{- end -}}

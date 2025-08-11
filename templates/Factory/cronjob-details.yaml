@@ -154,11 +154,16 @@ spec:
                               # Annotations counter block
                               - type: antdFlex
                                 data:
-                                  id: annotations-counter-block
+                                  id: ds-annotations
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 30}}
+                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
+                                      "jsonPath" ".metadata.annotations"
+                                      "type" "annotations"
+                                      "title" "Annotations"
+                                    ) | nindent 34
+                                  }}
 
                               # Cron schedule string (crontab)
                               - type: antdFlex

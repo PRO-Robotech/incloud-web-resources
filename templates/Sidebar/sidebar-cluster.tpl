@@ -18,31 +18,31 @@
 - key: hbf
   label: HBF
   children:
-    - key: networks
+    - key: hbf-networks
       label: Networks
       link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networks"
-    - key: addressgroups
+    - key: hbf-addressgroups
       label: AddressGroups
       link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/addressgroups"
-    - key: networkbindings
+    - key: hbf-networkbindings
       label: NetworkBindings
       link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networkbindings"
-    - key: ieagagrules
+    - key: hbf-ieagagrules
       label: RuleAG2AG
       link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/ieagagrules"
-    - key: services
+    - key: hbf-services
       label: Services
       link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/services"
-    - key: servicealiases
+    - key: hbf-servicealiases
       label: ServiceAliases
       link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/servicealiases"
-    - key: addressgroupbindings
+    - key: hbf-addressgroupbindings
       label: AddressGroupBindings
       link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupbindings"
-    - key: rules2ses
+    - key: hbf-rules2ses
       label: RuleS2S
       link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/rules2ses"
-    - key: addressgroupportmappings
+    - key: hbf-addressgroupportmappings
       label: AddressGroupPortMappings
       link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupportmappings"
 {{- end }}

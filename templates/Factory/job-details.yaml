@@ -162,14 +162,19 @@ spec:
                                 children:
                                   {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
 
-                              # Annotations
+                              # Annotations counter block
                               - type: antdFlex
                                 data:
-                                  id: annotations-block
+                                  id: ds-annotations
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.annotations" . | nindent 34 }}
+                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
+                                      "jsonPath" ".metadata.annotations"
+                                      "type" "annotations"
+                                      "title" "Annotations"
+                                    ) | nindent 34
+                                  }}
 
                               # Desired completions
                               - type: antdFlex
