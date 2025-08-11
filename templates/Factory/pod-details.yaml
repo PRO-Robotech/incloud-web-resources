@@ -538,3 +538,4 @@ spec:
                   cluster: "{2}"
                   namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
                   podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                  substractHeight: 400
