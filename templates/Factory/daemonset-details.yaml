@@ -13,7 +13,7 @@ spec:
   # Enable scrollable content card for main section
   withScrollableMainContentCard: true
 
-  # API endpoint for fetching DaemonSet details
+  # API endpoint for fetching DaemonSet details--
   urlsToFetch:
     - "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/daemonsets/{6}"
 
@@ -425,3 +425,28 @@ spec:
                   # Items path for Pods list
                   pathToItems:
                     - items
+
+{{- if .Values.addons.trivy.enabled }}
+          # ------ PODS TAB ------
+          - key: reports
+            label: Reports
+            children:
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/aquasecurity.github.io/v1alpha1/namespaces/{3}/vulnerabilityreports"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-aquasecurity.github.io.v1alpha1.vulnerabilityreports
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelector:
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']}"
+                    trivy-operator.container.name: "{reqsJsonPath[0]['.spec.template.spec.containers[0].name']}"
+                  # Items path for Pods list
+                  pathToItems:
+                    - items
+                    - 0
+                    - report
+                    - vulnerabilities
+{{- end -}}

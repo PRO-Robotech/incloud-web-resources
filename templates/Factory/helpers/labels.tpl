@@ -13,6 +13,14 @@
     jsonPathToLabels: ".metadata.labels"
     selectProps:
       maxTagTextLength: 35
+    notificationSuccessMessage: "Updated successfully"
+    notificationSuccessMessageDescription: "Labels have been updated"
+    modalTitle: "Edit labels"
+    modalDescriptionText: ""
+    inputLabel: ""
+    containerStyle: 
+      marginTop: "-30px"
+    maxEditTagTextLength: 35
 {{- end -}}
 
 {{- define "incloud-web-resources.factory.labels.base.selector" -}}

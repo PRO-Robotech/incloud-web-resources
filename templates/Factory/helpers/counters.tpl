@@ -13,6 +13,7 @@
     text: "~counter~ {{ $type }}"
     reqIndex: {{$i}}
     jsonPathToArray: "{{ .jsonPath | default "" }}"
+    errorText: "Error"
 {{- end -}}
 
 {{- define "incloud-web-resources.factory.counters.object.fields" -}}
@@ -30,4 +31,5 @@
     text: "~counter~ {{ $type }}"
     reqIndex: {{$i}}
     jsonPathToObj: "{{ .jsonPath | default "" }}"
+    errorText: "Error"
 {{- end -}}

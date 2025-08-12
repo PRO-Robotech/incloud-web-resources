@@ -539,3 +539,26 @@ spec:
                   namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
                   podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
                   substractHeight: 400
+
+          # ------ PODS TAB ------
+          - key: reports
+            label: Reports
+            children:
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/aquasecurity.github.io/v1alpha1/namespaces/{3}/vulnerabilityreports"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-aquasecurity.github.io.v1alpha1.vulnerabilityreports
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelector:
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.ownerReferences[?(@.controller==true && (@.kind=='ReplicaSet' || @.kind=='DaemonSet' || @.kind=='StatefulSet'))].name']['-']}"
+                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.metadata.ownerReferences[?(@.controller==true && (@.kind=='ReplicaSet' || @.kind=='DaemonSet' || @.kind=='StatefulSet'))].kind']['-']}"
+                  # Items path for Pods list
+                  pathToItems:
+                    - items
+                    - 0
+                    - report
+                    - vulnerabilities
