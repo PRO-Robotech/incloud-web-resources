@@ -1,6 +1,5 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
+---
+    apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
       name: "stock-cluster-v1.configmaps"
@@ -23,7 +22,8 @@ items:
           value: "-"
       id: "stock-cluster-/v1/configmaps"
 
-  - apiVersion: front.in-cloud.io/v1alpha1
+---
+    apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
       name: "stock-namespace-v1.configmaps"
@@ -40,7 +40,8 @@ items:
           value: 64
       id: "stock-namespace-/v1/configmaps"
 
-  - apiVersion: front.in-cloud.io/v1alpha1
+---
+    apiVersion: front.in-cloud.io/v1alpha1
     kind: CustomColumnsOverride
     metadata:
       name: "cluster-v1.configmaps"
@@ -62,5 +63,3 @@ items:
         - key: Namespace
           value: "-"
       id: "cluster-/v1/configmaps"
-kind: List
-metadata:

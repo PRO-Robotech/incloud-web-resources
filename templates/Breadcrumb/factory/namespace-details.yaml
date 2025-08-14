@@ -1,26 +1,22 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Breadcrumb
-    metadata:
-      name: stock-cluster-factory-namespace-details
-    spec:
-      id: "stock-cluster-factory-namespace-details"
-      breadcrumbItems:
-        - key: In-Cloud
-          label: In-Cloud
-          link: "/openapi-ui"
-        - key: clusterList
-          label: "Cluster List"
-          link: "/openapi-ui/clusters"
-        - key: cluster
-          label: "{clusterName}"
-          link: "/openapi-ui/clusters/{clusterName}"
-        - key: namespaces
-          label: "Namespaces"
-          link: "/openapi-ui/{clusterName}/builtin-table/namespaces"
-        - key: namespace
-          label: "{5}"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
 metadata:
+  name: stock-cluster-factory-namespace-details
+spec:
+  id: "stock-cluster-factory-namespace-details"
+  breadcrumbItems:
+    - key: In-Cloud
+      label: In-Cloud
+      link: "/openapi-ui"
+    - key: clusterList
+      label: "Cluster List"
+      link: "/openapi-ui/clusters"
+    - key: cluster
+      label: "{clusterName}"
+      link: "/openapi-ui/clusters/{clusterName}"
+    - key: namespaces
+      label: "Namespaces"
+      link: "/openapi-ui/{clusterName}/builtin-table/namespaces"
+    - key: namespace
+      label: "{5}"

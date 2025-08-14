@@ -1,29 +1,26 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Breadcrumb
-    metadata:
-      name: stock-project-factory-daemonset-details
-    spec:
-      id: "stock-project-factory-daemonset-details"
-      breadcrumbItems:
-        - key: In-Cloud
-          label: In-Cloud
-          link: "/openapi-ui"
-        - key: clusterList
-          label: "Cluster List"
-          link: "/openapi-ui/clusters"
-        - key: cluster
-          label: "{clusterName}"
-          link: "/openapi-ui/clusters/{clusterName}"
-        - key: namespaces
-          label: "Namespaces"
-        - key: namespace
-          label: "{namespace}"
-        - key: daemonsets
-          label: "daemonsets"
-          link: "/openapi-ui/{clusterName}/{namespace}/api-table/apps/v1/daemonsets"
-        - key: daemonset
-          label: "{5}"
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
 metadata:
+  name: stock-project-factory-daemonset-details
+spec:
+  id: "stock-project-factory-daemonset-details"
+  breadcrumbItems:
+    - key: In-Cloud
+      label: In-Cloud
+      link: "/openapi-ui"
+    - key: clusterList
+      label: "Cluster List"
+      link: "/openapi-ui/clusters"
+    - key: cluster
+      label: "{clusterName}"
+      link: "/openapi-ui/clusters/{clusterName}"
+    - key: namespaces
+      label: "Namespaces"
+    - key: namespace
+      label: "{namespace}"
+    - key: daemonsets
+      label: "daemonsets"
+      link: "/openapi-ui/{clusterName}/{namespace}/api-table/apps/v1/daemonsets"
+    - key: daemonset
+      label: "{5}"

@@ -1,28 +1,24 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: factory-node-images
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .names[0]
-          name: ImageID
-          type: string
-        - jsonPath: .sizeBytes
-          name: Size
-          type: string
-
-      additionalPrinterColumnsUndefinedValues:
-        - key: Message
-          value: "-"
-
-      additionalPrinterColumnsTrimLengths:
-        - key: ImageID
-          value: 128
-        - key: Size
-          value: 63
-      id: "factory-node-images"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
 metadata:
+  name: factory-node-images
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .names[0]
+      name: ImageID
+      type: string
+    - jsonPath: .sizeBytes
+      name: Size
+      type: string
+
+  additionalPrinterColumnsUndefinedValues:
+    - key: Message
+      value: "-"
+
+  additionalPrinterColumnsTrimLengths:
+    - key: ImageID
+      value: 128
+    - key: Size
+      value: 63
+  id: "factory-node-images"

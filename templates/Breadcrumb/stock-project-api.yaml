@@ -1,79 +1,77 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Breadcrumb
-    metadata:
-      name: stock-project-api-table
-    spec:
-      id: "stock-project-api-table"
-      breadcrumbItems:
-        - key: In-Cloud
-          label: In-Cloud
-          link: "/openapi-ui"
-        - key: clusterList
-          label: "Cluster List"
-          link: "/openapi-ui/clusters"
-        - key: cluster
-          label: "{clusterName}"
-          link: "/openapi-ui/clusters/{clusterName}"
-        - key: namespaces
-          label: "Namespaces"
-        - key: namespace
-          label: "{namespace}"
-        - key: api
-          label: "{typeName}"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Breadcrumb
-    metadata:
-      name: stock-project-api-form
-    spec:
-      id: "stock-project-api-form"
-      breadcrumbItems:
-        - key: In-Cloud
-          label: In-Cloud
-          link: "/openapi-ui"
-        - key: clusterList
-          label: "Cluster List"
-          link: "/openapi-ui/clusters"
-        - key: cluster
-          label: "{clusterName}"
-          link: "/openapi-ui/clusters/{clusterName}"
-        - key: namespaces
-          label: "Namespaces"
-        - key: namespace
-          label: "{namespace}"
-        - key: create-api-res-namespaced-table
-          label: "{typeName}"
-          link: "/openapi-ui/{clusterName}/{namespace}/api-table/{apiGroup}/{apiVersion}/{typeName}"
-        - key: create-api-res-namespaced-typename
-          label: Create
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: Breadcrumb
-    metadata:
-      name: stock-project-api-form-edit
-    spec:
-      id: "stock-project-api-form-edit"
-      breadcrumbItems:
-        - key: In-Cloud
-          label: In-Cloud
-          link: "/openapi-ui"
-        - key: clusterList
-          label: "Cluster List"
-          link: "/openapi-ui/clusters"
-        - key: cluster
-          label: "{clusterName}"
-          link: "/openapi-ui/clusters/{clusterName}"
-        - key: namespaces
-          label: "Namespaces"
-        - key: namespace
-          label: "{namespace}"
-        - key: create-api-res-namespaced-table
-          label: "{typeName}"
-          link: "/openapi-ui/{clusterName}/{namespace}/api-table/{apiGroup}/{apiVersion}/{typeName}"
-        - key: create-api-res-namespaced-typename
-          label: Update
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
 metadata:
+  name: stock-project-api-table
+spec:
+  id: "stock-project-api-table"
+  breadcrumbItems:
+    - key: In-Cloud
+      label: In-Cloud
+      link: "/openapi-ui"
+    - key: clusterList
+      label: "Cluster List"
+      link: "/openapi-ui/clusters"
+    - key: cluster
+      label: "{clusterName}"
+      link: "/openapi-ui/clusters/{clusterName}"
+    - key: namespaces
+      label: "Namespaces"
+    - key: namespace
+      label: "{namespace}"
+    - key: api
+      label: "{typeName}"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
+metadata:
+  name: stock-project-api-form
+spec:
+  id: "stock-project-api-form"
+  breadcrumbItems:
+    - key: In-Cloud
+      label: In-Cloud
+      link: "/openapi-ui"
+    - key: clusterList
+      label: "Cluster List"
+      link: "/openapi-ui/clusters"
+    - key: cluster
+      label: "{clusterName}"
+      link: "/openapi-ui/clusters/{clusterName}"
+    - key: namespaces
+      label: "Namespaces"
+    - key: namespace
+      label: "{namespace}"
+    - key: create-api-res-namespaced-table
+      label: "{typeName}"
+      link: "/openapi-ui/{clusterName}/{namespace}/api-table/{apiGroup}/{apiVersion}/{typeName}"
+    - key: create-api-res-namespaced-typename
+      label: Create
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
+metadata:
+  name: stock-project-api-form-edit
+spec:
+  id: "stock-project-api-form-edit"
+  breadcrumbItems:
+    - key: In-Cloud
+      label: In-Cloud
+      link: "/openapi-ui"
+    - key: clusterList
+      label: "Cluster List"
+      link: "/openapi-ui/clusters"
+    - key: cluster
+      label: "{clusterName}"
+      link: "/openapi-ui/clusters/{clusterName}"
+    - key: namespaces
+      label: "Namespaces"
+    - key: namespace
+      label: "{namespace}"
+    - key: create-api-res-namespaced-table
+      label: "{typeName}"
+      link: "/openapi-ui/{clusterName}/{namespace}/api-table/{apiGroup}/{apiVersion}/{typeName}"
+    - key: create-api-res-namespaced-typename
+      label: Update

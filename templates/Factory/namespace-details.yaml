@@ -165,29 +165,29 @@ spec:
                                   }}
 
                               # Owner information block
-                              - type: antdFlex
-                                data:
-                                  id: owner-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: owner-label
-                                      strong: true
-                                      text: "Owner"
-                                  - type: antdFlex
-                                    data:
-                                      id: owner-value-container
-                                      gap: 6
-                                      align: center
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: owner-value
-                                          text: "No owner"
-                                          style:
-                                            color: "#FF0000"
+                              # - type: antdFlex
+                              #   data:
+                              #     id: owner-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: owner-label
+                              #         strong: true
+                              #         text: "Owner"
+                              #     - type: antdFlex
+                              #       data:
+                              #         id: owner-value-container
+                              #         gap: 6
+                              #         align: center
+                              #       children:
+                              #         - type: antdText
+                              #           data:
+                              #             id: owner-value
+                              #             text: "No owner"
+                              #             style:
+                              #               color: "#FF0000"
 
                       # RIGHT COLUMN: status
                       - type: antdCol

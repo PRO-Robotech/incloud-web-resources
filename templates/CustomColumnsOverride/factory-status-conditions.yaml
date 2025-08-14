@@ -1,37 +1,33 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: factory-status-conditions
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .type
-          name: Type
-          type: string
-        - jsonPath: .status
-          name: Status
-          type: string
-        - jsonPath: .lastTransitionTime
-          name: Updated
-          type: string
-        - jsonPath: .reason
-          name: Reason
-          type: string
-        - jsonPath: .message
-          name: Message
-          type: string
-
-      additionalPrinterColumnsUndefinedValues:
-        - key: Reason
-          value: "-"
-        - key: Message
-          value: "-"
-
-      additionalPrinterColumnsTrimLengths:
-        - key: Message
-          value: 63
-      id: "factory-status-conditions"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
 metadata:
+  name: factory-status-conditions
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .type
+      name: Type
+      type: string
+    - jsonPath: .status
+      name: Status
+      type: string
+    - jsonPath: .lastTransitionTime
+      name: Updated
+      type: string
+    - jsonPath: .reason
+      name: Reason
+      type: string
+    - jsonPath: .message
+      name: Message
+      type: string
+
+  additionalPrinterColumnsUndefinedValues:
+    - key: Reason
+      value: "-"
+    - key: Message
+      value: "-"
+
+  additionalPrinterColumnsTrimLengths:
+    - key: Message
+      value: 63
+  id: "factory-status-conditions"

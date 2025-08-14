@@ -1,88 +1,86 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "factory-deployment-details-volume-list"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .name
-          name: Name
-          type: string
-      id: "factory-deployment-details-volume-list"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-cluster-apps.v1.deployments"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.namespace
-          name: Namespace
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .spec.template.metadata.labels
-          name: Pod Selector
-          type: string
-        - jsonPath: .status.conditions[?(@.type=="Available")].status
-          name: Status
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-        - key: Pod Selector
-          value: 1
-      additionalPrinterColumnsUndefinedValues:
-        - key: Labels
-          value: "-"
-        - key: Pod Selector
-          value: "-"
-      id: "stock-cluster-/apps/v1/deployments"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-namespace-apps.v1.deployments"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .spec.template.metadata.labels
-          name: Pod Selector
-          type: string
-        - jsonPath: .status.conditions[?(@.type=="Available")].status
-          name: Status
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-        - key: Pod Selector
-          value: 1
-      additionalPrinterColumnsUndefinedValues:
-        - key: Labels
-          value: "-"
-        - key: Pod Selector
-          value: "-"
-      id: "stock-namespace-/apps/v1/deployments"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
 metadata:
+  name: "factory-deployment-details-volume-list"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .name
+      name: Name
+      type: string
+  id: "factory-deployment-details-volume-list"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-cluster-apps.v1.deployments"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: string
+    - jsonPath: .spec.template.metadata.labels
+      name: Pod Selector
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Available")].status
+      name: Status
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+    - key: Pod Selector
+      value: 1
+  additionalPrinterColumnsUndefinedValues:
+    - key: Labels
+      value: "-"
+    - key: Pod Selector
+      value: "-"
+  id: "stock-cluster-/apps/v1/deployments"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-namespace-apps.v1.deployments"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: string
+    - jsonPath: .spec.template.metadata.labels
+      name: Pod Selector
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Available")].status
+      name: Status
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+    - key: Pod Selector
+      value: 1
+  additionalPrinterColumnsUndefinedValues:
+    - key: Labels
+      value: "-"
+    - key: Pod Selector
+      value: "-"
+  id: "stock-namespace-/apps/v1/deployments"

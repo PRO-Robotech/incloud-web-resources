@@ -1,18 +1,14 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: TableUriMapping
-    metadata:
-      name: stock-cluster-node-details
-    spec:
-      keysToParse:
-        - metadata
-        - name
-      keysToParseSecond:
-        - metadata
-        - namespace
-      id: "stock-cluster-/v1/nodes"
-      pathToNavigate: "/openapi-ui/{clusterName}/factory/node-details/~recordValue~"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: TableUriMapping
 metadata:
+  name: stock-cluster-node-details
+spec:
+  keysToParse:
+    - metadata
+    - name
+  keysToParseSecond:
+    - metadata
+    - namespace
+  id: "stock-cluster-/v1/nodes"
+  pathToNavigate: "/openapi-ui/{clusterName}/factory/node-details/~recordValue~"

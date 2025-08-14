@@ -150,34 +150,31 @@ spec:
                                     ) | nindent 34
                                   }}
 
-                              # Owner
-                              - type: antdFlex
-                                data:
-                                  id: meta-owner-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: meta-owner-label
-                                      strong: true
-                                      text: "Owner"
-                                  - type: antdFlex
-                                    data:
-                                      id: meta-owner-flex
-                                      gap: 6
-                                      align: center
-                                    children:
-                                      - type: antdText
-                                        data:
-                                          id: meta-owner-fallback
-                                          text: "No owner"
-                                          style:
-                                            color: "#FF0000"
+                              # # Owner
+                              # - type: antdFlex
+                              #   data:
+                              #     id: meta-owner-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: meta-owner-label
+                              #         strong: true
+                              #         text: "Owner"
+                              #     - type: antdFlex
+                              #       data:
+                              #         id: meta-owner-flex
+                              #         gap: 6
+                              #         align: center
+                              #       children:
+                              #         - type: antdText
+                              #           data:
+                              #             id: meta-owner-fallback
+                              #             text: "No owner"
+                              #             style:
+                              #               color: "#FF0000"
 
-
-
-                  
                   - type: antdCol
                     data:
                       id: rule-col

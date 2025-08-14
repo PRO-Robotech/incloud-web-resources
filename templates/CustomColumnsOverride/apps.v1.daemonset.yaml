@@ -1,97 +1,97 @@
-apiVersion: v1
-items:
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-cluster-apps.v1.daemonsets"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.namespace
-          name: Namespace
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .metadata.ownerReferences[*].name
-          name: Owner
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-      id: "stock-cluster-/apps/v1/daemonsets"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-namespace-apps.v1.daemonsets"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .metadata.ownerReferences[*].name
-          name: Owner
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-      id: "stock-namespace-/apps/v1/daemonsets"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "factory-apps.v1.daemonsets"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.labels
-          name: Labels
-          type: string
-        - jsonPath: .metadata.ownerReferences[*].name
-          name: Owner
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-        - key: Labels
-          value: 1
-      additionalPrinterColumnsUndefinedValues:
-        - key: Labels
-          value: "-"
-
-      id: "factory-/apps/v1/daemonsets"
-
-  - apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "factory-daemonset-details-volume-list"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .name
-          name: Name
-          type: string
-      id: "factory-daemonset-details-volume-list"
-
-kind: List
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
 metadata:
+  name: "stock-cluster-apps.v1.daemonsets"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: string
+    - jsonPath: .metadata.ownerReferences[*].name
+      name: Owner
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+  id: "stock-cluster-/apps/v1/daemonsets"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-namespace-apps.v1.daemonsets"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: string
+    - jsonPath: .metadata.ownerReferences[*].name
+      name: Owner
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+  id: "stock-namespace-/apps/v1/daemonsets"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "factory-apps.v1.daemonsets"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: string
+    - jsonPath: .metadata.ownerReferences[*].name
+      name: Owner
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+  additionalPrinterColumnsUndefinedValues:
+    - key: Labels
+      value: "-"
+
+  id: "factory-/apps/v1/daemonsets"
+
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "factory-daemonset-details-volume-list"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .name
+      name: Name
+      type: string
+  id: "factory-daemonset-details-volume-list"
+

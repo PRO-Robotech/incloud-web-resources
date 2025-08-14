@@ -181,24 +181,24 @@ spec:
                                   }}
 
                               # Owner information block
-                              - type: antdFlex
-                                data:
-                                  id: owner-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: owner-label
-                                      text: Owner
-                                      strong: true
-                                  - type: parsedText
-                                    data:
-                                      id: owner-value
-                                      strong: true
-                                      text: "No owner"
-                                      style:
-                                        color: red
+                              # - type: antdFlex
+                              #   data:
+                              #     id: owner-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: owner-label
+                              #         text: Owner
+                              #         strong: true
+                              #     - type: parsedText
+                              #       data:
+                              #         id: owner-value
+                              #         strong: true
+                              #         text: "No owner"
+                              #         style:
+                              #           color: red
 
           # ------ YAML TAB ------
           - key: yaml

@@ -186,33 +186,12 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.fields" (dict
-                                      "jsonPath" ".spec.tolerations"
-                                      "type" "tolerations"
-                                      "title" "Tolerations"
+                                  {{ include "incloud-web-resources.factory.tolerations.block" (dict 
+                                    "endpoint" "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                                    "jsonPathToArray" ".spec.tolerations"
+                                    "pathToValue" "/spec/tolerations"
                                     ) | nindent 34
                                   }}
-                                  - type: Tolerations
-                                    data:
-                                      id: tolerations
-                                      reqIndex: 0
-                                      jsonPathToArray: '.spec.tolerations'
-                                      text: "~counter~ Tollerations"
-                                      errorText: "0 Tollerations"
-                                      notificationSuccessMessage: "Updated successfully"
-                                      notificationSuccessMessageDescription: "Tollerations have been updated"
-                                      modalTitle: "Edit tolerations"
-                                      modalDescriptionText: ""
-                                      inputLabel: ""
-                                      endpoint: /api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}
-                                      pathToValue: "/spec/tolerations"
-                                      editModalWidth: "1000px"
-                                      cols:
-                                        - 8
-                                        - 3
-                                        - 7
-                                        - 4
-                                        - 2
 
                               # Annotations counter block
                               - type: antdFlex
@@ -242,24 +221,24 @@ spec:
                                   }}
 
                               # Owner information (fallback when absent)
-                              - type: antdFlex
-                                data:
-                                  id: meta-owner-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: meta-owner-label
-                                      strong: true
-                                      text: "Owner"
-                                  - type: parsedText
-                                    data:
-                                      id: meta-owner-fallback
-                                      strong: true
-                                      text: "No owner"
-                                      style:
-                                        color: red
+                              # - type: antdFlex
+                              #   data:
+                              #     id: meta-owner-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: meta-owner-label
+                              #         strong: true
+                              #         text: "Owner"
+                              #     - type: parsedText
+                              #       data:
+                              #         id: meta-owner-fallback
+                              #         strong: true
+                              #         text: "No owner"
+                              #         style:
+                              #           color: red
 
                       # Right column: status and runtime info
                       - type: antdCol
@@ -411,42 +390,43 @@ spec:
                                       text: "{reqsJsonPath[0]['.status.qosClass']['-']}"
 
                   # Volumes section (table is hidden if no volumes)
-                  - type: antdCol
-                    data:
-                      id: volumes-col
-                      style:
-                        marginTop: 10
-                        padding: 10
-                    children:
-                      - type: VisibilityContainer
-                        data:
-                          id: volumes-visibility
-                          value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
-                          style:
-                            margin: 0
-                            padding: 0
-                        children:
-                          # Volumes title
-                          - type: antdText
-                            data:
-                              id: volumes-title
-                              text: "Volumes"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          # Volumes table
-                          - type: EnrichedTable
-                            data:
-                              id: volumes-table
-                              fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-pod-details-volume-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - spec
-                                - volumes
+                  # TODO to be done
+                  # - type: antdCol
+                  #   data:
+                  #     id: volumes-col
+                  #     style:
+                  #       marginTop: 10
+                  #       padding: 10
+                  #   children:
+                  #     - type: VisibilityContainer
+                  #       data:
+                  #         id: volumes-visibility
+                  #         value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                  #         style:
+                  #           margin: 0
+                  #           padding: 0
+                  #       children:
+                  #         # Volumes title
+                  #         - type: antdText
+                  #           data:
+                  #             id: volumes-title
+                  #             text: "Volumes"
+                  #             strong: true
+                  #             style:
+                  #               fontSize: 22
+                  #               marginBottom: 32px
+                  #         # Volumes table
+                  #         - type: EnrichedTable
+                  #           data:
+                  #             id: volumes-table
+                  #             fetchUrl: "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/pods/{6}"
+                  #             clusterNamePartOfUrl: "{2}"
+                  #             customizationId: factory-pod-details-volume-list
+                  #             baseprefix: "/openapi-ui"
+                  #             withoutControls: true
+                  #             pathToItems:
+                  #               - spec
+                  #               - volumes
 
                   # Init containers section (hidden if none)
                   - type: antdCol

@@ -244,24 +244,24 @@ spec:
                                   }}
 
                               # Owner reference
-                              - type: antdFlex
-                                data:
-                                  id: owner-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: owner-label
-                                      strong: true
-                                      text: "Owner"
-                                  - type: parsedText
-                                    data:
-                                      id: owner-value
-                                      strong: true
-                                      text: "No owner"
-                                      style:
-                                        color: red
+                              # - type: antdFlex
+                              #   data:
+                              #     id: owner-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: owner-label
+                              #         strong: true
+                              #         text: "Owner"
+                              #     - type: parsedText
+                              #       data:
+                              #         id: owner-value
+                              #         strong: true
+                              #         text: "No owner"
+                              #         style:
+                              #           color: red
 
                       # === RIGHT COLUMN: Job status ===
                       - type: antdCol
@@ -393,42 +393,43 @@ spec:
                                       text: "{reqsJsonPath[0]['.status.failed']['-']}"
 
                   # === Volumes table ===
-                  - type: antdCol
-                    data:
-                      id: volumes-column
-                      style:
-                        marginTop: 10
-                        padding: 10
-                    children:
-                      - type: VisibilityContainer
-                        data:
-                          id: volumes-container
-                          value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
-                          style:
-                            margin: 0
-                            padding: 0
-                        children:
-                          - type: antdText
-                            data:
-                              id: volumes-title
-                              text: "Volumes"
-                              strong: true
-                              style:
-                                fontSize: 22
-                                marginBottom: 32px
-                          - type: EnrichedTable
-                            data:
-                              id: volumes-table
-                              fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
-                              clusterNamePartOfUrl: "{2}"
-                              customizationId: factory-job-details-volume-list
-                              baseprefix: "/openapi-ui"
-                              withoutControls: true
-                              pathToItems:
-                                - spec
-                                - template
-                                - spec
-                                - volumes
+                  # TODO to be done
+                  # - type: antdCol
+                  #   data:
+                  #     id: volumes-column
+                  #     style:
+                  #       marginTop: 10
+                  #       padding: 10
+                  #   children:
+                  #     - type: VisibilityContainer
+                  #       data:
+                  #         id: volumes-container
+                  #         value: "{reqsJsonPath[0]['.spec.volumes']['-']}"
+                  #         style:
+                  #           margin: 0
+                  #           padding: 0
+                  #       children:
+                  #         - type: antdText
+                  #           data:
+                  #             id: volumes-title
+                  #             text: "Volumes"
+                  #             strong: true
+                  #             style:
+                  #               fontSize: 22
+                  #               marginBottom: 32px
+                  #         - type: EnrichedTable
+                  #           data:
+                  #             id: volumes-table
+                  #             fetchUrl: "/api/clusters/{2}/k8s/apis/batch/v1/namespaces/{3}/jobs/{6}"
+                  #             clusterNamePartOfUrl: "{2}"
+                  #             customizationId: factory-job-details-volume-list
+                  #             baseprefix: "/openapi-ui"
+                  #             withoutControls: true
+                  #             pathToItems:
+                  #               - spec
+                  #               - template
+                  #               - spec
+                  #               - volumes
 
                   # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
