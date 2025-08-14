@@ -212,7 +212,10 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34}}
+                                 {{ include "incloud-web-resources.factory.labels" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/api/v1/nodes/{5}"
+                                    ) | nindent 34
+                                  }}
 
                               # Taints counter block
                               - type: antdFlex
@@ -227,6 +230,25 @@ spec:
                                       "title" "Taints"
                                     ) | nindent 34
                                   }}
+                                  - type: Taints
+                                    data:
+                                      id: taints
+                                      reqIndex: 0
+                                      jsonPathToArray: '.spec.taints'
+                                      text: "~counter~ Taints"
+                                      errorText: "0 Taints"
+                                      notificationSuccessMessage: "Updated successfully"
+                                      notificationSuccessMessageDescription: "Taints have been updated"
+                                      modalTitle: "Edit taints"
+                                      modalDescriptionText: ""
+                                      inputLabel: ""
+                                      endpoint: /api/clusters/{2}/k8s/api/v1/nodes/{5}
+                                      pathToValue: "/spec/taints"
+                                      editModalWidth: "800px"
+                                      cols:
+                                        - 8
+                                        - 8
+                                        - 6
 
                               # Annotations counter block
                               - type: antdFlex

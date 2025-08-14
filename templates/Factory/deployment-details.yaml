@@ -166,7 +166,10 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
+                                 {{ include "incloud-web-resources.factory.labels" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}"
+                                    ) | nindent 34
+                                  }}
 
                               # Node selector key-value list (rendered by include)
                               - type: antdFlex
@@ -210,7 +213,27 @@ spec:
                                       "title" "Tolerations"
                                     ) | nindent 34
                                   }}
-
+                                  - type: Tolerations
+                                    data:
+                                      id: tolerations
+                                      reqIndex: 0
+                                      jsonPathToArray: '.spec.template.spec.tolerations'
+                                      text: "~counter~ Tollerations"
+                                      errorText: "0 Tollerations"
+                                      notificationSuccessMessage: "Updated successfully"
+                                      notificationSuccessMessageDescription: "Tollerations have been updated"
+                                      modalTitle: "Edit tolerations"
+                                      modalDescriptionText: ""
+                                      inputLabel: ""
+                                      endpoint: /api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/deployments/{6}
+                                      pathToValue: "/spec/template/spec/tolerations"
+                                      editModalWidth: "1000px"
+                                      cols:
+                                        - 8
+                                        - 3
+                                        - 8
+                                        - 3
+                                        - 2
                               # Annotations counter block
                               - type: antdFlex
                                 data:

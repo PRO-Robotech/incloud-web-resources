@@ -139,7 +139,11 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 42}}
+                                 {{ include "incloud-web-resources.factory.labels" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/replicasets/{6}"
+                                    ) | nindent 34
+                                  }}
+
 
                               # Node selector
                               - type: antdFlex

@@ -132,7 +132,10 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.labels" . | nindent 34 }}
+                                 {{ include "incloud-web-resources.factory.labels" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/{5}"
+                                    ) | nindent 34
+                                  }}
 
                               # Annotations counter block
                               - type: antdFlex
