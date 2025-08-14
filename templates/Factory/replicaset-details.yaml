@@ -412,6 +412,7 @@ spec:
                   pathToItems:
                     - items
 
+{{- if .Values.addons.trivy.enabled }}
           # ------ PODS TAB ------
           - key: reports
             label: Reports
@@ -435,3 +436,4 @@ spec:
                     - 0
                     - report
                     - vulnerabilities
+{{- end -}}
