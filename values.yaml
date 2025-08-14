@@ -1,8 +1,8 @@
 addons:
   argocd:
-    enabled: true
+    enabled: false
   hbf:
-    enabled: true
+    enabled: false
     apiVersion: 
   trivy:
-    enabled: true
+    enabled: false

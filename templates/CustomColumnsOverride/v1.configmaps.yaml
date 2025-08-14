@@ -1,65 +1,65 @@
 ---
-    apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-cluster-v1.configmaps"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.namespace
-          name: Namespace
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-      additionalPrinterColumnsUndefinedValues:
-        - key: Namespace
-          value: "-"
-      id: "stock-cluster-/v1/configmaps"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-cluster-v1.configmaps"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+  additionalPrinterColumnsUndefinedValues:
+    - key: Namespace
+      value: "-"
+  id: "stock-cluster-/v1/configmaps"
 
 ---
-    apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "stock-namespace-v1.configmaps"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-      id: "stock-namespace-/v1/configmaps"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-namespace-v1.configmaps"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+  id: "stock-namespace-/v1/configmaps"
 
 ---
-    apiVersion: front.in-cloud.io/v1alpha1
-    kind: CustomColumnsOverride
-    metadata:
-      name: "cluster-v1.configmaps"
-    spec:
-      additionalPrinterColumns:
-        - jsonPath: .metadata.name
-          name: Name
-          type: string
-        - jsonPath: .metadata.namespace
-          name: Namespace
-          type: string
-        - jsonPath: .metadata.creationTimestamp
-          name: Created
-          type: date
-      additionalPrinterColumnsTrimLengths:
-        - key: Name
-          value: 64
-      additionalPrinterColumnsUndefinedValues:
-        - key: Namespace
-          value: "-"
-      id: "cluster-/v1/configmaps"
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "cluster-v1.configmaps"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: string
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: date
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+  additionalPrinterColumnsUndefinedValues:
+    - key: Namespace
+      value: "-"
+  id: "cluster-/v1/configmaps"
