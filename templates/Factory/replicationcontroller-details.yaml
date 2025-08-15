@@ -180,7 +180,7 @@ spec:
                                   gap: 4
                                 children:
                                   {{ include "incloud-web-resources.factory.tolerations.block" (dict 
-                                    "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/replicasets/{6}"
+                                    "endpoint" "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
                                     "jsonPathToArray" ".spec.template.spec.tolerations"
                                     "pathToValue" "/spec/template/spec/tolerations"
                                     ) | nindent 34
@@ -193,10 +193,8 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
-                                      "jsonPath" ".metadata.annotations"
-                                      "type" "annotations"
-                                      "title" "Annotations"
+                                  {{ include "incloud-web-resources.factory.annotations.block" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/api/v1/namespaces/{3}/replicationcontrollers/{6}"
                                     ) | nindent 34
                                   }}
 

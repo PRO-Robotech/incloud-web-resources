@@ -238,10 +238,8 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
-                                      "jsonPath" ".metadata.annotations"
-                                      "type" "annotations"
-                                      "title" "Annotations"
+                                  {{ include "incloud-web-resources.factory.annotations.block" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/api/v1/nodes/{5}"
                                     ) | nindent 34
                                   }}
 

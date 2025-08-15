@@ -146,10 +146,8 @@ spec:
                                   vertical: true
                                   gap: 4
                                 children:
-                                  {{ include "incloud-web-resources.factory.counters.object.fields" (dict
-                                      "jsonPath" ".metadata.annotations"
-                                      "type" "annotations"
-                                      "title" "Annotations"
+                                  {{ include "incloud-web-resources.factory.annotations.block" (dict
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/rbac.authorization.k8s.io/v1/namespaces/{3}/rolebindings/{6}"
                                     ) | nindent 34
                                   }}
 
