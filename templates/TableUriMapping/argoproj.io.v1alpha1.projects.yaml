@@ -26,6 +26,7 @@ spec:
   keysToParseSecond:
     - metadata
     - namespace
+  keysToParseThird: []
   id: "stock-namespace-/argoproj.io/v1alpha1/appprojects"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/argocd-appproject-details/~recordValue~"
 {{- end -}}
