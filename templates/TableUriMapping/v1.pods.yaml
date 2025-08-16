@@ -37,8 +37,8 @@ kind: TableUriMapping
 metadata:
   name: factory-service-details-endpointslice
 spec:
-  keysToParse: ".metadata.name"
-  keysToParseSecond: ".metadata.namespace"
+  keysToParse: ".targetRef.name"
+  keysToParseSecond: ".targetRef.namespace"
   id: "factory-service-details-endpointslice"
   pathToNavigate: "/openapi-ui/{2}/~recordValueSecond~/factory/pod-details/~recordValue~"
 

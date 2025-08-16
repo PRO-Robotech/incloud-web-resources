@@ -391,3 +391,23 @@ spec:
                         # TODO требуется обработка нулевого значения
                         pathToLabels: ".spec.selector"
                       pathToItems: ".items"
+
+{{- if .Values.addons.trivy.enabled }}
+          - key: cfg-reports
+            label: CFG reports
+            children:
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/aquasecurity.github.io/v1alpha1/namespaces/{3}/configauditreports"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-aquasecurity.github.io.v1alpha1.configauditreports
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelector:
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
+                  # Items path for Pods list
+                  pathToItems: ".items[*].report.checks"
+{{- end -}}
