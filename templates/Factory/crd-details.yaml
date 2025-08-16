@@ -273,9 +273,7 @@ spec:
                               customizationId: factory-status-conditions
                               baseprefix: "/openapi-ui"
                               withoutControls: true
-                              pathToItems:
-                                - status
-                                - conditions
+                              pathToItems: ".status.conditions"
 
                   # Versions section
                   - type: antdCol
@@ -309,9 +307,7 @@ spec:
                               customizationId: versions-apiextensions.k8s.io.v1.customresourcedefinitions
                               baseprefix: "/openapi-ui"
                               withoutControls: true
-                              pathToItems:
-                                - spec
-                                - versions
+                              pathToItems: ".spec.versions"
 
           # --- YAML TAB ---
           - key: yaml
@@ -341,5 +337,4 @@ spec:
                   customizationId: instances-crd
                   baseprefix: "/openapi-ui"
                   withoutControls: true
-                  pathToItems:
-                    - items
+                  pathToItems: ".items"

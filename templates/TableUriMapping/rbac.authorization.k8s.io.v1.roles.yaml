@@ -4,12 +4,8 @@ kind: TableUriMapping
 metadata:
   name: stock-cluster-role-details
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-cluster-/rbac.authorization.k8s.io/v1/roles"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/role-details/~recordValue~"
 
@@ -19,11 +15,7 @@ kind: TableUriMapping
 metadata:
   name: stock-namespace-role-details
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-namespace-/rbac.authorization.k8s.io/v1/roles"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/role-details/~recordValue~"

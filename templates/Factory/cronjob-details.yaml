@@ -397,9 +397,7 @@ spec:
                   #             baseprefix: "/openapi-ui"
                   #             withoutControls: true
                   #             # Path inside CronJob manifest where volumes are located
-                  #             pathToItems:
-                  #               - spec
-                  #               - volumes
+                  #             pathToItems: ".spec.volumes"
 
                   # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
@@ -496,9 +494,7 @@ spec:
                               baseprefix: "/openapi-ui"
                               withoutControls: true
                               # Path to conditions array
-                              pathToItems:
-                                - status
-                                - conditions
+                              pathToItems: ".status.conditions"
 
           # ------ YAML TAB ------
           - key: "yaml"
@@ -531,16 +527,9 @@ spec:
                   # Build label selector from job template's pod labels
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - jobTemplate
-                      - spec
-                      - template
-                      - metadata
-                      - labels
+                    pathToLabels: ".spec.jobTemplate.spec.template.metadata.labels"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
+                  pathToItems: ".items"
 
           # ------ JOBS TAB ------
           - key: jobs
@@ -558,11 +547,6 @@ spec:
                   # Build label selector from CronJob's job template metadata.labels
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - jobTemplate
-                      - metadata
-                      - labels
+                    pathToLabels: ".spec.jobTemplate.metadata.labels"
                   # Items path for Jobs list
-                  pathToItems:
-                    - items
+                  pathToItems: ".items"

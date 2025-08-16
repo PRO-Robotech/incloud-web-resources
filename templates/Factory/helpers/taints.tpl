@@ -1,6 +1,6 @@
 {{- define "incloud-web-resources.factory.taints.block" -}}
 {{- $i := (default 0 .reqIndex) -}}
-{{- $jsonPath := (default "" .jsonPath) -}}
+{{- $jsonPathToArray := (default "" .jsonPathToArray) -}}
 {{- $endpoint := (default "" .endpoint) -}}
 {{- $pathToValue := (default "" .pathToValue) -}}
 - type: antdText
@@ -12,7 +12,7 @@
   data:
     id: taints
     reqIndex: {{ $i }}
-    jsonPathToArray: "{{ $jsonPath }}"
+    jsonPathToArray: "{{ $jsonPathToArray }}"
     text: "~counter~ Taints"
     errorText: "0 Taints"
     notificationSuccessMessage: "Updated successfully"

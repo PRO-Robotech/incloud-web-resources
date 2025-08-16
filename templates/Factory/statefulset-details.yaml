@@ -310,11 +310,8 @@ spec:
                   #             customizationId: factory-statefulset-details-volume-list
                   #             baseprefix: "/openapi-ui"
                   #             withoutControls: true
-                  #             pathToItems:
-                  #               - spec
-                  #               - template
-                  #               - spec
-                  #               - volumes
+                  #             pathToItems: ".spec.template.spec.volumes"
+
 
                   # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
@@ -404,13 +401,8 @@ spec:
                   withoutControls: true
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - template
-                      - metadata
-                      - labels
-                  pathToItems:
-                    - items
+                    pathToLabels: ".spec.template.metadata.labels"
+                  pathToItems: ".items"
 
 {{- if .Values.addons.trivy.enabled }}
           # ------ PODS TAB ------
@@ -430,9 +422,6 @@ spec:
                     trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
                     trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
-                    - 0
-                    - report
-                    - checks
+                  pathToItems: ".items[*].report.checks"
+
 {{- end -}}

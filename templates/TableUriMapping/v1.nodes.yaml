@@ -4,11 +4,6 @@ kind: TableUriMapping
 metadata:
   name: stock-cluster-node-details
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
   id: "stock-cluster-/v1/nodes"
   pathToNavigate: "/openapi-ui/{clusterName}/factory/node-details/~recordValue~"

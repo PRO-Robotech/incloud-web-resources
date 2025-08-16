@@ -303,9 +303,7 @@ spec:
                   customizationId: "factory-argocd-application-status-resources"
                   baseprefix: "/openapi-ui"
                   withoutControls: true
-                  pathToItems:
-                    - status
-                    - resources
+                  pathToItems: ".status.resources"
 
           # ------ SYNC RESOURCES TAB ------
           - key: "sync-resources"
@@ -447,11 +445,7 @@ spec:
                           customizationId: "factory-argocd-application-resources"
                           baseprefix: "/openapi-ui"
                           withoutControls: true
-                          pathToItems:
-                            - status
-                            - operationState
-                            - syncResult
-                            - resources
+                          pathToItems: ".status.operationState.syncResult.resources"
 
           # ------ HISTORY TAB ------
           - key: "hystory"
@@ -465,7 +459,6 @@ spec:
                   customizationId: "factory-argocd-application-status-history"
                   baseprefix: "/openapi-ui"
                   withoutControls: true
-                  pathToItems:
-                    - status
-                    - history
+                  pathToItems: ".status.history"
+
 {{- end }}

@@ -402,10 +402,5 @@ spec:
                   withoutControls: true
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - template
-                      - metadata
-                      - labels
-                  pathToItems:
-                    - items
+                    pathToLabels: ".spec.template.metadata.labels"
+                  pathToItems: ".items"

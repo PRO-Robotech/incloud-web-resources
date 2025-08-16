@@ -5,12 +5,8 @@ kind: TableUriMapping
 metadata:
   name: "stock-cluster-default-argoproj.io.v1alpha1.appprojects"
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-cluster-/argoproj.io/v1alpha1/appprojects"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/argocd-appproject-details/~recordValue~"
 
@@ -20,13 +16,8 @@ kind: TableUriMapping
 metadata:
   name: "stock-namespace-default-argoproj.io.v1alpha1.appprojects"
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
-  keysToParseThird: []
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-namespace-/argoproj.io/v1alpha1/appprojects"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/argocd-appproject-details/~recordValue~"
 {{- end -}}

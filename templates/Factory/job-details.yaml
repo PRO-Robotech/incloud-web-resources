@@ -58,20 +58,13 @@ spec:
               lineHeight: 24px
               fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
 
-        # Job completion/failed status
-        - type: StatusText
+        - type: antdFlex
           data:
-            id: header-status
-            value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-            criteriaSuccess: equals
-            valueToCompareSuccess:
-              - "Complete"
-            criteriaError: equals
-            valueToCompareError:
-              - "Failed"
-            successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-            fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+            id: status-header-block
+            vertical: true
+            gap: 4
+          children:
+            {{ include "incloud-web-resources.factory.statuses.job" . | nindent 12 }}
 
     # === Main content tabs ===
     - type: antdTabs
@@ -299,19 +292,13 @@ spec:
                                       id: status-label
                                       strong: true
                                       text: "Status"
-                                  - type: StatusText
+                                  - type: antdFlex
                                     data:
-                                      id: status-value
-                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-                                      criteriaSuccess: equals
-                                      valueToCompareSuccess:
-                                        - "Complete"
-                                      criteriaError: equals
-                                      valueToCompareError:
-                                        - "Failed"
-                                      successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
-                                      fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Complete' || @.type=='Failed')].type']['-']}"
+                                      id: status-header-block
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.statuses.job" . | nindent 38 }}
 
                               # Start time
                               - type: antdFlex
@@ -423,11 +410,7 @@ spec:
                   #             customizationId: factory-job-details-volume-list
                   #             baseprefix: "/openapi-ui"
                   #             withoutControls: true
-                  #             pathToItems:
-                  #               - spec
-                  #               - template
-                  #               - spec
-                  #               - volumes
+                  #             pathToItems: ".spec.template.spec.volumes"
 
                   # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
@@ -519,9 +502,7 @@ spec:
                               customizationId: factory-status-conditions
                               baseprefix: "/openapi-ui"
                               withoutControls: true
-                              pathToItems:
-                                - status
-                                - conditions
+                              pathToItems: ".status.conditions"
 
           # ------ YAML TAB ------
           - key: "yaml"
@@ -552,10 +533,5 @@ spec:
                   # Build label selector from Job's pod template labels
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - template
-                      - metadata
-                      - labels
-                  pathToItems:
-                    - items
+                    pathToLabels: ".spec.template.metadata.labels"
+                  pathToItems: ".items"

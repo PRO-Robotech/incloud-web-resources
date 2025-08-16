@@ -4,12 +4,8 @@ kind: TableUriMapping
 metadata:
   name: stock-cluster-batch.v1.cronjobs
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-cluster-/batch/v1/cronjobs"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/cronjob-details/~recordValue~"
 
@@ -19,11 +15,7 @@ kind: TableUriMapping
 metadata:
   name: stock-namespace-batch.v1.cronjobs
 spec:
-  keysToParse:
-    - metadata
-    - name
-  keysToParseSecond:
-    - metadata
-    - namespace
+  keysToParse: ".metadata.name"
+  keysToParseSecond: ".metadata.namespace"
   id: "stock-namespace-/batch/v1/cronjobs"
   pathToNavigate: "/openapi-ui/{clusterName}/~recordValueSecond~/factory/cronjob-details/~recordValue~"

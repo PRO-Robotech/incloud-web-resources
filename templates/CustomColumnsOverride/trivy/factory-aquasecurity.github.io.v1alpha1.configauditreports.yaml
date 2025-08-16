@@ -1,0 +1,30 @@
+{{- if .Values.addons.trivy.enabled }}
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "factory-aquasecurity.github.io.v1alpha1.configauditreports"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .severity
+      name: severity
+      type: string
+    - jsonPath: .checkID
+      name: checkID
+      type: string
+    - jsonPath: .category
+      name: category
+      type: string
+    - jsonPath: .title
+      name: title
+      type: string
+    - jsonPath: .remediation
+      name: remediation
+      type: string
+  additionalPrinterColumnsTrimLengths:
+    - key: title
+      value: 128
+    - key: remediation
+      value: 128
+  id: "factory-aquasecurity.github.io.v1alpha1.configauditreports"
+{{- end -}}

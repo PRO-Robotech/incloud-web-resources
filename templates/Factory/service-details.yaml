@@ -322,9 +322,7 @@ spec:
                                       customizationId: "factory-service-details-port-mapping"
                                       baseprefix: "/openapi-ui"
                                       withoutControls: true
-                                      pathToItems:
-                                        - spec
-                                        - ports
+                                      pathToItems: ".spec.ports"
 
                               # Pod serving
                               - type: VisibilityContainer
@@ -354,10 +352,7 @@ spec:
                                           withoutControls: true
                                           labelsSelector:
                                             kubernetes.io/service-name: "{reqsJsonPath[0]['.metadata.name']['-']}"
-                                          pathToItems:
-                                            - items
-                                            - [0]
-                                            - endpoints
+                                          pathToItems: ".items[*].endpoints"
 
           # YAML tab
           - key: "yaml"
@@ -394,8 +389,5 @@ spec:
                       labelsSelectorFull:
                         reqIndex: 0
                         # TODO требуется обработка нулевого значения
-                        pathToLabels:
-                          - spec
-                          - selector
-                      pathToItems:
-                        - items
+                        pathToLabels: ".spec.selector"
+                      pathToItems: ".items"

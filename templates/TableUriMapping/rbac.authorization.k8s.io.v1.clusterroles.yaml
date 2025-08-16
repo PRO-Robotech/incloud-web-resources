@@ -4,8 +4,6 @@ kind: TableUriMapping
 metadata:
   name: stock-cluster-clusterrole-details
 spec:
-  keysToParse:
-    - metadata
-    - name
+  keysToParse: ".metadata.name"
   id: "stock-cluster-/rbac.authorization.k8s.io/v1/clusterroles"
   pathToNavigate: "/openapi-ui/{clusterName}/factory/clusterrole-details/~recordValue~"

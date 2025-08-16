@@ -57,23 +57,13 @@ spec:
               lineHeight: 24px
               fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
 
-        # Node readiness status
-        - type: StatusText
+        - type: antdFlex
           data:
-            id: header-status
-            value: "{reqsJsonPath[0]['.status.conditions[?(@.status=='True')].reason']['-']}"
-            criteriaSuccess: equals
-            valueToCompareSuccess:
-              - "KubeletReady"
-            criteriaError: equals
-            valueToCompareError:
-              - "KubeletHasSufficientMemory"
-              - "KubeletHasNoDiskPressure"
-              - "KubeletHasSufficientPID"
-              - "CiliumIsUp"
-            successText: "Ready"
-            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.status=='False')].reason']['-']} is False"
-            fallbackText: "Unknown"
+            id: status-header-block
+            vertical: true
+            gap: 4
+          children:
+            {{ include "incloud-web-resources.factory.statuses.node" . | nindent 12 }}
 
     # === MAIN TABS ===
     - type: antdTabs
@@ -297,22 +287,13 @@ spec:
                                       id: status-label
                                       strong: true
                                       text: "Status"
-                                  - type: StatusText
+                                  - type: antdFlex
                                     data:
-                                      id: status-text
-                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.status=='True')].reason']['-']}"
-                                      criteriaSuccess: equals
-                                      valueToCompareSuccess:
-                                        - "KubeletReady"
-                                      criteriaError: notEquals
-                                      valueToCompareError:
-                                        - "KubeletHasSufficientMemory"
-                                        - "KubeletHasNoDiskPressure"
-                                        - "KubeletHasSufficientPID"
-                                        - "CiliumIsUp"
-                                      successText: "Ready"
-                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.status=='True')].reason']['-']}"
-                                      fallbackText: "Unknown"
+                                      id: status-header-block
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.statuses.node" . | nindent 38 }}
 
                               # Operating system block
                               - type: antdFlex
@@ -456,9 +437,7 @@ spec:
                           customizationId: "factory-status-conditions"
                           baseprefix: "/openapi-ui"
                           withoutControls: true
-                          pathToItems:
-                            - status
-                            - conditions
+                          pathToItems: ".status.conditions"
 
                   # IMAGES SECTION
                   - type: antdCol
@@ -483,9 +462,7 @@ spec:
                           customizationId: "factory-node-images"
                           baseprefix: "/openapi-ui"
                           withoutControls: true
-                          pathToItems:
-                            - status
-                            - images
+                          pathToItems: ".status.images"
 
           # ------ YAML TAB ------
           - key: "yaml"
@@ -515,11 +492,10 @@ spec:
                   customizationId: "factory-node-details-/v1/pods"
                   baseprefix: "/openapi-ui"
                   withoutControls: true
-                  pathToItems:
-                    - items
                   fieldSelector:
                     fieldName: "spec.nodeName"
                     parsedText: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                  pathToItems: ".items"
 
           # ------ TERMINAL TAB ------
           - key: "terminal"
@@ -534,8 +510,8 @@ spec:
 
 {{- if .Values.addons.trivy.enabled }}
           # ------ PODS TAB ------
-          - key: reports
-            label: Reports
+          - key: cfg-reports
+            label: CFG reports
             children:
               - type: EnrichedTable
                 data:
@@ -550,9 +526,6 @@ spec:
                     trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
                     trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
-                    - 0
-                    - report
-                    - checks
+                  pathToItems: ".items[*].report.checks"
+
 {{- end -}}

@@ -20,10 +20,10 @@ spec:
     - jsonPath: .restartCount
       name: RestartCount
       type: string
-    - jsonPath: .lastState.waiting.reason
+    - jsonPath: .state.waiting.reason
       name: WaitingdReason
       type: string
-    - jsonPath: .lastState.terminated.reason
+    - jsonPath: .state.terminated.reason
       name: TerminatedReason
       type: string
 
@@ -62,10 +62,10 @@ spec:
     - jsonPath: .restartCount
       name: RestartCount
       type: string
-    - jsonPath: .lastState.waiting.reason
+    - jsonPath: .state.waiting.reason
       name: WaitingdReason
       type: string
-    - jsonPath: .lastState.terminated.reason
+    - jsonPath: .state.terminated.reason
       name: TerminatedReason
       type: string
 

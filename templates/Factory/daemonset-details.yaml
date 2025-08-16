@@ -321,11 +321,7 @@ spec:
                   #             customizationId: factory-daemonset-details-volume-list
                   #             baseprefix: "/openapi-ui"
                   #             withoutControls: true
-                  #             pathToItems:
-                  #               - spec
-                  #               - template
-                  #               - spec
-                  #               - volumes
+                  #             pathToItems: ".spec.template.spec.volumes"
 
                   # ---- INIT CONTAINERS SECTION ----
                   - type: antdCol
@@ -418,14 +414,9 @@ spec:
                   # Build label selector from pod template labels
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels:
-                      - spec
-                      - template
-                      - metadata
-                      - labels
+                    pathToLabels: ".spec.template.metadata.labels"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
+                  pathToItems: ".items"
 
 {{- if .Values.addons.trivy.enabled }}
           # ------ PODS TAB ------
@@ -445,9 +436,25 @@ spec:
                     trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']}"
                     trivy-operator.container.name: "{reqsJsonPath[0]['.spec.template.spec.containers[0].name']}"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
-                    - 0
-                    - report
-                    - vulnerabilities
+                  pathToItems: ".items[*].report.vulnerabilities"
+
+          - key: cfg-reports
+            label: CFG reports
+            children:
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/aquasecurity.github.io/v1alpha1/namespaces/{3}/configauditreports"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-aquasecurity.github.io.v1alpha1.configauditreports
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelector:
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
+                  # Items path for Pods list
+                  pathToItems: ".items[*].report.checks"
+
+
 {{- end -}}

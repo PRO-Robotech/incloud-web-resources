@@ -49,28 +49,13 @@ spec:
               lineHeight: 24px
               fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
 
-        # Pod readiness/status indicator
-        - type: StatusText
+        - type: antdFlex
           data:
-            id: header-pod-status
-            value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
-            criteriaSuccess: equals
-            valueToCompareSuccess:
-              - "PodReady"
-              - "ContainersReady"
-              - "Initialized"
-              - "PodCompleted"
-              - "fallback"
-            criteriaError: equals
-            valueToCompareError:
-              - "ContainersNotReady"
-              - "CrashLoopBackOff"
-              - "ImagePullBackOff"
-              - "ErrImagePull"
-              - "CreateContainerConfigError"
-            successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
-            errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
-            fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['-']}"
+            id: status-header-block
+            vertical: true
+            gap: 4
+          children:
+            {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 38 }}
 
     # Tabs with Details, YAML, Logs, and Terminal views
     - type: antdTabs
@@ -263,28 +248,13 @@ spec:
                                       strong: true
                                       text: "Status"
                                   # Pod readiness/status indicator
-                                  - type: StatusText
+                                  - type: antdFlex
                                     data:
-                                      id: header-pod-status
-                                      value: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['fallback']}"
-                                      criteriaSuccess: equals
-                                      valueToCompareSuccess:
-                                        - "PodReady"
-                                        - "ContainersReady"
-                                        - "Initialized"
-                                        - "PodCompleted"
-                                        - "fallback"
-                                      criteriaError: equals
-                                      valueToCompareError:
-                                        - "ContainersNotReady"
-                                        - "CrashLoopBackOff"
-                                        - "ImagePullBackOff"
-                                        - "ErrImagePull"
-                                        - "CreateContainerConfigError"
-                                      successText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Available']}"
-                                      errorText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['Unavailable']}"
-                                      fallbackText: "{reqsJsonPath[0]['.status.conditions[?(@.type=='Ready')].reason']['-']}"
-
+                                      id: status-label-block
+                                      vertical: true
+                                      gap: 4
+                                    children:
+                                      {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 38 }}
 
                               # Restart policy
                               - type: antdFlex
@@ -422,9 +392,8 @@ spec:
                   #             customizationId: factory-pod-details-volume-list
                   #             baseprefix: "/openapi-ui"
                   #             withoutControls: true
-                  #             pathToItems:
-                  #               - spec
-                  #               - volumes
+                  #             pathToItems: ".spec.volumes"
+
 
                   # Init containers section (hidden if none)
                   - type: antdCol
@@ -501,9 +470,7 @@ spec:
                               customizationId: factory-status-conditions
                               baseprefix: "/openapi-ui"
                               withoutControls: true
-                              pathToItems:
-                                - status
-                                - conditions
+                              pathToItems: ".status.conditions"
 
           # YAML tab with inline editor
           - key: "yaml"
@@ -557,12 +524,26 @@ spec:
                   withoutControls: true
                   # Build label selector from pod template labels
                   labelsSelector:
-                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.ownerReferences[?(@.controller==true && (@.kind=='ReplicaSet' || @.kind=='DaemonSet' || @.kind=='StatefulSet'))].name']['-']}"
-                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.metadata.ownerReferences[?(@.controller==true && (@.kind=='ReplicaSet' || @.kind=='DaemonSet' || @.kind=='StatefulSet'))].kind']['-']}"
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
                   # Items path for Pods list
-                  pathToItems:
-                    - items
-                    - 0
-                    - report
-                    - vulnerabilities
+                  pathToItems: ".items[*].report.vulnerabilities"
+
+          - key: cfg-reports
+            label: CFG reports
+            children:
+              - type: EnrichedTable
+                data:
+                  id: ds-pods-table
+                  fetchUrl: "/api/clusters/{2}/k8s/apis/aquasecurity.github.io/v1alpha1/namespaces/{3}/configauditreports"
+                  clusterNamePartOfUrl: "{2}"
+                  customizationId: factory-aquasecurity.github.io.v1alpha1.configauditreports
+                  baseprefix: "/openapi-ui"
+                  withoutControls: true
+                  # Build label selector from pod template labels
+                  labelsSelector:
+                    trivy-operator.resource.name: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                    trivy-operator.resource.kind: "{reqsJsonPath[0]['.kind']['-']}"
+                  # Items path for Pods list
+                  pathToItems: ".items[*].report.checks"
 {{- end -}}

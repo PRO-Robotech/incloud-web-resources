@@ -1,6 +1,6 @@
 {{- define "incloud-web-resources.factory.tolerations.block" -}}
 {{- $i := (default 0 .reqIndex) -}}
-{{- $jsonPath := (default "" .jsonPath) -}}
+{{- $jsonPathToArray := (default "" .jsonPathToArray) -}}
 {{- $endpoint := (default "" .endpoint) -}}
 {{- $pathToValue := (default "" .pathToValue) -}}
 - type: antdText
@@ -12,7 +12,7 @@
   data:
     id: tolerations
     reqIndex: {{ $i }}
-    jsonPathToArray: "{{ $jsonPath }}"
+    jsonPathToArray: "{{ $jsonPathToArray }}"
     text: "~counter~ Tolerations"
     errorText: "0 Tolerations"
     notificationSuccessMessage: "Updated successfully"

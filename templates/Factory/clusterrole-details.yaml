@@ -196,8 +196,7 @@ spec:
                           customizationId: factory-k8s-rbac-rules
                           baseprefix: "/openapi-ui"
                           withoutControls: true
-                          pathToItems:
-                            - rules
+                          pathToItems: ".rules"
 
           # YAML tab
           - key: "yaml"
