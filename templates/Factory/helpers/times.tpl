@@ -22,7 +22,7 @@
         formatter: timestamp
 {{- end -}}
 
-{{- define "incloud-web-resources.factory.timeblock.create" -}}
+{{- define "incloud-web-resources.factory.timeblock" -}}
 {{- $i := (default 0 .reqIndex) -}}
 - type: antdFlex
   data:

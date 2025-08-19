@@ -12,7 +12,7 @@ spec:
       name: Resources
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -20,7 +20,7 @@ spec:
       name: Resource Names
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -28,7 +28,7 @@ spec:
       name: Non resource URLs
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -36,7 +36,7 @@ spec:
       name: Verbs
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}

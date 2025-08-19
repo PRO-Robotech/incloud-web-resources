@@ -12,7 +12,7 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}

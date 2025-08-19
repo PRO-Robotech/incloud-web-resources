@@ -10,7 +10,17 @@ spec:
       type: string
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.links.details" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "title" "Namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 8
+        }}
+
     - jsonPath: .spec.restartPolicy
       name: Restart Policy
       type: string
@@ -33,7 +43,7 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -82,7 +92,7 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -134,7 +144,7 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
@@ -183,7 +193,7 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+        {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
         }}
