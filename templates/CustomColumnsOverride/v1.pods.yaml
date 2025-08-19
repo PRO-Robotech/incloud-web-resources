@@ -12,10 +12,9 @@ spec:
       name: Namespace
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.links.details" (dict
+        {{ include "incloud-web-resources.factory.linkblock" (dict
             "reqIndex" 0
             "type" "namespace"
-            "title" "Namespace"
             "jsonPath" ".metadata.namespace"
             "factory" "namespace-details"
           ) | nindent 8
