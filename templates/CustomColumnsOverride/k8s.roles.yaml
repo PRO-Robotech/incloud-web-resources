@@ -10,16 +10,16 @@ spec:
       type: string
     - jsonPath: .resources
       name: Resources
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
     - jsonPath: .resourceNames
       name: Resource Names
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
     - jsonPath: .nonResourceURLs
       name: Non resource URLs
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
     - jsonPath: .verbs
       name: Verbs
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

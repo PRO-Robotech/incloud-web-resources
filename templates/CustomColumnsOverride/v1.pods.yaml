@@ -31,7 +31,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: Node
       value: Unschedulable
@@ -75,7 +75,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: Node
       value: Unschedulable
@@ -122,7 +122,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: Node
       value: Unschedulable
@@ -166,7 +166,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: Node
       value: Unschedulable

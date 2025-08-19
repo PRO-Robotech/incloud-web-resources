@@ -25,7 +25,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: ClusterIP
       value: "-"
@@ -68,7 +68,7 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
   additionalPrinterColumnsUndefinedValues:
     - key: ClusterIP
       value: "-"
