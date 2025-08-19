@@ -4,6 +4,7 @@ metadata:
   name: statefulset-details
 spec:
   key: statefulset-details
+
   sidebarTags:
     - statefulset-sidebar
   withScrollableMainContentCard: true
@@ -120,17 +121,28 @@ spec:
                               # Namespace link block (include)
                               - type: antdFlex
                                 data:
-                                  id: namespace-block
+                                  id: meta-namespace-block
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                  - type: antdText
+                                    data:
+                                      id: meta-name-label
+                                      text: Namespace
+                                      strong: true
+
+                                  {{ include "incloud-web-resources.icon" (dict
+                                      "text" "NS"
+                                      "title" "namespace"
+                                      "backgroundColor" "#a25792ff"
+                                    )| nindent 34
+                                  }}
+                                  {{ include "incloud-web-resources.factory.linkblock" (dict
                                       "reqIndex" 0
                                       "type" "namespace"
-                                      "title" "Namespace"
                                       "jsonPath" ".metadata.namespace"
                                       "factory" "namespace-details"
-                                    ) | nindent 34 
+                                    ) | nindent 38
                                   }}
 
                               # Labels block (include)
@@ -182,7 +194,7 @@ spec:
                                   gap: 4
                                 children:
                                   {{ include "incloud-web-resources.factory.tolerations.block" (dict 
-                                    "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefullsets/{6}"
+                                    "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefulsets/{6}"
                                     "jsonPathToArray" ".spec.template.spec.tolerations"
                                     "pathToValue" "/spec/template/spec/tolerations"
                                     ) | nindent 34
@@ -196,7 +208,7 @@ spec:
                                   gap: 4
                                 children:
                                   {{ include "incloud-web-resources.factory.annotations.block" (dict
-                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefullsets/{6}"
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefulsets/{6}"
                                     ) | nindent 34
                                   }}
 

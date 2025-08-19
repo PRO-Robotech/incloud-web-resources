@@ -112,17 +112,28 @@ spec:
                                       text: "{reqsJsonPath[0]['.metadata.name']['-']}"
                               - type: antdFlex
                                 data:
-                                  id: namespace-links-block
+                                  id: meta-namespace-block
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                  - type: antdText
+                                    data:
+                                      id: meta-name-label
+                                      text: Namespace
+                                      strong: true
+
+                                  {{ include "incloud-web-resources.icon" (dict
+                                      "text" "NS"
+                                      "title" "namespace"
+                                      "backgroundColor" "#a25792ff"
+                                    )| nindent 34
+                                  }}
+                                  {{ include "incloud-web-resources.factory.linkblock" (dict
                                       "reqIndex" 0
                                       "type" "namespace"
-                                      "title" "Namespace"
                                       "jsonPath" ".metadata.namespace"
                                       "factory" "namespace-details"
-                                    ) | nindent 34 
+                                    ) | nindent 38
                                   }}
 
                               - type: antdFlex

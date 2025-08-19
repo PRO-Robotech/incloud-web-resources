@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-factory-pod-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: pods
-      label: "pods"
+      label: "v1/pods"
       link: "/openapi-ui/{clusterName}/{namespace}/builtin-table/pods"
     - key: pod
       label: "{6}"

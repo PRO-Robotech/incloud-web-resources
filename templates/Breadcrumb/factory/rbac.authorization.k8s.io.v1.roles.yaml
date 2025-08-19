@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-factory-role-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: roles
-      label: "roles"
+      label: "rbac.authorization.k8s.io/v1/roles"
       link: "/openapi-ui/{clusterName}/{namespace}/api-table/rbac.authorization.k8s.io/v1/roles"
     - key: role
       label: "{5}"

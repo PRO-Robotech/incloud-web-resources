@@ -1,0 +1,13 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
+metadata:
+  name: stock-project-factory-poddisruptionbudget-details
+spec:
+  id: "stock-project-factory-poddisruptionbudget-details"
+  breadcrumbItems:
+    - key: poddisruptionbudgets
+      label: "policy/v1/poddisruptionbudgets"
+      link: "/openapi-ui/{clusterName}/{namespace}/api-table/policy/v1/poddisruptionbudgets"
+    - key: poddisruptionbudget
+      label: "{6}"

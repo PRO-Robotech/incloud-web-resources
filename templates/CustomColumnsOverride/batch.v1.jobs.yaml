@@ -7,10 +7,43 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "J"
+            "title" "job"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "job-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#a25792ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.manualSelector
       name: Manual selector
       type: string
@@ -29,9 +62,22 @@ spec:
     - jsonPath: .spec.suspend
       name: Suspend
       type: string
+    - name: Status
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
@@ -51,7 +97,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "J"
+            "title" "job"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "job-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .spec.manualSelector
       name: Manual selector
       type: string
@@ -70,9 +133,22 @@ spec:
     - jsonPath: .spec.suspend
       name: Suspend
       type: string
+    - name: Status
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
@@ -92,7 +168,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "J"
+            "title" "job"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "job-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .spec.manualSelector
       name: Manual selector
       type: string
@@ -114,9 +207,22 @@ spec:
     - jsonPath: .spec.startingDeadlineSeconds
       name: Starting deadline seconds
       type: string
+    - name: Status
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

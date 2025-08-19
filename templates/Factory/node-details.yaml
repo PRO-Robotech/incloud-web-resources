@@ -151,21 +151,22 @@ spec:
                                       text: "{reqsJsonPath[0]['.spec.externalID']['-']}"
 
                               # Uptime block (placeholder for future calculated value)
-                              - type: antdFlex
-                                data:
-                                  id: uptime-block
-                                  vertical: true
-                                  gap: 4
-                                children:
-                                  - type: antdText
-                                    data:
-                                      id: uptime-label
-                                      strong: true
-                                      text: "Uptime"
-                                  - type: parsedText
-                                    data:
-                                      id: uptime-value
-                                      text: "Function needed to calculate uptime"
+                              # TODO To be done
+                              # - type: antdFlex
+                              #   data:
+                              #     id: uptime-block
+                              #     vertical: true
+                              #     gap: 4
+                              #   children:
+                              #     - type: antdText
+                              #       data:
+                              #         id: uptime-label
+                              #         strong: true
+                              #         text: "Uptime"
+                              #     - type: parsedText
+                              #       data:
+                              #         id: uptime-value
+                              #         text: "Function needed to calculate uptime"
 
                               # Node address block
                               - type: antdFlex
@@ -507,6 +508,7 @@ spec:
                   id: terminal
                   cluster: "{2}"
                   nodeName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                  substractHeight: 400
 
 {{- if .Values.addons.trivy.enabled }}
           # ------ PODS TAB ------

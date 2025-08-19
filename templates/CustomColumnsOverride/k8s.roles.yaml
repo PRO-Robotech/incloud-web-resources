@@ -7,19 +7,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .apiGroups
       name: Api groups
-      type: string
+      type: array
+
     - jsonPath: .resources
       name: Resources
-      type: date
+      type: array
+
     - jsonPath: .resourceNames
       name: Resource Names
-      type: date
+      type: array
+
     - jsonPath: .nonResourceURLs
       name: Non resource URLs
-      type: date
+      type: array
+
     - jsonPath: .verbs
       name: Verbs
-      type: date
+      type: array
+
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

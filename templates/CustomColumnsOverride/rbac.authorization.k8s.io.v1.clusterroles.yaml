@@ -7,10 +7,33 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "CR"
+            "title" "clusterrole"
+            "backgroundColor" "#c46100"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "factory" "clusterrole-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

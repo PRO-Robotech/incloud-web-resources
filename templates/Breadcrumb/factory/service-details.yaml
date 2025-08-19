@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-factory-service-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: services
-      label: "services"
+      label: "v1/services"
       link: "/openapi-ui/{clusterName}/{namespace}/builtin-table/services"
     - key: service
       label: "{6}"

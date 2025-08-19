@@ -8,10 +8,43 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "A"
+            "title" "applications"
+            "backgroundColor" "#436853ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "argocd-application-details"
+        ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#a25792ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .status.sync.status
       name: Sync Status
       type: string
@@ -26,14 +59,15 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
-  additionalPrinterColumnsTrimLengths:
-    - key: Name
-      value: 64
-    - key: Labels
-      value: 1
-    - key: Pod Selector
-      value: 1
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
+  additionalPrinterColumnsTrimLengths: []
   additionalPrinterColumnsUndefinedValues:
     - key: Name
       value: "-"
@@ -57,7 +91,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "A"
+            "title" "applications"
+            "backgroundColor" "#436853ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "argocd-application-details"
+        ) | nindent 12 
+        }}
     - jsonPath: .status.sync.status
       name: Sync Status
       type: string
@@ -72,14 +123,16 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
-  additionalPrinterColumnsTrimLengths:
-    - key: Name
-      value: 64
-    - key: Labels
-      value: 1
-    - key: Pod Selector
-      value: 1
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
+  additionalPrinterColumnsTrimLengths: []
+
   additionalPrinterColumnsUndefinedValues:
     - key: Name
       value: "-"
@@ -179,10 +232,24 @@ spec:
       type: string
     - jsonPath: .deployStartedAt
       name: Deploy Started At
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".deployStartedAt"
+          ) | nindent 8
+        }}
     - jsonPath: .deployedAt
       name: Deployed At
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".deployedAt"
+          ) | nindent 8
+        }}
     - jsonPath: .revision
       name: Revision
       type: string
