@@ -12,22 +12,34 @@ spec:
       name: Resources
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
+        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
     - jsonPath: .resourceNames
       name: Resource Names
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
+        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
     - jsonPath: .nonResourceURLs
       name: Non resource URLs
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
+        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
     - jsonPath: .verbs
       name: Verbs
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
+        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

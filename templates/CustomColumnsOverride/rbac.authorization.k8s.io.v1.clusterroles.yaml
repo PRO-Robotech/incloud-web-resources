@@ -12,7 +12,10 @@ spec:
       name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
+        {{ include "incloud-web-resources.factory.timeblock.create" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
