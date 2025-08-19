@@ -407,7 +407,7 @@ spec:
                   withoutControls: true
                   labelsSelectorFull:
                     reqIndex: 0
-                    pathToLabels: ".spec.template.metadata.labals"
+                    pathToLabels: ".spec.template.metadata.labels"
                   pathToItems: ".items"
 
 {{- if .Values.addons.trivy.enabled }}

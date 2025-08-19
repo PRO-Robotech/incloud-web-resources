@@ -7,78 +7,45 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "DS"
+            "title" "ds"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
-    - jsonPath: .metadata.labels
-      name: Labels
-      type: string
-    - jsonPath: .metadata.ownerReferences[*].name
-      name: Owner
-      type: string
-    - jsonPath: .metadata.creationTimestamp
-      name: Created
       type: factory
       customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#1e4f18"
+          )| nindent 8
         }}
-  additionalPrinterColumnsTrimLengths:
-    - key: Name
-      value: 64
-    - key: Labels
-      value: 1
-  id: "stock-cluster-/apps/v1/daemonsets"
-
----
-apiVersion: front.in-cloud.io/v1alpha1
-kind: CustomColumnsOverride
-metadata:
-  name: "stock-namespace-apps.v1.daemonsets"
-spec:
-  additionalPrinterColumns:
-    - jsonPath: .metadata.name
-      name: Name
-      type: string
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .metadata.ownerReferences[*].name
       name: Owner
-      type: string
-    - jsonPath: .metadata.creationTimestamp
-      name: Created
-      type: factory
-      customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
-        }}
-  additionalPrinterColumnsTrimLengths:
-    - key: Name
-      value: 64
-    - key: Labels
-      value: 1
-  id: "stock-namespace-/apps/v1/daemonsets"
-
----
-apiVersion: front.in-cloud.io/v1alpha1
-kind: CustomColumnsOverride
-metadata:
-  name: "factory-apps.v1.daemonsets"
-spec:
-  additionalPrinterColumns:
-    - jsonPath: .metadata.name
-      name: Name
-      type: string
-    - jsonPath: .metadata.labels
-      name: Labels
-      type: string
-    - jsonPath: .metadata.ownerReferences[*].name
-      name: Owner
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -93,10 +60,56 @@ spec:
     - key: Labels
       value: 1
   additionalPrinterColumnsUndefinedValues:
-    - key: Labels
+    - key: Owner
       value: "-"
+  id: "stock-cluster-/apps/v1/daemonsets"
 
-  id: "factory-/apps/v1/daemonsets"
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: CustomColumnsOverride
+metadata:
+  name: "stock-namespace-apps.v1.daemonsets"
+spec:
+  additionalPrinterColumns:
+    - jsonPath: .metadata.name
+      name: Name
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "DS"
+            "title" "ds"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12 
+        }}
+    - jsonPath: .metadata.labels
+      name: Labels
+      type: array
+
+    - jsonPath: .metadata.ownerReferences[*].name
+      name: Owner
+      type: array
+    - jsonPath: .metadata.creationTimestamp
+      name: Created
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
+  additionalPrinterColumnsTrimLengths:
+    - key: Name
+      value: 64
+    - key: Labels
+      value: 1
+  id: "stock-namespace-/apps/v1/daemonsets"
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1

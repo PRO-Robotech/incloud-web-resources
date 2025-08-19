@@ -10,7 +10,7 @@ spec:
       type: string
     - jsonPath: .status
       name: Status
-      type: string
+      type: bool
     - jsonPath: .lastTransitionTime
       name: Updated
       type: string

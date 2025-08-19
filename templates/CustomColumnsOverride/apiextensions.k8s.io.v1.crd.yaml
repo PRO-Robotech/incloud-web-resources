@@ -5,9 +5,23 @@ metadata:
   name: stock-cluster-apiextensions.k8s.io.v1.customresourcedefinitions
 spec:
   additionalPrinterColumns:
-    - jsonPath: .spec.names.kind
+    - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "CRD"
+            "title" "crd"
+            "backgroundColor" "#137706ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "factory" "crd-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.group
       name: Group
       type: string

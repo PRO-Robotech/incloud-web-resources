@@ -7,19 +7,39 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "P"
+            "title" "pod"
+            "backgroundColor" "#009596"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
       type: factory
       customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#1e4f18"
+          )| nindent 8
+        }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
             "reqIndex" 0
             "type" "namespace"
             "jsonPath" ".metadata.namespace"
             "factory" "namespace-details"
-          ) | nindent 8
+          ) | nindent 12
         }}
-
     - jsonPath: .spec.restartPolicy
       name: Restart Policy
       type: string
@@ -35,9 +55,10 @@ spec:
     - jsonPath: .status.qosClass
       name: QOS
       type: string
-    - jsonPath: .status.phase
-      name: Phase
-      type: string
+    - name: Status
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -65,7 +86,22 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "P"
+            "title" "pod"
+            "backgroundColor" "#009596"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.nodeName
       name: Node
       type: string
@@ -84,9 +120,10 @@ spec:
     - jsonPath: .status.qosClass
       name: QOS
       type: string
-    - jsonPath: .status.phase
-      name: Phase
-      type: string
+    - name: Status
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -112,12 +149,39 @@ metadata:
   name: "stock-cluster-v1.pods"
 spec:
   additionalPrinterColumns:
-    - jsonPath: .metadata.name
-      name: Name
-      type: string
-    - jsonPath: .metadata.namespace
-      name: Namespace
-      type: string
+    - name: Name
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "P"
+            "title" "pod"
+            "backgroundColor" "#009596"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12
+        }}
+    - name: Namespace
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#1e4f18"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.nodeName
       name: Node
       type: string
@@ -136,9 +200,10 @@ spec:
     - jsonPath: .status.qosClass
       name: QOS
       type: string
-    - jsonPath: .status.phase
-      name: Phase
-      type: string
+    - name: Status
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -166,7 +231,22 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "P"
+            "title" "pod"
+            "backgroundColor" "#009596"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "pod-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .spec.nodeName
       name: Node
       type: string
@@ -185,9 +265,10 @@ spec:
     - jsonPath: .status.qosClass
       name: QOS
       type: string
-    - jsonPath: .status.phase
-      name: Phase
-      type: string
+    - name: Status
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.statuses.pod" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory

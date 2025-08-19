@@ -7,39 +7,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .apiGroups
       name: Api groups
-      type: string
+      type: array
+
     - jsonPath: .resources
       name: Resources
-      type: factory
-      customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
-        }}
+      type: array
+
     - jsonPath: .resourceNames
       name: Resource Names
-      type: factory
-      customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
-        }}
+      type: array
+
     - jsonPath: .nonResourceURLs
       name: Non resource URLs
-      type: factory
-      customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
-        }}
+      type: array
+
     - jsonPath: .verbs
       name: Verbs
-      type: factory
-      customProps:
-        {{ include "incloud-web-resources.factory.timeblock" (dict
-          "req" ".metadata.creationTimestamp"
-          ) | nindent 8
-        }}
+      type: array
+
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

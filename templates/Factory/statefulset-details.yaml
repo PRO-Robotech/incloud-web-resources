@@ -4,6 +4,7 @@ metadata:
   name: statefulset-details
 spec:
   key: statefulset-details
+
   sidebarTags:
     - statefulset-sidebar
   withScrollableMainContentCard: true
@@ -182,7 +183,7 @@ spec:
                                   gap: 4
                                 children:
                                   {{ include "incloud-web-resources.factory.tolerations.block" (dict 
-                                    "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefullsets/{6}"
+                                    "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefulsets/{6}"
                                     "jsonPathToArray" ".spec.template.spec.tolerations"
                                     "pathToValue" "/spec/template/spec/tolerations"
                                     ) | nindent 34
@@ -196,7 +197,7 @@ spec:
                                   gap: 4
                                 children:
                                   {{ include "incloud-web-resources.factory.annotations.block" (dict
-                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefullsets/{6}"
+                                      "endpoint" "/api/clusters/{2}/k8s/apis/apps/v1/namespaces/{3}/statefulsets/{6}"
                                     ) | nindent 34
                                   }}
 

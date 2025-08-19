@@ -496,6 +496,7 @@ spec:
                   cluster: "{2}"
                   namespace: "{reqsJsonPath[0]['.metadata.namespace']['-']}"
                   podName: "{reqsJsonPath[0]['.metadata.name']['-']}"
+                  substractHeight: 400
 
           # Terminal tab with exec into pod
           - key: "terminal"

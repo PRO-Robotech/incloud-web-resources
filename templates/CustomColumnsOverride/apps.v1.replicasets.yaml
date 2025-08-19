@@ -7,16 +7,45 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "RS"
+            "title" "deployment"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "replicaset-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#1e4f18"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .metadata.ownerReferences[*].name
       name: Owner
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -41,13 +70,28 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "RS"
+            "title" "deployment"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "replicaset-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .metadata.ownerReferences[*].name
       name: Owner
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -72,13 +116,28 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "RS"
+            "title" "deployment"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "replicaset-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .metadata.ownerReferences[*].name
       name: Owner
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory

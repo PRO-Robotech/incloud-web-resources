@@ -364,7 +364,7 @@ spec:
                               "title" "Containers"
                               "customizationId" "container-spec-containers-list"
                               "type" "containers"
-                              "apiGroup" "apis/apps/v1"
+                              "apiGroup" "api/v1"
                               "kind" "replicationcontrollers"
                               "resourceName" "{6}"
                               "namespace" "{3}"

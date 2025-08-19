@@ -55,10 +55,10 @@ spec:
       type: string
     - jsonPath: .started
       name: Started
-      type: string
+      type: bool
     - jsonPath: .ready
       name: Ready
-      type: string
+      type: bool
     - jsonPath: .restartCount
       name: RestartCount
       type: string
@@ -97,10 +97,10 @@ spec:
       type: string
     - jsonPath: .resources.requests
       name: Resources requests
-      type: string
+      type: array
     - jsonPath: .resources.limits
       name: Resources limits
-      type: string
+      type: array
   additionalPrinterColumnsTrimLengths:
     - key: Image
       value: 64
@@ -130,13 +130,13 @@ spec:
       type: string
     - jsonPath: .resources.requests
       name: Resources requests
-      type: string
+      type: array
     - jsonPath: .resources.limits
       name: Resources limits
-      type: string
+      type: array
     - jsonPath: .ports[*].containerPort
       name: Ports
-      type: string
+      type: array
   additionalPrinterColumnsTrimLengths:
     - key: Image
       value: 64
