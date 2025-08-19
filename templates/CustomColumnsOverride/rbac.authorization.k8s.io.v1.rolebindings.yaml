@@ -25,7 +25,9 @@ spec:
       type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
   additionalPrinterColumnsUndefinedValues:
     - key: Role ref
       value: "-"
@@ -68,7 +70,9 @@ spec:
       type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
   additionalPrinterColumnsUndefinedValues:
     - key: Role ref
       value: "-"

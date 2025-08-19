@@ -19,7 +19,9 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
@@ -45,7 +47,9 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

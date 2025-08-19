@@ -10,16 +10,24 @@ spec:
       type: string
     - jsonPath: .resources
       name: Resources
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
     - jsonPath: .resourceNames
       name: Resource Names
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
     - jsonPath: .nonResourceURLs
       name: Non resource URLs
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
     - jsonPath: .verbs
       name: Verbs
-        {{- include "incloud-web-resources.factory.time.create" . | nindent 8 -}}
+      type: factory
+      customProps:
+        {{ include "incloud-web-resources.factory.time.create" . | nindent 8 }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
