@@ -20,31 +20,31 @@
   children:
     - key: hbf-networks
       label: Networks
-      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networks"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/networks"
     - key: hbf-addressgroups
       label: AddressGroups
-      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/addressgroups"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/addressgroups"
     - key: hbf-networkbindings
       label: NetworkBindings
-      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/networkbindings"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/networkbindings"
     - key: hbf-ieagagrules
       label: RuleAG2AG
-      link: "/openapi-ui/{clusterName}/api-table/provider.sgroups.io/v1alpha1/ieagagrules"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/ieagagrules"
     - key: hbf-services
       label: Services
-      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/services"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/services"
     - key: hbf-servicealiases
       label: ServiceAliases
-      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/servicealiases"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/servicealiases"
     - key: hbf-addressgroupbindings
       label: AddressGroupBindings
-      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupbindings"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/addressgroupbindings"
     - key: hbf-rules2ses
       label: RuleS2S
-      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/rules2ses"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/rules2s"
     - key: hbf-addressgroupportmappings
       label: AddressGroupPortMappings
-      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/v1alpha1/addressgroupportmappings"
+      link: "/openapi-ui/{clusterName}/api-table/netguard.sgroups.io/{{ .Values.addons.hbf.apiVersion }}/addressgroupportmappings"
 {{- end }}
 
 - children:

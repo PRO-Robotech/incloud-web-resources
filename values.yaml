@@ -3,6 +3,6 @@ addons:
     enabled: false
   hbf:
     enabled: false
-    apiVersion: 
+    apiVersion: v1beta1
   trivy:
     enabled: false
