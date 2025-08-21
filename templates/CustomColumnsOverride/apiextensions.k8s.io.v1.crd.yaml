@@ -9,6 +9,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CRD"
             "title" "crd"

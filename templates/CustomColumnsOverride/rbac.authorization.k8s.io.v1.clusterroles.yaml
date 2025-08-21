@@ -9,6 +9,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CR"
             "title" "clusterrole"
@@ -26,6 +28,8 @@ spec:
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8

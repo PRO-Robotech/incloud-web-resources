@@ -9,6 +9,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "N"
             "title" "node"
@@ -25,11 +27,15 @@ spec:
     - name: Status
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.statuses.node" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8

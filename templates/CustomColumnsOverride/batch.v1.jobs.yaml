@@ -9,6 +9,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "J"
             "title" "job"
@@ -27,6 +29,8 @@ spec:
       name: Namespace
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
@@ -61,11 +65,15 @@ spec:
     - name: Status
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
@@ -91,6 +99,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "J"
             "title" "job"
@@ -126,11 +136,15 @@ spec:
     - name: Status
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
@@ -156,6 +170,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "J"
             "title" "job"
@@ -194,11 +210,15 @@ spec:
     - name: Status
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.statuses.job" . | nindent 8 }}
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8

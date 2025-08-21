@@ -9,6 +9,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "RS"
             "title" "deployment"
@@ -27,6 +29,8 @@ spec:
       name: Namespace
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
@@ -50,6 +54,8 @@ spec:
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
@@ -72,6 +78,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "RS"
             "title" "deployment"
@@ -96,6 +104,8 @@ spec:
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
@@ -118,6 +128,8 @@ spec:
       name: Name
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.icon" (dict
             "text" "RS"
             "title" "deployment"
@@ -142,6 +154,8 @@ spec:
       name: Created
       type: factory
       customProps:
+        disableEventBubbling: true
+        items:
         {{ include "incloud-web-resources.factory.timeblock" (dict
           "req" ".metadata.creationTimestamp"
           ) | nindent 8
