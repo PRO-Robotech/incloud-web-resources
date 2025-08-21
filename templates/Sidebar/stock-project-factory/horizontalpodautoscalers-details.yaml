@@ -1,0 +1,12 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Sidebar
+metadata:
+  name: stock-project-factory-horizontalpodautoscaler-details
+spec:
+  id: stock-project-factory-horizontalpodautoscaler-details
+  keysAndTags:
+    horizontalpodautoscalers:
+      - horizontalpodautoscaler-sidebar
+  menuItems:
+    {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}

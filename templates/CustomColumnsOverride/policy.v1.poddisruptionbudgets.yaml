@@ -2,7 +2,7 @@
 apiVersion: front.in-cloud.io/v1alpha1
 kind: CustomColumnsOverride
 metadata:
-  name: "stock-cluster-apps.v1.daemonsets"
+  name: "stock-cluster-policy.v1.poddisruptionbudgets"
 spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
@@ -12,9 +12,9 @@ spec:
         disableEventBubbling: true
         items:
         {{ include "incloud-web-resources.icon" (dict
-            "text" "DS"
-            "title" "ds"
-            "backgroundColor" "#004080"
+            "text" "PDB"
+            "title" "poddisruptionbudgets"
+            "backgroundColor" "#2b9af3"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -22,7 +22,7 @@ spec:
             "type" "name"
             "jsonPath" ".metadata.name"
             "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-            "factory" "daemonset-details"
+            "factory" "poddisruptionbudget-details"
           ) | nindent 12 
         }}
     - jsonPath: .metadata.namespace
@@ -44,12 +44,7 @@ spec:
             "factory" "namespace-details"
           ) | nindent 12
         }}
-    - jsonPath: .metadata.labels
-      name: Labels
-      type: array
-    - jsonPath: .metadata.ownerReferences[*].name
-      name: Owner
-      type: array
+
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -63,18 +58,16 @@ spec:
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
-    - key: Labels
-      value: 1
-  additionalPrinterColumnsUndefinedValues:
-    - key: Owner
-      value: "-"
-  id: "stock-cluster-/apps/v1/daemonsets"
+
+  additionalPrinterColumnsUndefinedValues: []
+
+  id: "stock-cluster-/policy/v1/poddisruptionbudgets"
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
 kind: CustomColumnsOverride
 metadata:
-  name: "stock-namespace-apps.v1.daemonsets"
+  name: "stock-namespace-policy.v1.poddisruptionbudgets"
 spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
@@ -84,9 +77,9 @@ spec:
         disableEventBubbling: true
         items:
         {{ include "incloud-web-resources.icon" (dict
-            "text" "DS"
-            "title" "ds"
-            "backgroundColor" "#004080"
+            "text" "PDB"
+            "title" "poddisruptionbudgets"
+            "backgroundColor" "#2b9af3"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -94,16 +87,10 @@ spec:
             "type" "name"
             "jsonPath" ".metadata.name"
             "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-            "factory" "daemonset-details"
+            "factory" "poddisruptionbudget-details"
           ) | nindent 12 
         }}
-    - jsonPath: .metadata.labels
-      name: Labels
-      type: array
 
-    - jsonPath: .metadata.ownerReferences[*].name
-      name: Owner
-      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
       type: factory
@@ -117,19 +104,7 @@ spec:
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
-    - key: Labels
-      value: 1
-  id: "stock-namespace-/apps/v1/daemonsets"
 
----
-apiVersion: front.in-cloud.io/v1alpha1
-kind: CustomColumnsOverride
-metadata:
-  name: "factory-daemonset-details-volume-list"
-spec:
-  additionalPrinterColumns:
-    - jsonPath: .name
-      name: Name
-      type: string
-  id: "factory-daemonset-details-volume-list"
+  additionalPrinterColumnsUndefinedValues: []
 
+  id: "stock-namespace-/policy/v1/poddisruptionbudgets"

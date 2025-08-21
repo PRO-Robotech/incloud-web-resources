@@ -112,9 +112,24 @@ spec:
             "factory" "pod-details"
           ) | nindent 12
         }}
-    - jsonPath: .spec.nodeName
-      name: Node
-      type: string
+    - name: Node
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "N"
+            "title" "node"
+            "backgroundColor" "#8476d1"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".spec.nodeName"
+            "factory" "node-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.restartPolicy
       name: Restart Policy
       type: string
@@ -200,9 +215,24 @@ spec:
             "factory" "namespace-details"
           ) | nindent 12
         }}
-    - jsonPath: .spec.nodeName
-      name: Node
-      type: string
+    - name: Node
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "N"
+            "title" "node"
+            "backgroundColor" "#8476d1"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".spec.nodeName"
+            "factory" "node-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.restartPolicy
       name: Restart Policy
       type: string
@@ -271,9 +301,24 @@ spec:
             "factory" "pod-details"
           ) | nindent 12 
         }}
-    - jsonPath: .spec.nodeName
-      name: Node
-      type: string
+    - name: Node
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "N"
+            "title" "node"
+            "backgroundColor" "#8476d1"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".spec.nodeName"
+            "factory" "node-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.restartPolicy
       name: Restart Policy
       type: string
