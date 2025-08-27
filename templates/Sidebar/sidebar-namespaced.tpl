@@ -1,9 +1,9 @@
 {{- define "incloud-web-resources.sidebar.menu.items.namespaced" -}}
 {{- if .Values.addons.argocd.enabled -}}
 - children:
-    - key: argocd
+    - key: argocd-web
       label: ArgoCD
-      link: /argocd
+      link: /argocd/
     - key: argocd-application
       label: Applications
       link: /openapi-ui/{clusterName}/{namespace}/api-table/argoproj.io/v1alpha1/applications
@@ -20,7 +20,7 @@
 - children:
     - key: grafana
       label: Grafana
-      link: /grafana
+      link: /grafana/
   key: monitoring
   label: Monitoring
 
