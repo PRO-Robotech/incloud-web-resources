@@ -12,13 +12,18 @@ spec:
       customProps:
         disableEventBubbling: true
         items:
-        {{ include "incloud-web-resources.pod.icon" . | nindent 8}}
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "A"
+            "title" "applications"
+            "backgroundColor" "#436853ff"
+          )| nindent 8
+        }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
             "reqIndex" 0
             "type" "name"
             "jsonPath" ".metadata.name"
             "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-            "factory" "pod-details"
+            "factory" "argocd-application-details"
         ) | nindent 12 
         }}
     - jsonPath: .metadata.namespace
@@ -30,7 +35,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
-            "backgroundColor" "#1e4f18"
+            "backgroundColor" "#a25792ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -90,13 +95,18 @@ spec:
       customProps:
         disableEventBubbling: true
         items:
-        {{ include "incloud-web-resources.pod.icon" . | nindent 8}}
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "A"
+            "title" "applications"
+            "backgroundColor" "#436853ff"
+          )| nindent 8
+        }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
             "reqIndex" 0
             "type" "name"
             "jsonPath" ".metadata.name"
             "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
-            "factory" "pod-details"
+            "factory" "argocd-application-details"
         ) | nindent 12 
         }}
     - jsonPath: .status.sync.status
@@ -222,10 +232,24 @@ spec:
       type: string
     - jsonPath: .deployStartedAt
       name: Deploy Started At
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".deployStartedAt"
+          ) | nindent 8
+        }}
     - jsonPath: .deployedAt
       name: Deployed At
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".deployedAt"
+          ) | nindent 8
+        }}
     - jsonPath: .revision
       name: Revision
       type: string

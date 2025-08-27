@@ -14,7 +14,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CRD"
             "title" "crd"
-            "backgroundColor" "#137706ff"
+            "backgroundColor" "#2b9af3"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict

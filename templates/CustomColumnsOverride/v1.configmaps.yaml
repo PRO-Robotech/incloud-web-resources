@@ -14,7 +14,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CM"
             "title" "configmap"
-            "backgroundColor" "#40199a"
+            "backgroundColor" "#b48c78ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -34,7 +34,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
-            "backgroundColor" "#1e4f18"
+            "backgroundColor" "#a25792ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -78,7 +78,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CM"
             "title" "configmap"
-            "backgroundColor" "#40199a"
+            "backgroundColor" "#b48c78ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -120,7 +120,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "CM"
             "title" "configmap"
-            "backgroundColor" "#40199a"
+            "backgroundColor" "#b48c78ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -140,7 +140,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
-            "backgroundColor" "#1e4f18"
+            "backgroundColor" "#a25792ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict

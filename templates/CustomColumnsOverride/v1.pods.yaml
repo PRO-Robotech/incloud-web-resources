@@ -34,7 +34,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
-            "backgroundColor" "#1e4f18"
+            "backgroundColor" "#a25792ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -50,12 +50,12 @@ spec:
     - jsonPath: .status.podIP
       name: Pod IP
       type: string
-    - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
-      name: Status Containers
-      type: string
-    - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
-      name: Status Scheduled
-      type: string
+    # - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+    #   name: Status Containers
+    #   type: string
+    # - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+    #   name: Status Scheduled
+    #   type: string
     - jsonPath: .status.qosClass
       name: QOS
       type: string
@@ -136,12 +136,12 @@ spec:
     - jsonPath: .status.podIP
       name: Pod IP
       type: string
-    - jsonPath: .status.conditions[?(@.type=="ContainersReady" || @.type=="PodReady")].status
-      name: Status Containers
-      type: string
-    - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
-      name: Status Scheduled
-      type: string
+    # - jsonPath: .status.conditions[?(@.type=="ContainersReady" || @.type=="PodReady")].status
+    #   name: Status Containers
+    #   type: string
+    # - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+    #   name: Status Scheduled
+    #   type: string
     - jsonPath: .status.qosClass
       name: QOS
       type: string
@@ -205,7 +205,7 @@ spec:
         {{ include "incloud-web-resources.icon" (dict
             "text" "NS"
             "title" "namespace"
-            "backgroundColor" "#1e4f18"
+            "backgroundColor" "#a25792ff"
           )| nindent 8
         }}
         {{ include "incloud-web-resources.factory.linkblock" (dict
@@ -239,12 +239,12 @@ spec:
     - jsonPath: .status.podIP
       name: Pod IP
       type: string
-    - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
-      name: Status Containers
-      type: string
-    - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
-      name: Status Scheduled
-      type: string
+    # - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+    #   name: Status Containers
+    #   type: string
+    # - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+    #   name: Status Scheduled
+    #   type: string
     - jsonPath: .status.qosClass
       name: QOS
       type: string
@@ -325,12 +325,12 @@ spec:
     - jsonPath: .status.podIP
       name: Pod IP
       type: string
-    - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
-      name: Status Containers
-      type: string
-    - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
-      name: Status Scheduled
-      type: string
+    # - jsonPath: .status.conditions[?(@.type=="ContainersReady")].status
+    #   name: Status Containers
+    #   type: string
+    # - jsonPath: .status.conditions[?(@.type=="PodScheduled")].status
+    #   name: Status Scheduled
+    #   type: string
     - jsonPath: .status.qosClass
       name: QOS
       type: string

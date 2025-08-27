@@ -60,7 +60,7 @@
 {{- define "incloud-web-resources.icon" -}}
 {{- $text := (default "" .text) -}}
 {{- $title := (default "" .title) -}}
-{{- $backgroundColor := (default "#1e4f18" .backgroundColor) -}}
+{{- $backgroundColor := (default "#a25792ff" .backgroundColor) -}}
 - type: antdFlex
   data:
     id: header-row

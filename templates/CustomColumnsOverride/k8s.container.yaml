@@ -13,10 +13,10 @@ spec:
       type: string
     - jsonPath: .started
       name: Started
-      type: string
+      type: bool
     - jsonPath: .ready
       name: Ready
-      type: string
+      type: bool
     - jsonPath: .restartCount
       name: RestartCount
       type: string

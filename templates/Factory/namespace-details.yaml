@@ -43,7 +43,7 @@ spec:
               textAlign: center
               whiteSpace: nowrap
               color: "#fff"
-              backgroundColor: "#1e4f18"
+              backgroundColor: "#a25792ff"
               fontFamily: RedHatDisplay, Overpass, overpass, helvetica, arial, sans-serif
               fontWeight: 400
 

@@ -88,6 +88,7 @@ spec:
                       id: details-spacer
                       "$space": 16
                   # Two-column layout for metadata (left) and status/spec (right)
+
                   - type: antdRow
                     data:
                       id: details-grid
@@ -129,15 +130,25 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                  - type: antdText
+                                    data:
+                                      id: meta-name-label
+                                      text: Namespace
+                                      strong: true
+
+                                  {{ include "incloud-web-resources.icon" (dict
+                                      "text" "NS"
+                                      "title" "namespace"
+                                      "backgroundColor" "#a25792ff"
+                                    )| nindent 34
+                                  }}
+                                  {{ include "incloud-web-resources.factory.linkblock" (dict
                                       "reqIndex" 0
                                       "type" "namespace"
-                                      "title" "Namespace"
                                       "jsonPath" ".metadata.namespace"
                                       "factory" "namespace-details"
-                                    ) | nindent 34 
+                                    ) | nindent 38
                                   }}
-
                               # Labels list (kept as include)
                               - type: antdFlex
                                 data:
@@ -331,13 +342,24 @@ spec:
                                   vertical: true
                                   gap: 8
                                 children:
-                                  {{ include "incloud-web-resources.factory.links.details" (dict
+                                  - type: antdText
+                                    data:
+                                      id: meta-node
+                                      text: Node
+                                      strong: true
+
+                                  {{ include "incloud-web-resources.icon" (dict
+                                      "text" "N"
+                                      "title" "node"
+                                      "backgroundColor" "#8476d1"
+                                    )| nindent 34
+                                  }}
+                                  {{ include "incloud-web-resources.factory.linkblock" (dict
                                       "reqIndex" 0
-                                      "type" "node"
-                                      "title" "Node"
+                                      "type" "name"
                                       "jsonPath" ".spec.nodeName"
                                       "factory" "node-details"
-                                    ) | nindent 34 
+                                    ) | nindent 38
                                   }}
 
                               # QoS class

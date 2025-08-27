@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-factory-horizontalpodautoscaler-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: horizontalpodautoscalers
-      label: "HorizontalPodAutoscaler"
+      label: "autoscaling/v2/horizontalpodautoscalers"
       link: "/openapi-ui/{clusterName}/{namespace}/api-table/autoscaling/v2/horizontalpodautoscalers"
     - key: horizontalpodautoscaler
       label: "{6}"

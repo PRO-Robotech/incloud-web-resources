@@ -10,7 +10,16 @@ spec:
       type: string
     - jsonPath: .sizeBytes
       name: Size
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+          - type: ConverterBytes
+            data:
+              id: example-converter-bytes
+              bytesValue: "{reqsJsonPath[0]['.sizeBytes']['-']}"
+              format: true
+              precision: 1
 
   additionalPrinterColumnsUndefinedValues:
     - key: Message
