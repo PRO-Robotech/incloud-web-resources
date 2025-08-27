@@ -20,7 +20,7 @@
 - children:
     - key: grafana
       label: Grafana
-      link: /grafana/
+      link: /grafana/login
   key: monitoring
   label: Monitoring
 
