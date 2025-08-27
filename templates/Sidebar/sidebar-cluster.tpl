@@ -1,6 +1,9 @@
 {{- define "incloud-web-resources.sidebar.menu.items.cluster" -}}
 {{- if .Values.addons.argocd.enabled -}}
 - children:
+    - key: argocd
+      label: ArgoCD
+      link: /argocd
     - key: argocd-application
       label: Applications
       link: /openapi-ui/{clusterName}/api-table/argoproj.io/v1alpha1/applications
@@ -13,6 +16,13 @@
   key: argocd
   label: Argocd
 {{- end }}
+
+- children:
+    - key: grafana
+      label: Grafana
+      link: /grafana
+  key: monitoring
+  label: Monitoring
 
 {{- if .Values.addons.hbf.enabled }}
 - key: hbf
