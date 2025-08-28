@@ -1,7 +1,7 @@
 {{- define "incloud-web-resources.sidebar.menu.items.cluster" -}}
 {{- if .Values.addons.argocd.enabled -}}
 - children:
-    - key: argocd
+    - key: argocd-web
       label: ArgoCD
       link: /argocd
     - key: argocd-application
