@@ -1,7 +1,7 @@
 {{- define "incloud-web-resources.sidebar.menu.items.cluster" -}}
 {{- if .Values.addons.argocd.enabled -}}
 - children:
-    - key: argocd-web
+    - key: argocd-web-ext-link
       label: ArgoCD
       link: /argocd
     - key: argocd-application
@@ -18,7 +18,7 @@
 {{- end }}
 
 - children:
-    - key: grafana
+    - key: grafana-ext-link
       label: Grafana
       link: /grafana
   key: monitoring

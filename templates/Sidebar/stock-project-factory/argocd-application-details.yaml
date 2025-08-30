@@ -11,4 +11,6 @@ spec:
       - argocd-applications-sidebar
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 {{- end }}

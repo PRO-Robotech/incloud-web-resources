@@ -7,6 +7,8 @@ spec:
   id: inside-namespace-api-form
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -17,6 +19,8 @@ spec:
   id: inside-namespace-api-table
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -27,6 +31,8 @@ spec:
   id: inside-namespace-builtin-form
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -37,6 +43,8 @@ spec:
   id: inside-namespace-builtin-table
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -47,6 +55,8 @@ spec:
   id: inside-namespace-crd-form
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -57,3 +67,5 @@ spec:
   id: inside-namespace-crd-table
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.namespaced" . | nindent 4 }}
+  externalKeys:
+    {{ include "incloud-web-resources.sidebar.externalKeys" . | nindent 4 }}
