@@ -7,19 +7,59 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "RC"
+            "title" "replicationcontroller"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "replicationcontroller-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#a25792ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .metadata.ownerReferences[*].name
       name: Owner
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64
@@ -36,7 +76,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "RC"
+            "title" "replicationcontroller"
+            "backgroundColor" "#004080"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "replicationcontroller-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.labels
       name: Labels
       type: string
@@ -45,7 +102,14 @@ spec:
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsTrimLengths:
     - key: Name
       value: 64

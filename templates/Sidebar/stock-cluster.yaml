@@ -5,6 +5,29 @@ metadata:
   name: stock-cluster-api-form
 spec:
   id: stock-cluster-api-form
+  keysAndTags:
+    {{- if .Values.addons.hbf.enabled }}
+    hbf-networks:
+      - netguard.sgroups.io/v1beta1/networks
+    hbf-addressgroups:
+      - netguard.sgroups.io/v1beta1/addressgroups
+    hbf-networkbindings:
+      - netguard.sgroups.io/v1beta1/networkbindings
+    hbf-servicealiases:
+      - netguard.sgroups.io/v1beta1/servicealiases
+    hbf-services:
+      - netguard.sgroups.io/v1beta1/services
+    hbf-networks:
+      - netguard.sgroups.io/v1beta1/networks
+    hbf-addressgroupbindings:
+      - netguard.sgroups.io/v1beta1/addressgroupbindings
+    hbf-rules2ses:
+      - netguard.sgroups.io/v1beta1/rules2s
+    hbf-addressgroupportmappings:
+      - netguard.sgroups.io/v1beta1/addressgroupportmappings
+    hbf-ieagagrules:
+      - netguard.sgroups.io/v1beta1/ieagagrules
+    {{- end }}
   menuItems:
     {{ include "incloud-web-resources.sidebar.menu.items.cluster" . | nindent 4 }}
 

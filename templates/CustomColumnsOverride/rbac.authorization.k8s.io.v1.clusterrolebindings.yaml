@@ -7,25 +7,45 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "CRB"
+            "title" "clusterrolebinding"
+            "backgroundColor" "#008bad"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "factory" "clusterrolebinding-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .roleRef.name
       name: Role ref
       type: string
     - jsonPath: .subjects[?(@.kind=="ServiceAccount")].name
       name: Service accounts
-      type: string
+      type: array
     - jsonPath: .subjects[?(@.kind=="User")].name
       name: Users
       type: array
     - jsonPath: .subjects[?(@.kind=="Group")].name
       name: Groups
       type: array
-    - jsonPath: .metadata.namepase
-      name: Namespace
-      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsUndefinedValues:
     - key: Role ref
       value: "-"

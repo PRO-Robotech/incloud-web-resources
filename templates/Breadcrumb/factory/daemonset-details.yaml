@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-factory-daemonset-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: daemonsets
-      label: "daemonsets"
+      label: "apps/v1/daemonsets"
       link: "/openapi-ui/{clusterName}/{namespace}/api-table/apps/v1/daemonsets"
     - key: daemonset
       label: "{5}"

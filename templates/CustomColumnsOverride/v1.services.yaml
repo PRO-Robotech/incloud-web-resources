@@ -7,10 +7,43 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "S"
+            "title" "service"
+            "backgroundColor" "#6ca100"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "service-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .metadata.namespace
       name: Namespace
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "NS"
+            "title" "namespace"
+            "backgroundColor" "#a25792ff"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "namespace"
+            "jsonPath" ".metadata.namespace"
+            "factory" "namespace-details"
+          ) | nindent 12
+        }}
     - jsonPath: .spec.clusterIP
       name: ClusterIP
       type: string
@@ -19,13 +52,20 @@ spec:
       type: string
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .spec.selector
       name: Pod Selector
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsUndefinedValues:
     - key: ClusterIP
       value: "-"
@@ -53,7 +93,24 @@ spec:
   additionalPrinterColumns:
     - jsonPath: .metadata.name
       name: Name
-      type: string
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.icon" (dict
+            "text" "S"
+            "title" "service"
+            "backgroundColor" "#6ca100"
+          )| nindent 8
+        }}
+        {{ include "incloud-web-resources.factory.linkblock" (dict
+            "reqIndex" 0
+            "type" "name"
+            "jsonPath" ".metadata.name"
+            "namespace" "{reqsJsonPath[0]['.metadata.namespace']['-']}"
+            "factory" "service-details"
+          ) | nindent 12 
+        }}
     - jsonPath: .spec.clusterIP
       name: ClusterIP
       type: string
@@ -62,13 +119,20 @@ spec:
       type: string
     - jsonPath: .metadata.labels
       name: Labels
-      type: string
+      type: array
     - jsonPath: .spec.selector
       name: Pod Selector
-      type: string
+      type: array
     - jsonPath: .metadata.creationTimestamp
       name: Created
-      type: date
+      type: factory
+      customProps:
+        disableEventBubbling: true
+        items:
+        {{ include "incloud-web-resources.factory.timeblock" (dict
+          "req" ".metadata.creationTimestamp"
+          ) | nindent 8
+        }}
   additionalPrinterColumnsUndefinedValues:
     - key: ClusterIP
       value: "-"

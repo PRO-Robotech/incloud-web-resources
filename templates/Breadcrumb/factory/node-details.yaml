@@ -6,17 +6,8 @@ metadata:
 spec:
   id: "stock-cluster-factory-node-details"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
     - key: node
-      label: "nodes"
+      label: "v1/nodes"
       link: "/openapi-ui/{clusterName}/builtin-table/nodes"
     - key: node
       label: "{5}"

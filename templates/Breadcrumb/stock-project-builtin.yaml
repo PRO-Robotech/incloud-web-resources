@@ -6,21 +6,8 @@ metadata:
 spec:
   id: "stock-project-builtin-table"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: api
-      label: "{typeName}"
+      label: "v1/{typeName}"
 
 ---
 apiVersion: front.in-cloud.io/v1alpha1
@@ -30,21 +17,8 @@ metadata:
 spec:
   id: "stock-project-builtin-form"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: create-api-res-namespaced-table
-      label: "{typeName}"
+      label: "v1/{typeName}"
       link: "/openapi-ui/{clusterName}/{namespace}/builtin-table/{typeName}"
     - key: create-api-res-namespaced-typename
       label: Create
@@ -57,21 +31,8 @@ metadata:
 spec:
   id: "stock-project-builtin-form-edit"
   breadcrumbItems:
-    - key: In-Cloud
-      label: In-Cloud
-      link: "/openapi-ui"
-    - key: clusterList
-      label: "Cluster List"
-      link: "/openapi-ui/clusters"
-    - key: cluster
-      label: "{clusterName}"
-      link: "/openapi-ui/clusters/{clusterName}"
-    - key: namespaces
-      label: "Namespaces"
-    - key: namespace
-      label: "{namespace}"
     - key: create-api-res-namespaced-table
-      label: "{typeName}"
+      label: "v1/{typeName}"
       link: "/openapi-ui/{clusterName}/{namespace}/builtin-table/{typeName}"
     - key: create-api-res-namespaced-typename
       label: Update

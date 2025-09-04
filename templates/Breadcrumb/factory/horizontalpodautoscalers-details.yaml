@@ -1,0 +1,13 @@
+---
+apiVersion: front.in-cloud.io/v1alpha1
+kind: Breadcrumb
+metadata:
+  name: stock-project-factory-horizontalpodautoscaler-details
+spec:
+  id: "stock-project-factory-horizontalpodautoscaler-details"
+  breadcrumbItems:
+    - key: horizontalpodautoscalers
+      label: "autoscaling/v2/horizontalpodautoscalers"
+      link: "/openapi-ui/{clusterName}/{namespace}/api-table/autoscaling/v2/horizontalpodautoscalers"
+    - key: horizontalpodautoscaler
+      label: "{6}"
